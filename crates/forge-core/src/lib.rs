@@ -6,7 +6,9 @@
 //! Nothing here is Android-specific; `forge-cli` exercises the whole of it on
 //! desktop Linux with no device attached (AD-10).
 
+pub mod availability;
 pub mod capability;
+pub mod entitlement;
 pub mod graph;
 pub mod validate;
 

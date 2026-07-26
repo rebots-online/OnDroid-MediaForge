@@ -109,19 +109,15 @@ pub fn exclusive_families(tier: DeviceTier) -> Vec<(StageFamily, StageFamily)> {
 /// This is the single source of the tier axis, read by `validate_graph` for
 /// `TierUnavailable` and by `resolve_availability` for `TierLimited`; neither
 /// re-derives it.
+///
+/// Only `GenerativeFill` is above the floor. Every other kind has a CPU path
+/// that is acceptable on any device, so raising one here would both assert a
+/// hardware fact the architecture does not state and break the invariant that
+/// a `TierLimited` node always has a substitute at the device's own tier.
 pub fn required_tier(kind: NodeKind) -> DeviceTier {
-    use DeviceTier::*;
-    use NodeKind::*;
     match kind {
-        // Diffusion needs a real NPU budget.
-        GenerativeFill => T2,
-        // Real-time video stages need at least a usable GPU or NPU.
-        VideoUpscale | VideoRemoveBg | VideoInterpolate | CaptionFrames => T1,
-        // Everything else has a CPU path that is acceptable on any device.
-        SourceVideo | SourceImage | SourceAudio | AudioSplit | AudioDenoise
-        | AudioIsolateVoice | AudioStems | Transcribe | Diarize | ImageUpscale
-        | ImageObjectRemove | ImageCutout | MetadataGen | MaskHelper | AvMux | SinkGallery
-        | SinkFiles => T0,
+        NodeKind::GenerativeFill => DeviceTier::T2,
+        _ => DeviceTier::T0,
     }
 }
 

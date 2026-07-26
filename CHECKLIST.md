@@ -103,7 +103,7 @@ returning pairs that must never be resident together at that tier; at `T0` and
 
 ---
 
-### [ ] T4 — Graph validation
+### [X] T4 — Graph validation
 
 > Order note: this task was previously numbered T3.
 
