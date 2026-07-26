@@ -168,7 +168,7 @@ returns `Accelerated`; and the `TierLimited` result always carries `Some(substit
 
 ---
 
-### [ ] T6 — Entitlement seam
+### [X] T6 — Entitlement seam
 
 **Files:** create `crates/forge-core/src/entitlement.rs`; modify `lib.rs`
 

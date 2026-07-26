@@ -10,6 +10,7 @@ pub mod availability;
 pub mod capability;
 pub mod entitlement;
 pub mod graph;
+pub mod tiler;
 pub mod validate;
 
 /// Every failure the core can surface to a host.
