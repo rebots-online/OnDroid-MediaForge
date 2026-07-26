@@ -167,6 +167,8 @@ the device can prove.
 | `DiagnosticsSink` | `diagnostics.rs` | Emission point, alongside `ProgressSink` so the scheduler emits both in one pass | `trait DiagnosticsSink { fn record(&mut self, event: DiagnosticEvent); }` |
 | `JobRecord::to_bundle` | `diagnostics.rs` | Serialises for the share sheet. Local by default; leaves the device only by explicit user action | `fn to_bundle(&self) -> Result<String, CoreError>` |
 
+| `TestDir` | `testdir.rs` | Scratch directory for tests, named per test, removed before creation and again on drop so a run that died mid-test cannot make the next run pass or fail for the wrong reason. Rooted at the repository's `.tmp/`, never the system temp directory | `pub(crate) struct TestDir { path: PathBuf }` with `fn new(name: &str) -> Self` |
+
 ### `crates/forge-engines` — inference adapters
 
 | Entity | Module | Role | Signature |
