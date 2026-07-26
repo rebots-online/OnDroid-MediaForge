@@ -270,7 +270,7 @@ each segment exactly once.
 
 ---
 
-### [ ] T11 — Pipeline document serde
+### [X] T11 — Pipeline document serde
 
 **Files:** create `crates/forge-core/src/pipeline.rs`; modify `lib.rs`; create
 `tests/fixtures/podcast-cleanup.json`
