@@ -6,6 +6,10 @@
 //! Nothing here is Android-specific; `forge-cli` exercises the whole of it on
 //! desktop Linux with no device attached (AD-10).
 
+pub mod capability;
+pub mod graph;
+pub mod validate;
+
 /// Every failure the core can surface to a host.
 #[derive(Debug, thiserror::Error)]
 pub enum CoreError {

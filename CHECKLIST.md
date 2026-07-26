@@ -22,7 +22,7 @@ workspace build.
 
 ## Stanza 1 — Workspace and pipeline model
 
-### [ ] T1 — Cargo workspace and crate skeletons
+### [X] T1 — Cargo workspace and crate skeletons
 
 **Files:** create `Cargo.toml`, `crates/forge-core/Cargo.toml`,
 `crates/forge-core/src/lib.rs`, `crates/forge-engines/Cargo.toml`,
@@ -66,44 +66,68 @@ function returning the declared input and output ports for each of the 22
 
 ---
 
-### [ ] T3 — Graph validation
+### [ ] T3 — Capability model
+
+> Order note: this task was previously numbered T4. Validation consumes
+> `SocProfile`, so capability must land first or the dependent task cannot
+> compile.
+
+**Files:** create `crates/forge-core/src/capability.rs`; modify `lib.rs`
+
+**Entities:** `DeviceTier`, `Backend`, `SocProfile`, `probe_device`,
+`StageFamily`
+
+**Do:** Implement per §3. `probe_device` reads the SoC identifier, attempts a
+delegate load, and runs a timed micro-benchmark, returning a populated
+`SocProfile`. Behind `#[cfg(not(target_os = "android"))]` it returns a desktop
+profile with `tier: DeviceTier::T0`, `backends: vec![Backend::Cpu]`,
+`npu_experimental: false`, so `forge-cli` runs without a device.
+
+`SocProfile` additionally carries `probe_schema_version: u32` and
+`model_budget_bytes: u64`. The schema version is compared against the running
+binary's expected value on load; a mismatch forces a re-probe rather than
+trusting a stale cache. The model budget is the memory available for resident
+models after OS and app overhead, and is what stops mutually exclusive stage
+families being co-resident.
+
+`StageFamily` is `enum StageFamily { Diffusion, LargeLanguage, Audio, Vision }`.
+Provide `fn exclusive_families(tier: DeviceTier) -> Vec<(StageFamily, StageFamily)>`
+returning pairs that must never be resident together at that tier; at `T0` and
+`T1` this includes `(Diffusion, LargeLanguage)`.
+
+**Accept:**
+- `cargo check -p forge-core` exits 0
+- `grep -c 'npu_experimental' crates/forge-core/src/capability.rs` returns at least 1
+- `grep -c 'probe_schema_version' crates/forge-core/src/capability.rs` returns at least 1
+- `grep -c 'exclusive_families' crates/forge-core/src/capability.rs` returns at least 1
+
+---
+
+### [ ] T4 — Graph validation
+
+> Order note: this task was previously numbered T3.
 
 **Files:** create `crates/forge-core/src/validate.rs`; modify
 `crates/forge-core/src/lib.rs` to add `pub mod validate;`
 
 **Entities:** `ValidationError`, `validate_graph`
 
-**Consumes:** `Graph`, `Edge`, `NodeId`, `PortType`, `ports_for` from `graph.rs`;
-`SocProfile`, `DeviceTier` from `capability.rs` (T4)
+**Consumes:** `Graph`, `Edge`, `NodeId`, `PortType`, `ports_for` from `graph.rs`
+(T2); `SocProfile`, `DeviceTier`, `StageFamily`, `exclusive_families` from
+`capability.rs` (T3)
 
 **Do:** `validate_graph` returns every error found rather than the first.
 Detect: port type mismatch on an edge, cycles, a required input left unconnected,
-and a node whose required tier exceeds `caps.tier`. Write unit tests covering a
-valid chain, an audio-to-image mismatch, a two-node cycle, and a T2-only node on a
+a node whose required tier exceeds `caps.tier`, and a graph containing two nodes
+from a pair returned by `exclusive_families` for this tier. Write unit tests
+covering a valid chain, an audio-to-image mismatch, a two-node cycle, a T2-only
+node on a T0 profile, and a graph pairing generative fill with LLM metadata on a
 T0 profile.
 
 **Accept:**
 - `cargo test -p forge-core validate` exits 0
 - `grep -c 'TypeMismatch' crates/forge-core/src/validate.rs` returns at least 1
-
----
-
-### [ ] T4 — Capability model
-
-**Files:** create `crates/forge-core/src/capability.rs`; modify `lib.rs`
-
-**Entities:** `DeviceTier`, `Backend`, `SocProfile`, `probe_device`
-
-**Do:** Implement per §3. `probe_device` reads the SoC identifier, attempts a
-delegate load, and runs a timed micro-benchmark, returning a populated
-`SocProfile`. Behind `#[cfg(not(target_os = "android"))]` it returns a desktop
-profile with `tier: DeviceTier::T0`, `backends: vec![Backend::Cpu]`,
-`npu_experimental: false`, so `forge-cli` runs without a device. `SocProfile`
-serialises so the probe result caches to disk and is not re-run per launch.
-
-**Accept:**
-- `cargo check -p forge-core` exits 0
-- `grep -c 'npu_experimental' crates/forge-core/src/capability.rs` returns at least 1
+- `grep -c 'ExclusiveFamilies' crates/forge-core/src/validate.rs` returns at least 1
 
 ---
 
