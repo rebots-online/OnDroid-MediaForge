@@ -362,7 +362,7 @@ Android device or an NPU.
 
 ## Stanza 4 — Shell and Android layer
 
-### [X] T15 — Tauri 2 Android shell
+### [✅] T15 — Tauri 2 Android shell
 
 **Files:** create `ui/package.json`, `ui/index.html`, `ui/src/main.ts`,
 `crates/forge-ffi/tauri.conf.json`; modify `crates/forge-ffi/src/lib.rs`
