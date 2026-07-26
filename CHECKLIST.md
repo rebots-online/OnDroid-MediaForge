@@ -131,7 +131,7 @@ T0 profile.
 
 ---
 
-### [ ] T5 — Availability resolution (the gating precedence rule)
+### [X] T5 — Availability resolution (the gating precedence rule)
 
 **Files:** create `crates/forge-core/src/availability.rs`; modify `lib.rs`
 
