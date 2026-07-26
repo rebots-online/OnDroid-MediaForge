@@ -83,12 +83,21 @@ device. It may not state that the app is offline or uses no network, because it
 downloads models and syncs entitlements. Getting this wrong ships a false privacy
 claim.
 
-**Prefer published binaries over building engines.** ONNX Runtime, the Qualcomm
-QNN runtime, and the LiteRT delegate are all published Maven artifacts. INC-12
-records an architect nearly commissioning weeks of NDK cross-compilation when a
-prebuilt path already existed. Any large vendored source lands under
-`vendored-in-code/<source-domain>/<component>/` with a provenance stub before
-assimilation.
+**Vendor engines in source; a binary is a scaffold, never a destination.** A
+binary without its source and a recipe we have actually run means we cannot
+support our own app and are at upstream's mercy for anything that changes
+underneath us. Every core engine — ONNX Runtime, LiteRT, ggml, NCNN, all of them
+FOSS — is vendored as source under `vendored-in-code/<source-domain>/<component>/`,
+pinned to an exact upstream commit, with a provenance stub written before
+assimilation and the clone fetched straight into place, never staged through
+scratch (INC-15). Consuming a published Maven artifact to keep moving is allowed
+and carries a mandatory obligation: bring the from-source build up, substitute
+it, and make that succeed — as a tracked task with a gate, not a note. Full
+reasoning and the QNN carve-out are AD-2a and AD-3 in `DOCS/ARCHITECTURE.md`.
+
+Do not cite INC-12 for the opposite. It is about purposive rule reading causing a
+total stoppage; the option it endorsed was FOSS with its source already vendored,
+and it narrowed one clause for one target.
 
 **`crates/forge-cli` is the fast path.** It runs the scheduler, tiler, asset
 store, and the ONNX Runtime CPU path on desktop Linux with no device attached.

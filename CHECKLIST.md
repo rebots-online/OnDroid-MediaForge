@@ -428,12 +428,17 @@ price and no credit cost anywhere in its markup.
 backgrounding. `ThermalReader` subscribes to `PowerManager.getThermalHeadroom()`
 and feeds `ThermalGovernor`. `BillingBridge` implements the concrete
 `EntitlementService` over Play Billing with RevenueCat as the authoritative store.
-Engine binaries are consumed as published Maven artifacts per AD-3 — nothing is
-built from source.
+`LiteRtBridge` may consume the published Maven artifact to get the bridge
+standing, which AD-3 permits as a scaffold; the from-source substitution is T23
+and is not optional. Per AD-2a the QNN delegate is attached to generative stages
+only, and `LiteRtBridge` must select the CPU/GPU path on any of three losses —
+unsupported silicon, a delegate that fails to load, or an upstream artifact that
+no longer resolves. No deterministic stage requests the delegate at all.
 
 **Accept:**
 - `./gradlew :android:compileReleaseKotlin` ends `BUILD SUCCESSFUL`
 - `git ls-files android/*.kt | wc -l` returns 6
+- `grep -c 'AD-2a' android/LiteRtBridge.kt` returns at least 1
 
 > Clause note: this previously gated on a full `assemble`, which compiles the
 > Rust core, the FFI layer and the web bundle. Under hermetic per-task verify a
@@ -563,3 +568,68 @@ check behind the privacy claim, not a review comment.
 - `cargo test -p forge-core diagnostics` exits 0
 - `grep -o 'DiagnosticEvent' crates/forge-core/src/diagnostics.rs | wc -l` returns at least 3
 - `grep -c 'fn to_bundle' crates/forge-core/src/diagnostics.rs` returns 1
+
+---
+
+## Stanza 7 — Supply chain
+
+> Why this stanza exists: AD-3 permits a published binary as a scaffold and
+> obliges the from-source substitution to follow and to succeed. That obligation
+> is only real if it is a task with a gate. These are those tasks. Until T24
+> passes, every engine in the app is a binary we cannot reproduce.
+
+### [ ] T23 — Vendor the engine sources
+
+**Files:** create `vendored-in-code/github.com/microsoft/onnxruntime/PROVENANCE.md`,
+`vendored-in-code/github.com/google-ai-edge/LiteRT/PROVENANCE.md`,
+`vendored-in-code/github.com/ggml-org/ggml/PROVENANCE.md`,
+`vendored-in-code/github.com/Tencent/ncnn/PROVENANCE.md`
+
+**Do:** Vendor the source of each of the four FOSS engines named in AD-2. Per
+INC-15 the clone is fetched **straight into its final location** — never cloned
+to `.tmp/` or a scratch path and moved, which erodes provenance — and the
+`PROVENANCE.md` stub is written **before** the tree is assimilated, not after.
+Each stub records the upstream URL, the exact pinned commit SHA, the upstream
+release tag if the pin is a tag, the licence with its SPDX identifier, the
+retrieval date, and the reason this component is vendored. Nothing is deleted or
+rewritten in an upstream tree; assimilation is additive.
+
+This task vendors source only. It does not build anything — that is T24 — so it
+cannot fail on toolchain grounds and must not be blocked behind one.
+
+The four paths above are the expected upstream locations. The
+`<source-domain>/<owner>/<repo>` segments are taken from the clone URL actually
+used, so if a project has moved the path follows the real URL rather than this
+list — record the move in the stub. That is not an invented entity and needs no
+escalation.
+
+**Accept:**
+- `git ls-files 'vendored-in-code/**/PROVENANCE.md' | wc -l` returns 4
+- `grep -rl 'SPDX-License-Identifier' vendored-in-code --include=PROVENANCE.md | wc -l` returns 4
+- `grep -rl 'Pinned commit' vendored-in-code --include=PROVENANCE.md | wc -l` returns 4
+
+---
+
+### [ ] T24 — Prove the from-source build and substitute
+
+**Files:** create `scripts/build-engines.sh`; modify `android/LiteRtBridge.kt`
+
+**Do:** Bring up the NDK cross-compile of the vendored engine sources for
+`arm64-v8a` and substitute the resulting artifacts for the published Maven ones
+consumed as scaffolds in T18. `build-engines.sh` builds from the pinned
+`vendored-in-code/` trees and from nothing else — it must not fetch source at
+build time, because a build that downloads its own inputs is the dependency AD-3
+exists to remove.
+
+The proprietary QNN delegate is explicitly **out of scope**: it has no source and
+cannot be built. It stays a published binary and stays confined to generative
+stages per AD-2a, which is why its absence must already be survivable.
+
+Scope note: `arm64-v8a` only. AD-2's four-ABI question is a distribution
+decision, not a build-recipe one, and proving one ABI is what discharges AD-3's
+obligation that the recipe be one we have actually run.
+
+**Accept:**
+- `bash scripts/build-engines.sh 2>&1 | tail -1` ends `BUILD SUCCESSFUL`
+- `grep -c 'vendored-in-code' scripts/build-engines.sh` returns at least 1
+- `grep -Ec 'curl|wget|git clone|FetchContent' scripts/build-engines.sh` returns 0

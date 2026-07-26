@@ -48,36 +48,79 @@ through M1, is a Compose host calling the same Rust cdylib through UniFFI with
 the same WebView canvas — the core and the UI both survive that swap; only the
 shell changes. The decision point is the end of M1.
 
-**AD-2 — Two runtimes in the core, two satellites.** ONNX Runtime with the QNN
-execution provider is the workhorse for deterministic media operations: the audio
-stack, LaMa, super-resolution and matting. It has the best Rust story and the
-broadest model coverage. LiteRT with vendor NPU accelerators carries generative
-and LLM stages, because that is where the platform optimisation effort is
-concentrated. ggml covers batch speech-to-text everywhere and is the LLM
-portability floor below T1. NCNN-Vulkan covers frame interpolation and the ncnn
-super-resolution ports, and works on Exynos GPUs.
+**AD-2 — Two runtimes in the core, two satellites; all four FOSS.** ONNX Runtime
+is the workhorse for deterministic media operations: the audio stack, LaMa,
+super-resolution and matting. It has the best Rust story and the broadest model
+coverage. LiteRT carries generative and LLM stages, because that is where the
+platform optimisation effort is concentrated. ggml covers batch speech-to-text
+everywhere and is the LLM portability floor below T1. NCNN-Vulkan covers frame
+interpolation and the ncnn super-resolution ports, and works on Exynos GPUs.
+Every one of the four is open source and is vendored as source under AD-3.
 
-**AD-3 — Engines are acquired as published binaries, never built from source.**
-ONNX Runtime, the Qualcomm QNN runtime, and the LiteRT delegate are all published
-Maven artifacts. Building them from source for four ABIs is a multi-week trap
-with a prebuilt path already available. Any large vendored source lands under
-`vendored-in-code/<source-domain>/<component>/` with a provenance stub written
-before the tree is assimilated.
+**AD-2a — The proprietary accelerator is confined to where it is decisive.**
+Snapdragon NPU acceleration is not a runtime and is never load-bearing. Both
+routes to it — ONNX Runtime's QNN execution provider and LiteRT's QNN delegate —
+resolve to the same proprietary Qualcomm binary (`com.qualcomm.qti:qnn-runtime`),
+so preferring LiteRT over ORT does not avoid the dependency; only declining NPU
+acceleration does. §Runtimes settles where accepting it is worth the exposure:
+the entire audio stack, batch Whisper, LaMa, QuickSRNet upscaling, matting and
+RIFE all run on CPU/GPU at Fold3 class, so on those stages the NPU buys speed,
+not capability, and the source-vendored path is both the less vulnerable and the
+sufficient one. Generative fill is the single exception and is a difference in
+kind: a 20-step 512² SD1.5 generation is ~1–3 s on the NPU (46.2 ms/UNet-step,
+verified) against tens of seconds otherwise. So the QNN binary attaches to the
+generative stages alone, as an accelerator whose loss degrades those stages
+rather than breaking the app. Three losses are equally expected and take the same
+path: the silicon does not support it, the delegate fails to load, or upstream
+changes it under us — a version, an ABI or a package that no longer resolves. The
+last is the reason the fallback is architectural rather than a nicety: it is the
+one failure we cannot fix by vendoring, so the app must already not depend on it.
+No deterministic stage ever touches it. OV-2 is the test of exactly this.
+
+**AD-3 — Engines are vendored as source with a build recipe we have run; a
+published binary is a scaffold, never a destination.** A binary without its
+source and a proven recipe means we cannot support our own app — we cannot
+patch it, cannot reproduce it, and are at upstream's mercy for anything that
+changes underneath us. So every engine in the core is vendored as source under
+`vendored-in-code/<source-domain>/<component>/`, pinned to an exact upstream
+commit, with a provenance stub written before the tree is assimilated and the
+clone fetched straight into its final location, never staged through scratch
+(INC-15).
+
+Consuming the published Maven artifact is permitted, and is how the app builds
+before a recipe exists — but it carries a mandatory parallel obligation. The
+from-source build must be brought up and substituted for the binary, and that
+substitution must succeed. It is tracked as a checklist task with an owner and a
+gate, never as a note. A prebuilt that quietly never gets replaced is the
+failure this decision exists to prevent.
+
+This supersedes an earlier reading of INC-12 recorded here. That incident is
+about purposive rule reading — an architect refused a goal-advancing option on a
+rule's literal wording and caused a total stoppage — and the alternative it
+endorsed was a same-purpose Apache-2.0 FOSS runtime whose source was *already*
+vendored. It narrowed one clause for one target. It did not license acquiring
+engines as opaque binaries, and the reading that turned it into "never built
+from source" also dropped "vendored" from a pin that had always carried it.
 
 **AD-4 — Nothing long-running executes on the main thread.** Tauri plugin
 commands dispatch to a worker pool or a coroutine and return immediately. Jobs
 run in a foreground service through WorkManager, never inside a command handler.
 This is what keeps the app off the ANR path.
 
-**AD-5 — Fixed-shape execution plus tiling.** The QNN execution provider requires
-fixed input shapes. `Tiler` normalises arbitrary media into fixed tiles with
-overlap blending — 512² for inpainting, 128² for super-resolution, matching
-QuickSRNet's native design. This is also what bounds RAM and smooths thermal
-load.
+**AD-5 — Fixed-shape execution plus tiling.** `Tiler` normalises arbitrary media
+into fixed tiles with overlap blending — 512² for inpainting, 128² for
+super-resolution, matching QuickSRNet's native design. Bounding RAM and smoothing
+thermal load is the reason this holds for every stage, including the
+source-vendored CPU/GPU paths that never touch a vendor delegate. The QNN
+execution provider additionally *requires* fixed input shapes, so on the
+generative path tiling is not merely prudent but mandatory — but that
+requirement is now a property of one accelerator on one class of stage (AD-2a),
+not the justification for the whole design.
 
-**AD-6 — Compilation caches are a first-class product feature.** ORT QNN context
+**AD-6 — Compilation caches are a first-class product feature.** ORT EPContext
 binaries and LiteRT compilation caches are stored per device per model on first
-run. The verified 7,465 ms cold to 198 ms warm initialisation delta is the
+run. EPContext is an ONNX Runtime facility rather than a QNN one, so the cache
+is live on the CPU path as shipped and does not depend on the vendor delegate. The verified 7,465 ms cold to 198 ms warm initialisation delta is the
 difference between a toy and a product, so the first-run compile is surfaced in
 the UI as a one-time step rather than hidden.
 
