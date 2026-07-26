@@ -377,3 +377,38 @@ palette, model licenses, gating explanations, experimental consent, and purchase
 
 State what to do in one sentence and give one action. No illustrations, no
 apologies.
+
+## Appendix — how to extend this complement
+
+Three things about the generation tooling were learned the hard way while
+producing these screens. All were verified, and the first reverses an earlier
+conclusion recorded in this repository's history.
+
+**A timeout is a transport failure, not a generation failure.** Screen generation
+routinely exceeds the MCP call's transport window and returns "the operation
+timed out" while the work completes server-side one to four minutes later. Every
+such call observed here eventually produced a screen. Do not re-issue on timeout —
+poll instead, matching on prompt-specific strings in `list_screens`. Re-issuing
+is what produced roughly fifteen orphaned duplicate screens in this project,
+which remain and can only be cleared in the Stitch web UI.
+
+This corrects an earlier belief that TABLET generation was broken because five
+consecutive TABLET calls timed out. On the evidence now available those
+generations most likely succeeded and were simply never collected. The one screen
+in this complement built as DESKTOP rather than TABLET was a workaround for a
+problem that probably did not exist.
+
+**`edit_screens` is a silent no-op on this project.** Two calls against
+`e4-result-viewer` returned HTTP success with well-formed DOM operations, one
+even producing a new image asset, and neither mutation was ever committed — the
+screen's file id and md5 were unchanged after thirty-four rounds of polling. Do
+not rely on it to amend a screen. Regenerate instead.
+
+**The stored design system will not match this file.** It was created by
+uploading this document, but the tool re-derived the palette and dropped tokens
+(see the two constraints above). One attempt to correct it through
+`update_design_system` was rejected outright with "Request contains an invalid
+argument", and the override fields that would pin the neutral ramp appear not to
+be accepted by this deployment. Generated screens therefore arrive carrying the
+drifted values, and `scripts/normalize-stitch-tokens.sh` corrects them on the way
+into the freeze. Run it after freezing anything new.
