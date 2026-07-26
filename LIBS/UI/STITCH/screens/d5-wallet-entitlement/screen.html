@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Wallet and Entitlement</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Chivo:wght@400;600;700&amp;family=Inter:wght@400;700&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-fixed": "#cfe5ff",
+                        "surface-variant": "#2c2e34",
+                        "on-tertiary-fixed": "#001d34",
+                        "inverse-surface": "#e8e6e3",
+                        "surface-container-high": "#24262b",
+                        "on-secondary-fixed": "#00201d",
+                        "tertiary-container": "#009af3",
+                        "surface-container-low": "#181a1e",
+                        "outline-variant": "#3f4045",
+                        "error": "#ffb4ab",
+                        "heat-hot": "#ff5722",
+                        "inverse-primary": "#9c4500",
+                        "primary-fixed": "#ffdbca",
+                        "heat-idle": "#5a5b60",
+                        "surface-container-highest": "#2c2e34",
+                        "on-primary-container": "#4e1f00",
+                        "port-tensor": "#d4c77f",
+                        "port-text": "#a8c7e8",
+                        "on-primary": "#542200",
+                        "tertiary": "#a8c7e8",
+                        "on-secondary-fixed-variant": "#00504a",
+                        "on-secondary-container": "#9cf4e8",
+                        "on-background": "#e8e6e3",
+                        "surface-tint": "#ffb077",
+                        "on-tertiary-fixed-variant": "#004a78",
+                        "surface-container": "#1d1f23",
+                        "outline": "#8a857e",
+                        "primary-fixed-dim": "#ffb077",
+                        "surface-bright": "#44362f",
+                        "port-mask": "#e88ac4",
+                        "tertiary-fixed-dim": "#a8c7e8",
+                        "on-surface-variant": "#b3afa9",
+                        "surface-graphite": "#121316",
+                        "on-tertiary": "#003355",
+                        "plate-shadow": "#08090a",
+                        "molten-copper-bright": "#ffb077",
+                        "on-primary-fixed": "#331200",
+                        "heat-throttle": "#ffb300",
+                        "on-tertiary-container": "#002f4f",
+                        "primary-container": "#ed7014",
+                        "on-error-container": "#ffdad6",
+                        "secondary-container": "#00726a",
+                        "on-error": "#690005",
+                        "primary": "#ffb077",
+                        "secondary-fixed": "#9bf2e7",
+                        "surface-container-lowest": "#08090a",
+                        "on-secondary": "#003732",
+                        "error-container": "#93000a",
+                        "on-primary-fixed-variant": "#773300",
+                        "port-image": "#9ad67f",
+                        "secondary-fixed-dim": "#7fd6cb",
+                        "inverse-on-surface": "#3b2e27",
+                        "background": "#121316",
+                        "secondary": "#7fd6cb",
+                        "surface": "#121316",
+                        "on-surface": "#e8e6e3",
+                        "surface-dim": "#121316",
+                        "plate-highlight": "#3f4045"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "margin-mobile": "20px",
+                        "touch-min": "44px",
+                        "node-row-height": "72px",
+                        "base": "8px",
+                        "gutter": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-sm": ["Chivo"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "telemetry-sm": ["JetBrains Mono"],
+                        "headline-md": ["Chivo"],
+                        "headline-lg": ["Chivo"],
+                        "telemetry": ["JetBrains Mono"],
+                        "label-caps": ["Inter"],
+                        "body-sm": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "telemetry-sm": ["11px", {"lineHeight": "16px", "fontWeight": "400"}],
+                        "headline-md": ["22px", {"lineHeight": "28px", "fontWeight": "700"}],
+                        "headline-lg": ["30px", {"lineHeight": "38px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "telemetry": ["13px", {"lineHeight": "20px", "fontWeight": "450"}],
+                        "label-caps": ["11px", {"lineHeight": "16px", "letterSpacing": "0.06em", "fontWeight": "700"}],
+                        "body-sm": ["13px", {"lineHeight": "18px", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: #121316;
+            color: #e8e6e3;
+            -webkit-font-smoothing: antialiased;
+        }
+        .plate-effect {
+            border: 1px solid #3f4045;
+            border-top-color: #3f4045;
+            background-color: #121316;
+            box-shadow: 0 4px 6px -1px rgba(8, 9, 10, 0.5);
+        }
+        .machined-edge {
+            position: relative;
+        }
+        .machined-edge::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background-color: #08090a;
+        }
+        .copper-border {
+            border: 2px solid #ed7014;
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-body-md text-body-md pb-32">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full h-14 z-50 border-b border-outline-variant bg-surface-graphite flex justify-between items-center px-margin-mobile">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">account_balance_wallet</span>
+<h1 class="font-headline-sm text-headline-sm-mobile md:text-headline-sm text-primary tracking-tight">WALLET AND ENTITLEMENT</h1>
+</div>
+<div class="text-on-surface-variant font-telemetry-sm text-telemetry-sm px-2 py-1 border border-outline-variant bg-surface-container-low">
+            [RECONCILED]
+        </div>
+</header>
+<main class="mt-20 px-margin-mobile max-w-2xl mx-auto space-y-8">
+<!-- Plan Status Plate -->
+<section class="plate-effect p-base flex flex-col gap-1">
+<div class="font-label-caps text-label-caps text-primary tracking-widest">FREE PLAN</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+                All source and sink nodes, the full audio stack, object removal, upscaling, matting, and presets.
+            </p>
+</section>
+<!-- Credit Balance Section -->
+<section class="text-center py-6">
+<div class="flex items-baseline justify-center gap-2">
+<span class="font-telemetry text-headline-lg text-on-surface tracking-tighter">240</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant">CREDITS</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-2">
+                Shared across all our apps. Your balance travels with you.
+            </p>
+</section>
+<!-- Reserve Plate -->
+<section class="plate-effect machined-edge">
+<div class="divide-y divide-outline-variant/30">
+<div class="px-4 py-3 flex justify-between items-center">
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant uppercase tracking-wider">RESERVE HELD</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface">180 credits</span>
+</div>
+<div class="px-4 py-3 flex justify-between items-center">
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant uppercase tracking-wider">SPENT OFFLINE</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface">60 credits</span>
+</div>
+<div class="px-4 py-3 flex justify-between items-center">
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant uppercase tracking-wider">LAST RECONCILED</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface">2 hours ago</span>
+</div>
+</div>
+<div class="p-4 bg-surface-container-lowest">
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed italic opacity-80">
+                    Credits are drawn into a signed reserve while you are online and spent from it during jobs. A generation never waits on the network.
+                </p>
+</div>
+</section>
+<!-- Buy Credits Section -->
+<section class="space-y-4">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Buy credits</h2>
+<div class="grid grid-cols-3 gap-3">
+<button class="plate-effect hover:bg-surface-container transition-colors p-4 flex flex-col items-center justify-center gap-1 active:scale-95 duration-100 h-touch-min">
+<span class="font-telemetry text-body-lg">500</span>
+<span class="font-label-caps text-[10px] text-on-surface-variant">$4.99</span>
+</button>
+<button class="plate-effect hover:bg-surface-container transition-colors p-4 flex flex-col items-center justify-center gap-1 active:scale-95 duration-100 h-touch-min">
+<span class="font-telemetry text-body-lg">1200</span>
+<span class="font-label-caps text-[10px] text-on-surface-variant">$9.99</span>
+</button>
+<button class="plate-effect hover:bg-surface-container transition-colors p-4 flex flex-col items-center justify-center gap-1 active:scale-95 duration-100 h-touch-min">
+<span class="font-telemetry text-body-lg">3000</span>
+<span class="font-label-caps text-[10px] text-on-surface-variant">$19.99</span>
+</button>
+</div>
+</section>
+<!-- Pro Section -->
+<section class="space-y-4">
+<!-- Lifetime Hero -->
+<div class="plate-effect copper-border p-5 space-y-2 group cursor-pointer hover:bg-surface-container transition-all">
+<div class="flex justify-between items-center">
+<div class="font-label-caps text-label-caps text-primary-container tracking-widest">LIFETIME</div>
+<div class="font-telemetry text-body-lg text-primary-container">$149.00</div>
+</div>
+<p class="font-body-md text-body-md text-on-surface">Pay once. Version 1.x is yours permanently.</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant opacity-70">
+                    A perpetual licence to this major version — not a claim on future major versions.
+                </p>
+</div>
+<!-- Secondary Options -->
+<div class="space-y-2">
+<div class="plate-effect p-4 flex justify-between items-center hover:bg-surface-container transition-colors cursor-pointer">
+<div class="flex flex-col">
+<span class="font-body-md text-on-surface">Monthly Access</span>
+<span class="font-body-sm text-on-surface-variant">Cancel anytime. Full toolset.</span>
+</div>
+<span class="font-telemetry text-body-md">$12.99/mo</span>
+</div>
+<div class="plate-effect p-4 flex justify-between items-center hover:bg-surface-container transition-colors cursor-pointer">
+<div class="flex flex-col">
+<span class="font-body-md text-on-surface">Annual Commitment</span>
+<span class="font-body-sm text-on-surface-variant">Billed yearly. Best value.</span>
+</div>
+<span class="font-telemetry text-body-md">$99.00/yr</span>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="pt-6 border-t border-outline-variant/30 text-center">
+<p class="font-body-sm text-body-sm text-on-surface-variant px-4">
+                RevenueCat is the authoritative record of what you own. Purchases restore on any device you sign in to.
+            </p>
+</footer>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-stretch h-node-row-height bg-surface-container-lowest border-t border-outline-variant shadow-[0_-4px_12px_rgba(8,9,10,0.4)]">
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-all flex-1" href="#">
+<span class="material-symbols-outlined mb-1">memory</span>
+<span class="font-label-caps text-label-caps">Foundry</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-all flex-1" href="#">
+<span class="material-symbols-outlined mb-1">inventory_2</span>
+<span class="font-label-caps text-label-caps">Registry</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary border-l-2 border-primary bg-surface-container transition-all flex-1" href="#">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">analytics</span>
+<span class="font-label-caps text-label-caps">Telemetry</span>
+</a>
+</nav>
+<script>
+        // Micro-interaction: Update Reconciled time text
+        setInterval(() => {
+            const timeSpan = document.querySelector('.reconcile-time');
+            if (timeSpan) {
+                // Logic for dynamic update could go here
+            }
+        }, 60000);
+
+        // Simple button active state feedback
+        document.querySelectorAll('button, .plate-effect').forEach(el => {
+            el.addEventListener('touchstart', () => {
+                el.classList.add('opacity-80');
+            });
+            el.addEventListener('touchend', () => {
+                el.classList.remove('opacity-80');
+            });
+        });
+    </script>
+</body></html>
