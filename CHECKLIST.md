@@ -208,7 +208,7 @@ reproduces the input within one least-significant bit.
 
 ---
 
-### [ ] T8 — Thermal governor
+### [X] T8 — Thermal governor
 
 **Files:** create `crates/forge-core/src/thermal.rs`; modify `lib.rs`
 

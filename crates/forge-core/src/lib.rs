@@ -6,13 +6,19 @@
 //! Nothing here is Android-specific; `forge-cli` exercises the whole of it on
 //! desktop Linux with no device attached (AD-10).
 
+pub mod assets;
 pub mod availability;
 pub mod capability;
+pub mod checkpoint;
 pub mod entitlement;
 pub mod graph;
+pub mod scheduler;
 pub mod thermal;
 pub mod tiler;
 pub mod validate;
+
+#[cfg(test)]
+mod testdir;
 
 /// Every failure the core can surface to a host.
 #[derive(Debug, thiserror::Error)]
