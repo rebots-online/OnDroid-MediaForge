@@ -399,7 +399,12 @@ palette and editor render.
 
 ### [ ] T17 — Wire the frozen screens
 
-**Files:** create `ui/src/screens/` from `LIBS/UI/STITCH/screens/`
+**Files:** create `scripts/vendor-stitch-assets.sh`, `ui/src/screens/index.ts`,
+`ui/src/screens/availability.ts`, `ui/src/assets/fonts/PROVENANCE.md`; modify
+`ui/src/main.ts`, `ui/package.json`, `ui/index.html`
+
+**Entities (verbatim):** `SCREENS`, `ScreenId`, `renderAvailability`,
+`AVAILABILITY_PRESENTATION`
 
 **Do:** Integrate the frozen Stitch exports as the application's screens. Coders
 **do not re-implement or redesign** any screen and do not invent one that is not
@@ -407,13 +412,41 @@ in the frozen complement. The seven `NodeAvailability` variants render exactly a
 `d1-node-state-legend` specifies, and `TierLimited` must render with no lock, no
 price and no credit cost anywhere in its markup.
 
+`vendor-stitch-assets.sh` copies each `LIBS/UI/STITCH/screens/<name>/screen.html`
+to `ui/src/screens/<name>.html`, replacing the `cdn.tailwindcss.com` script and
+the `fonts.googleapis.com` and `fonts.gstatic.com` links with the local bundle,
+and vendoring the one remote image. It is idempotent and self-verifying in the
+same shape as `scripts/normalize-stitch-tokens.sh` — read that script first and
+match its idiom. It never writes to `LIBS/`, which stays byte-untouched.
+
+`AVAILABILITY_PRESENTATION` maps each `NodeAvailability` variant name to the row
+presentation `d1-node-state-legend` already renders, and `renderAvailability`
+applies it. `NodeAvailability` derives plain `Serialize`, so it is externally
+tagged and the JSON keys are the variant names verbatim: `Ready`, `Accelerated`,
+`NeedsModel`, `Experimental`, `Metered`, `ProLocked`, `TierLimited`. Take
+`TierLimited`'s presentation from d1's seventh row — grey `row-grey`, the label
+"Needs newer silicon", the substitute line — and not from anywhere else.
+
+Fonts are self-hosted from the pinned copies under `vendored-in-code/` per AD-3,
+subset to the ligatures the complement uses. `PROVENANCE.md` records source,
+version, sha256 and SPDX licence for each family.
+
 **Accept:**
 - `git ls-files ui/src/screens | wc -l` returns at least 24
 - `grep -rho 'TierLimited' ui/src/screens | wc -l` returns at least 1
+- `grep -rho 'https\?://' ui/src/screens | wc -l` returns 0
+- `grep -rho 'https\?://' ui/src/assets | wc -l` returns 0
+- `git ls-files scripts/vendor-stitch-assets.sh | wc -l` returns 1
 
-> Clause note: this previously used `grep -rc … | wc -l`, which counts *files
-> listed* — including files with zero matches — and so passed as long as any file
-> existed. `grep -rho` emits one line per actual occurrence.
+> Clause note: the `TierLimited` clause previously used `grep -rc … | wc -l`,
+> which counts *files listed* — including files with zero matches — and so passed
+> as long as any file existed. `grep -rho` emits one line per actual occurrence.
+
+> Clause note: the two `https://` clauses are the privacy gate, not style. As
+> frozen, every screen fetches its stylesheet and icon font from Google at render
+> time; shipping that puts an outbound third-party request on app open and leaves
+> an offline install unstyled. §5 has the reasoning. A prose claim is not
+> enforcement — these two clauses are.
 
 ---
 

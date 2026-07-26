@@ -263,6 +263,19 @@ the device can prove.
 | `JobForegroundService` | `JobForegroundService.kt` | WorkManager-driven foreground service hosting long jobs |
 | `ThermalReader` | `ThermalReader.kt` | Subscribes to `PowerManager.getThermalHeadroom()` and feeds `ThermalGovernor` |
 
+### `ui/src` — WebView front end
+
+The screens themselves are not entities: they are the frozen exports, vendored in
+by `scripts/vendor-stitch-assets.sh` and never authored here (§5). These four are
+the only hand-written code that touches them.
+
+| Entity | File | Role | Signature |
+| --- | --- | --- | --- |
+| `ScreenId` | `screens/index.ts` | The 24 frozen screen names as a closed union, so a typo is a compile error rather than a blank view | `type ScreenId = 'a1-welcome' \| 'a2-capability-result' \| … \| 'f3-settings'` |
+| `SCREENS` | `screens/index.ts` | Registry mapping each `ScreenId` to its vendored markup | `const SCREENS: Record<ScreenId, () => Promise<string>>` |
+| `AVAILABILITY_PRESENTATION` | `screens/availability.ts` | The seven externally-tagged `NodeAvailability` variant names mapped to the row presentation `d1-node-state-legend` renders. `TierLimited` carries `rowClass: 'text-row-grey'`, `label: 'Needs newer silicon'` and a substitute line, and carries no lock glyph, price or credit field — the type has nowhere to put one | `const AVAILABILITY_PRESENTATION: Record<AvailabilityTag, StatePresentation>` |
+| `renderAvailability` | `screens/availability.ts` | Applies the presentation to a node row. The single place a variant becomes pixels, mirroring `resolve_availability` being the single place it is decided | `function renderAvailability(state: NodeAvailability): HTMLElement` |
+
 ## 4. Pipeline document format
 
 Deterministic, JSON-serialisable, and shareable — the unit of virality.
@@ -371,6 +384,40 @@ generated as `DESKTOP` rather than `TABLET`. Five consecutive TABLET generations
 timed out while every MOBILE and DESKTOP call succeeded, so the device type was
 substituted to obtain the screen at all. It stands in for the unfolded inner
 display and its two-pane layout is correct; only its generation metadata differs.
+
+**Screens are vendored on the way into `ui/`, never copied verbatim.** As frozen,
+every screen loads its stylesheet and its icon font from the network: 23 of the
+24 pull the Tailwind Play CDN compiler from `cdn.tailwindcss.com`, 42 `<link>`
+elements resolve fonts from `fonts.googleapis.com`, and one screen references a
+remote image. That is correct for a design artifact opened in a browser and
+wrong for a packaged app in three separate ways. It puts an outbound request to
+a third party on app open, which is outside the three network uses the privacy
+copy authorises — model downloads, entitlement sync, opt-in telemetry — and the
+one thing this product promises is that the network is not in the media path. It
+leaves a fresh install with no connectivity rendering unstyled, with every icon
+showing as its literal ligature text, on an app whose entire proposition is that
+inference is local. And the Play CDN ships a compiler intended for prototyping,
+not for shipping.
+
+So the integration step substitutes assets. Tailwind compiles at build time from
+the class names already present in the frozen markup; the four families —
+Chivo, Inter, JetBrains Mono, Material Symbols Outlined — are self-hosted from
+the pinned upstream copies under `vendored-in-code/` per AD-3, subset to the 65
+distinct ligatures the complement actually uses; the remote image is vendored
+beside them. Structure, layout, component composition and copy are untouched:
+this is asset substitution, not redesign, and TC12's prohibition on
+re-implementing a screen is not weakened by it.
+
+The transform is scripted rather than hand-applied, for the same reason
+`scripts/normalize-stitch-tokens.sh` is: a hand-edited copy of a frozen artifact
+drifts from its source silently and cannot be re-derived when the complement is
+extended. `scripts/vendor-stitch-assets.sh` owns it, and the frozen complement
+stays byte-untouched.
+
+The check that this held is mechanical and belongs in T17's Accept clauses
+rather than in review: `grep -rho 'https\?://' ui/src/screens | wc -l` returns 0.
+A privacy claim that is only asserted in prose is not enforced; this one is
+grepped.
 
 ## 6. Operator verification protocol
 
