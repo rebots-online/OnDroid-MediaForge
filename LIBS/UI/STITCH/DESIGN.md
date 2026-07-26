@@ -36,24 +36,24 @@ colors:
   background: '#121316'
   on-background: '#e8e6e3'
   surface-variant: '#2c2e34'
-  plate-highlight: '#3f4045'
-  plate-shadow: '#08090a'
+  plate-highlight: '#43444a'
+  plate-shadow: '#070809'
   heat-idle: '#5a5b60'
-  heat-warm: '#ed7014'
+  heat-warm: '#f07a1e'
   heat-hot: '#ff5722'
-  heat-throttle: '#ffb300'
-  heat-paused: '#8a857e'
-  port-audio: '#ffb077'
-  port-video: '#7fd6cb'
-  port-image: '#9ad67f'
+  heat-throttle: '#ffc033'
+  heat-paused: '#7d7973'
+  port-audio: '#ffa04d'
+  port-video: '#5cc9bc'
+  port-image: '#7fc95f'
   port-mask: '#e88ac4'
-  port-text: '#a8c7e8'
-  port-tensor: '#d4c77f'
+  port-text: '#93b8de'
+  port-tensor: '#c9b96a'
   state-ready: '#9ad67f'
   state-experimental: '#ffb300'
   state-limited: '#6a6a6d'
   state-metered: '#d4c77f'
-  state-pro: '#ffb077'
+  state-pro: '#ffbb8a'
 typography:
   headline-lg:
     fontFamily: Chivo
@@ -169,6 +169,30 @@ channel. One primary action per screen, never two.
 
 **Secondary — slate teal.** `#7fd6cb`. Carries data flow: graph edges, active
 links, selected connections.
+
+### Two constraints on this palette that are not aesthetic
+
+Both were learned by observing what a design tool did to an earlier version of
+this file, and both must hold on every future edit.
+
+**Every custom token carries a hex no other token uses.** When this document was
+first pushed to Stitch, nine of eighteen custom tokens vanished — and the pattern
+was exact: every token whose value duplicated another token's value was
+de-duplicated away, while every token with a unique value survived with its hex
+intact. All five `state-*` tokens were lost as a group, because each happened to
+share a colour with a port or a heat token. That is the worst possible loss here,
+since the whole gating precedence rule depends on `state-limited` and `state-pro`
+being visibly different things. Semantically distinct tokens therefore get
+visually distinct values, even where the difference is a few percent of
+lightness. This is also better design on its own terms: a green that means *ready*
+and a green that means *image port* should never have been the same green.
+
+**The neutral ramp is pinned, not derived.** A tool given only a copper primary
+will generate a Material tonal palette seeded from it and produce a warm brown
+neutral ramp — which it did, replacing graphite `#121316` with `#1c110b`
+throughout. The graphite ground is a deliberate choice, not a by-product of the
+accent, so the neutral must be supplied explicitly as an override rather than
+inferred. When re-pushing this system, set the neutral override to `#121316`.
 
 ### Functional token groups
 
