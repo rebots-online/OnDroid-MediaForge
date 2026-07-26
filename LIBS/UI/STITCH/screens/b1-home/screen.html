@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MediaForge - Home</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=JetBrains+Mono:wght@400;450&amp;family=Chivo:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-fixed": "#cfe5ff",
+                        "on-primary-fixed": "#331200",
+                        "inverse-surface": "#f5ded3",
+                        "background": "#1c110b",
+                        "outline": "#a78b7d",
+                        "tertiary-fixed-dim": "#99cbff",
+                        "on-secondary-fixed-variant": "#00504a",
+                        "surface-variant": "#40322b",
+                        "surface-container-low": "#251913",
+                        "secondary-fixed": "#9bf2e7",
+                        "on-tertiary-fixed-variant": "#004a78",
+                        "error-container": "#93000a",
+                        "inverse-on-surface": "#3b2e27",
+                        "on-surface-variant": "#dfc0b1",
+                        "surface-tint": "#ffb68e",
+                        "primary-fixed-dim": "#ffb68e",
+                        "port-mask": "#e88ac4",
+                        "on-primary-container": "#4e1f00",
+                        "secondary-fixed-dim": "#7fd6cb",
+                        "surface-container-high": "#342720",
+                        "plate-shadow": "#08090a",
+                        "port-image": "#9ad67f",
+                        "plate-highlight": "#3f4045",
+                        "secondary": "#7fd6cb",
+                        "on-tertiary-container": "#002f4f",
+                        "primary": "#ffb68e",
+                        "error": "#ffb4ab",
+                        "tertiary-container": "#009af3",
+                        "surface-graphite": "#121316",
+                        "on-error": "#690005",
+                        "on-tertiary-fixed": "#001d34",
+                        "on-secondary-fixed": "#00201d",
+                        "on-primary-fixed-variant": "#773300",
+                        "surface-container-highest": "#40322b",
+                        "on-secondary-container": "#9cf4e8",
+                        "on-secondary": "#003732",
+                        "primary-fixed": "#ffdbca",
+                        "tertiary": "#99cbff",
+                        "on-error-container": "#ffdad6",
+                        "inverse-primary": "#9c4500",
+                        "heat-idle": "#5a5b60",
+                        "outline-variant": "#584237",
+                        "molten-copper-bright": "#ffb077",
+                        "surface-bright": "#44362f",
+                        "on-tertiary": "#003355",
+                        "surface": "#1c110b",
+                        "on-primary": "#542200",
+                        "surface-dim": "#1c110b",
+                        "primary-container": "#ed7014",
+                        "on-background": "#f5ded3",
+                        "heat-throttle": "#ffb300",
+                        "port-text": "#a8c7e8",
+                        "surface-container": "#291d17",
+                        "surface-container-lowest": "#160c07",
+                        "secondary-container": "#00726a",
+                        "port-tensor": "#d4c77f",
+                        "heat-hot": "#ff5722",
+                        "on-surface": "#f5ded3"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "touch-min": "44px",
+                        "margin-mobile": "20px",
+                        "base": "8px",
+                        "node-row-height": "72px",
+                        "gutter": "16px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "telemetry": ["JetBrains Mono"],
+                        "body-sm": ["Inter"],
+                        "telemetry-sm": ["JetBrains Mono"],
+                        "label-caps": ["Inter"],
+                        "headline-sm": ["Chivo"],
+                        "body-md": ["Inter"],
+                        "headline-md": ["Chivo"],
+                        "headline-lg": ["Chivo"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "telemetry": ["13px", { "lineHeight": "20px", "fontWeight": "450" }],
+                        "body-sm": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+                        "telemetry-sm": ["11px", { "lineHeight": "16px", "fontWeight": "400" }],
+                        "label-caps": ["11px", { "lineHeight": "16px", "letterSpacing": "0.06em", "fontWeight": "700" }],
+                        "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-md": ["22px", { "lineHeight": "28px", "fontWeight": "700" }],
+                        "headline-lg": ["30px", { "lineHeight": "38px", "letterSpacing": "-0.01em", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface-graphite text-on-surface antialiased pb-24 h-screen overflow-x-hidden">
+<!-- Top AppBar -->
+<header class="fixed top-0 w-full z-50 border-b border-outline-variant bg-surface-container-low">
+<div class="flex justify-between items-center h-touch-min px-margin-mobile">
+<!-- Brand -->
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">memory</span>
+<span class="font-headline-sm text-headline-sm text-on-surface uppercase tracking-wider">MEDIA_PROCESSOR_v1.0</span>
+</div>
+<!-- Chips -->
+<div class="flex items-center gap-base">
+<!-- Thermal Chip -->
+<div class="flex items-center gap-1 px-2 py-1 border border-outline rounded-sm">
+<span class="material-symbols-outlined text-[14px] text-heat-idle">thermostat</span>
+<span class="font-telemetry-sm text-telemetry-sm text-heat-idle uppercase">[IDLE]</span>
+</div>
+<!-- Privacy Chip -->
+<div class="flex items-center gap-1 px-2 py-1 border border-outline rounded-sm hidden md:flex">
+<span class="material-symbols-outlined text-[14px] text-on-surface-variant">shield</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Media stays on device</span>
+</div>
+</div>
+</div>
+</header>
+<main class="pt-[64px] px-margin-mobile space-y-8 mt-4">
+<!-- Recent Jobs Section -->
+<section>
+<h2 class="font-label-caps text-label-caps text-on-surface-variant mb-4 tracking-widest uppercase">RECENT JOBS</h2>
+<div class="bg-[#1d1f23] rounded-xl border border-outline-variant border-t-plate-highlight shadow-[0_4px_0_rgba(8,9,10,0.4)] flex flex-col overflow-hidden">
+<!-- Row 1 -->
+<div class="h-node-row-height flex items-center px-4 border-b border-outline-variant hover:bg-surface-bright transition-colors cursor-pointer group">
+<div class="w-12 h-12 bg-surface-container rounded-sm flex-shrink-0 flex items-center justify-center relative overflow-hidden" data-alt="A dark UI placeholder square for audio waveforms, industrial and minimalist design, clean lines, slate gray background with subtle grid overlay, flat lighting." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAmq2cB7VKILVLKbZ7WsqEQ0sHk4h0r3h8nNPuY_r17fj2N4jH574Aas7l5JQMnjnJ5tOdGdOYwM5svmiSA14tvrCYQdzy45swscGuOwu7i0Buy-9hwGtl-V1XbKti3lm9LNskyBNmLbSU88hZ2DSRjN_J19vmJ84wswey34gNrxJwZfMXiaelkbWqSKkpD2Km8SaDlKVR0B79sei1p8lDVr5FS6J_54OlbkP_iVRXpNNaUZYvWgEIZMmTrmB9RKOyvBe5nziy43uQb')"></div>
+<div class="ml-4 flex-grow flex flex-col justify-center">
+<span class="font-body-md text-body-md font-semibold text-on-surface">Podcast cleanup</span>
+<div class="flex items-center gap-2 mt-1">
+<span class="w-2 h-2 rounded-full bg-port-image shadow-[0_0_8px_rgba(154,214,127,0.5)]"></span>
+<span class="font-telemetry text-telemetry text-on-surface-variant">Done</span>
+<span class="text-on-surface-variant font-telemetry text-telemetry opacity-50 mx-1">•</span>
+<span class="font-telemetry text-telemetry text-on-surface-variant">4:12</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-on-surface transition-colors">chevron_right</span>
+</div>
+<!-- Row 2 -->
+<div class="h-node-row-height flex items-center px-4 border-b border-outline-variant hover:bg-surface-bright transition-colors cursor-pointer group">
+<div class="w-12 h-12 bg-surface-container rounded-sm flex-shrink-0 flex items-center justify-center relative overflow-hidden" data-alt="A dark UI placeholder square for video thumbnails, industrial and minimalist design, clean lines, slate gray background with subtle grid overlay, flat lighting." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDQUiJzui3eQCc_dB77aBi07x8Rg_IrjL3-dgJ2Q1ZnwoNpp4EgMer7GmkDEunB_qOO-yoNENeF1jf3zcvEO-6sQJnFp2vdox_-wyUcROODLm5F2Fj9s0lMOyDtq9BDZ-qVBUysTw3F5y0TP-r5uMZY7XoF91hMEgPkRCGzWGQhbA8BcZGDrgP3qsiwoOHIpq7_6vxs4kb9a_rdpZ6MwIGzyjH_5FhkKWVroOgpQql8XZmJZgAZOM78XyUYZwwBwnJunU0AW_6rjEC9')"></div>
+<div class="ml-4 flex-grow flex flex-col justify-center">
+<span class="font-body-md text-body-md font-semibold text-on-surface">Old footage revival</span>
+<div class="flex items-center gap-2 mt-1">
+<span class="material-symbols-outlined text-[14px] text-heat-throttle" style="font-variation-settings: 'FILL' 1;">pause</span>
+<span class="font-telemetry-sm text-telemetry-sm text-heat-throttle">Cooling down — resumes automatically</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-on-surface transition-colors">chevron_right</span>
+</div>
+<!-- Row 3 -->
+<div class="h-node-row-height flex items-center px-4 hover:bg-surface-bright transition-colors cursor-pointer group">
+<div class="w-12 h-12 bg-surface-container rounded-sm flex-shrink-0 flex items-center justify-center relative overflow-hidden" data-alt="A dark UI placeholder square for batch processing, industrial and minimalist design, clean lines, slate gray background with subtle grid overlay, flat lighting." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB70qlNBy_SyT0uoJdrZwrFW-Y0Dcwz0d_O-oUgTtojxt0ruPcnaxCUtyrrx9F9--kpIdTTbo4rOHbdOQRoGTc8DmeDUwaMG8vBjKN4ZAHwpNdnpysLBEe1iXQX2SHNSosQyABftmLnbqXzYtNARTP-5H8ksi3gkGotTxTG_QOeVDDphu2GtnUS_St-0CWzzPSSvVia66iV88alpcPtvxqdMrDNsGey4ARkAA4uALcPA20AQisV5kf3gO3xi1cFHw8AlbjEZjppKt6b')"></div>
+<div class="ml-4 flex-grow flex flex-col justify-center">
+<span class="font-body-md text-body-md font-semibold text-on-surface text-opacity-50">Shorts factory</span>
+<div class="flex items-center gap-2 mt-1">
+<span class="material-symbols-outlined text-[14px] text-heat-idle">hourglass_empty</span>
+<span class="font-telemetry-sm text-telemetry-sm text-heat-idle">Queued</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-on-surface transition-colors">chevron_right</span>
+</div>
+</div>
+</section>
+<!-- Presets Section -->
+<section>
+<div class="flex justify-between items-end mb-4">
+<h2 class="font-label-caps text-label-caps text-on-surface-variant tracking-widest uppercase">PRESETS</h2>
+<a class="font-body-sm text-body-sm text-molten-copper-bright hover:underline cursor-pointer" href="#">See all</a>
+</div>
+<!-- Horizontal Rail -->
+<div class="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory hide-scrollbar -mx-margin-mobile px-margin-mobile">
+<!-- Card 1 -->
+<div class="w-[160px] flex-shrink-0 bg-[#1d1f23] rounded-xl border border-outline-variant border-t-plate-highlight shadow-[0_4px_0_rgba(8,9,10,0.4)] p-4 snap-start hover:bg-surface-bright transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-secondary mb-3">graphic_eq</span>
+<h3 class="font-body-md text-body-md font-semibold text-on-surface mb-2 leading-tight">Podcast cleanup</h3>
+<div class="font-telemetry-sm text-telemetry-sm text-on-surface-variant opacity-70 leading-relaxed whitespace-pre-wrap">denoise →
+isolate →
+transcribe</div>
+</div>
+<!-- Card 2 -->
+<div class="w-[160px] flex-shrink-0 bg-[#1d1f23] rounded-xl border border-outline-variant border-t-plate-highlight shadow-[0_4px_0_rgba(8,9,10,0.4)] p-4 snap-start hover:bg-surface-bright transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-secondary mb-3">movie_edit</span>
+<h3 class="font-body-md text-body-md font-semibold text-on-surface mb-2 leading-tight">Old footage revival</h3>
+<div class="font-telemetry-sm text-telemetry-sm text-on-surface-variant opacity-70 leading-relaxed whitespace-pre-wrap">upscale →
+denoise →
+grade</div>
+</div>
+<!-- Card 3 -->
+<div class="w-[160px] flex-shrink-0 bg-[#1d1f23] rounded-xl border border-outline-variant border-t-plate-highlight shadow-[0_4px_0_rgba(8,9,10,0.4)] p-4 snap-start hover:bg-surface-bright transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-secondary mb-3">layers_clear</span>
+<h3 class="font-body-md text-body-md font-semibold text-on-surface mb-2 leading-tight">Remove background</h3>
+<div class="font-telemetry-sm text-telemetry-sm text-on-surface-variant opacity-70 leading-relaxed whitespace-pre-wrap">matte →
+composite</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Floating Action Button -->
+<button class="fixed bottom-[84px] right-margin-mobile h-touch-min px-4 bg-primary-container text-on-primary-container rounded-lg flex items-center justify-center gap-2 shadow-[0_-4px_12px_rgba(8,9,10,0.4)] border-t border-molten-copper-bright hover:brightness-110 active:scale-95 transition-all z-40">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">add</span>
+<span class="font-body-md text-body-md font-semibold">New pipeline</span>
+</button>
+<!-- Bottom Navigation Shell -->
+<nav class="fixed bottom-0 w-full z-50 h-[64px] border-t border-plate-highlight bg-surface-container-high shadow-[0_-4px_12px_rgba(8,9,10,0.4)] md:hidden">
+<div class="flex justify-around items-center w-full max-w-md mx-auto h-full">
+<button class="flex flex-col items-center justify-center w-full h-full text-on-surface-variant hover:bg-surface-container-highest active:bg-surface-bright transition-all group">
+<span class="material-symbols-outlined text-[24px] group-hover:scale-110 transition-transform">schema</span>
+</button>
+<button class="flex flex-col items-center justify-center w-full h-full bg-primary-container text-on-primary-container p-2 border-t-2 border-primary transition-all group">
+<span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">analytics</span>
+</button>
+<button class="flex flex-col items-center justify-center w-full h-full text-on-surface-variant hover:bg-surface-container-highest active:bg-surface-bright transition-all group">
+<span class="material-symbols-outlined text-[24px] group-hover:scale-110 transition-transform">settings</span>
+</button>
+</div>
+</nav>
+<style>
+        /* Utility to hide scrollbar but keep functionality */
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</body></html>
