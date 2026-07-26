@@ -311,7 +311,7 @@ whose first entry fails to load yields the second entry's engine.
 
 ---
 
-### [ ] T13 — ONNX Runtime engine, CPU path
+### [X] T13 — ONNX Runtime engine, CPU path
 
 **Files:** create `crates/forge-engines/src/ort.rs`; modify
 `crates/forge-engines/src/lib.rs` and `crates/forge-engines/Cargo.toml`
@@ -333,7 +333,7 @@ context binary exists for the model it is used rather than recompiling. Reports
 
 ---
 
-### [ ] T14 — Desktop harness
+### [X] T14 — Desktop harness
 
 **Files:** modify `crates/forge-cli/src/main.rs`, `crates/forge-cli/Cargo.toml`
 
