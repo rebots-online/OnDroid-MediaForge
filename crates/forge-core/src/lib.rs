@@ -10,6 +10,7 @@ pub mod availability;
 pub mod capability;
 pub mod entitlement;
 pub mod graph;
+pub mod thermal;
 pub mod tiler;
 pub mod validate;
 

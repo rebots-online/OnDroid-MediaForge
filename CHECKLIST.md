@@ -22,7 +22,7 @@ workspace build.
 
 ## Stanza 1 — Workspace and pipeline model
 
-### [X] T1 — Cargo workspace and crate skeletons
+### [✅] T1 — Cargo workspace and crate skeletons
 
 **Files:** create `Cargo.toml`, `crates/forge-core/Cargo.toml`,
 `crates/forge-core/src/lib.rs`, `crates/forge-engines/Cargo.toml`,
@@ -43,7 +43,7 @@ as a `thiserror` enum with variants `Io(std::io::Error)`, `Serde(serde_json::Err
 
 ---
 
-### [X] T2 — Graph types
+### [✅] T2 — Graph types
 
 **Files:** create `crates/forge-core/src/graph.rs`; modify
 `crates/forge-core/src/lib.rs` to add `pub mod graph;`
@@ -66,7 +66,7 @@ function returning the declared input and output ports for each of the 22
 
 ---
 
-### [X] T3 — Capability model
+### [✅] T3 — Capability model
 
 > Order note: this task was previously numbered T4. Validation consumes
 > `SocProfile`, so capability must land first or the dependent task cannot
@@ -103,7 +103,7 @@ returning pairs that must never be resident together at that tier; at `T0` and
 
 ---
 
-### [X] T4 — Graph validation
+### [✅] T4 — Graph validation
 
 > Order note: this task was previously numbered T3.
 
@@ -131,7 +131,7 @@ T0 profile.
 
 ---
 
-### [X] T5 — Availability resolution (the gating precedence rule)
+### [✅] T5 — Availability resolution (the gating precedence rule)
 
 **Files:** create `crates/forge-core/src/availability.rs`; modify `lib.rs`
 
@@ -168,7 +168,7 @@ returns `Accelerated`; and the `TierLimited` result always carries `Some(substit
 
 ---
 
-### [X] T6 — Entitlement seam
+### [✅] T6 — Entitlement seam
 
 **Files:** create `crates/forge-core/src/entitlement.rs`; modify `lib.rs`
 
@@ -191,7 +191,7 @@ credits, used by `forge-cli`.
 
 ## Stanza 2 — Execution
 
-### [ ] T7 — Tiler
+### [X] T7 — Tiler
 
 **Files:** create `crates/forge-core/src/tiler.rs`; modify `lib.rs`
 
