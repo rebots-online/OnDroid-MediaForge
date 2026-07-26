@@ -1,0 +1,7 @@
+{
+  "$schema": "../gen/schemas/mobile-schema.json",
+  "identifier": "default",
+  "description": "Baseline capability for the main window: Tauri's core commands only. Plugin permissions are granted by the task that adds the plugin, never in advance.",
+  "windows": ["main"],
+  "permissions": ["core:default"]
+}

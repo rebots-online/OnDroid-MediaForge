@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="dark" />
+    <title>OnDroid MediaForge</title>
+    <style>
+      /* The frozen system ships dark only (LIBS/UI/STITCH/DESIGN.md § Colors):
+         graphite ground, warm off-white text, 8px rhythm, 20px mobile margin.
+         Fonts are named but not bundled — the frozen faces arrive with the
+         screens in T17, so each family falls back to a stack of the same class. */
+      :root {
+        --surface: #121316;
+        --surface-container: #1d1f23;
+        --surface-container-high: #24262b;
+        --on-surface: #e8e6e3;
+        --on-surface-variant: #b3afa9;
+        --outline-variant: #3f4045;
+        --primary: #ffb077;
+        --base: 8px;
+        --gutter: 16px;
+        --margin-mobile: 20px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        background: var(--surface);
+        color: var(--on-surface);
+      }
+
+      body {
+        font-family: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+        font-size: 14px;
+        line-height: 20px;
+        padding: var(--margin-mobile);
+        -webkit-text-size-adjust: 100%;
+      }
+
+      h1 {
+        font-family: Chivo, "Arial Black", system-ui, sans-serif;
+        font-size: 22px;
+        line-height: 28px;
+        font-weight: 700;
+        margin: 0 0 var(--base);
+      }
+
+      h2 {
+        font-family: Inter, system-ui, sans-serif;
+        font-size: 11px;
+        line-height: 16px;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--on-surface-variant);
+        margin: calc(var(--base) * 4) 0 var(--base);
+      }
+
+      p.lede {
+        color: var(--on-surface-variant);
+        margin: 0 0 var(--base);
+        max-width: 62ch;
+      }
+
+      .swatches {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(148px, 1fr));
+        gap: var(--base);
+      }
+
+      .swatch {
+        background: var(--surface-container);
+        border: 1px solid var(--outline-variant);
+        border-radius: 0.5rem;
+        overflow: hidden;
+        min-height: 72px;
+      }
+
+      .swatch .chip {
+        height: 44px;
+        border-bottom: 1px solid var(--outline-variant);
+      }
+
+      .swatch .meta {
+        padding: var(--base);
+      }
+
+      .swatch .name {
+        display: block;
+        font-size: 13px;
+        line-height: 18px;
+      }
+
+      /* JetBrains Mono for every machine-generated value, without exception —
+         a hex is measured, not written, so it is monospace. */
+      .swatch .hex {
+        display: block;
+        font-family: "JetBrains Mono", ui-monospace, "Cascadia Mono", Menlo, monospace;
+        font-size: 11px;
+        line-height: 16px;
+        color: var(--on-surface-variant);
+      }
+
+      footer {
+        margin-top: calc(var(--base) * 5);
+        padding-top: var(--gutter);
+        border-top: 1px solid var(--outline-variant);
+        color: var(--on-surface-variant);
+        font-size: 13px;
+        line-height: 18px;
+      }
+
+      footer code {
+        font-family: "JetBrains Mono", ui-monospace, Menlo, monospace;
+        color: var(--primary);
+      }
+    </style>
+  </head>
+  <body>
+    <main id="app"></main>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

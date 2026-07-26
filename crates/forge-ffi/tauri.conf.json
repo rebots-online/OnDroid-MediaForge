@@ -1,0 +1,37 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "OnDroid MediaForge",
+  "identifier": "mba.robin.ondroidmediaforge",
+  "build": {
+    "frontendDist": "../../ui/dist",
+    "devUrl": "http://localhost:41637",
+    "beforeDevCommand": {
+      "script": "pnpm dev",
+      "cwd": "../../ui"
+    },
+    "beforeBuildCommand": {
+      "script": "pnpm build",
+      "cwd": "../../ui"
+    }
+  },
+  "app": {
+    "withGlobalTauri": true,
+    "windows": [
+      {
+        "label": "main",
+        "title": "OnDroid MediaForge",
+        "width": 412,
+        "height": 915
+      }
+    ],
+    "security": {
+      "csp": "default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src ipc: http://ipc.localhost"
+    }
+  },
+  "bundle": {
+    "active": true,
+    "android": {
+      "minSdkVersion": 31
+    }
+  }
+}

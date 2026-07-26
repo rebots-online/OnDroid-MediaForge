@@ -8,5 +8,9 @@ publish.workspace = true
 [lib]
 crate-type = ["lib", "cdylib", "staticlib"]
 
+[build-dependencies]
+tauri-build = "2"
+
 [dependencies]
 forge-core.workspace = true
+tauri = "2"

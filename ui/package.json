@@ -1,0 +1,15 @@
+{
+  "name": "ondroid-mediaforge-ui",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "WebView front end for the OnDroid MediaForge Tauri 2 shell. At T15 this is a placeholder that renders the frozen design system's colour tokens; the frozen screens are wired in T17.",
+  "scripts": {
+    "dev": "vite --host --port 41637 --strictPort",
+    "build": "vite build",
+    "preview": "vite preview --host --port 41637 --strictPort"
+  },
+  "devDependencies": {
+    "vite": "^8.1.5"
+  }
+}
