@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "name": "Podcast cleanup",
+  "graph": {
+    "nodes": [
+      {"id": "in",  "kind": "SourceVideo", "params": {"uri": "content://..."}},
+      {"id": "aud", "kind": "AudioSplit",  "params": {}},
+      {"id": "dnz", "kind": "AudioDenoise","model": "gtcrn", "params": {"strength": 0.8}},
+      {"id": "txt", "kind": "Transcribe",  "model": "whisper-small", "params": {}},
+      {"id": "out", "kind": "SinkFiles",   "params": {}}
+    ],
+    "edges": [
+      {"from": ["in","audio"],  "to": ["aud","in"]},
+      {"from": ["aud","voice"], "to": ["dnz","in"]},
+      {"from": ["dnz","out"],   "to": ["txt","in"]},
+      {"from": ["txt","out"],   "to": ["out","in"]}
+    ]
+  }
+}

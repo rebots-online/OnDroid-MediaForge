@@ -246,7 +246,7 @@ job.
 
 ---
 
-### [ ] T10 — Scheduler
+### [X] T10 — Scheduler
 
 **Files:** create `crates/forge-core/src/scheduler.rs`; modify `lib.rs`
 

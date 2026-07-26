@@ -12,6 +12,7 @@ pub mod capability;
 pub mod checkpoint;
 pub mod entitlement;
 pub mod graph;
+pub mod pipeline;
 pub mod scheduler;
 pub mod thermal;
 pub mod tiler;
