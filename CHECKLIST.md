@@ -66,7 +66,7 @@ function returning the declared input and output ports for each of the 22
 
 ---
 
-### [ ] T3 — Capability model
+### [X] T3 — Capability model
 
 > Order note: this task was previously numbered T4. Validation consumes
 > `SocProfile`, so capability must land first or the dependent task cannot
