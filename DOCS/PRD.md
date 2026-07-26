@@ -144,6 +144,30 @@ OpenRAIL-M terms are legal-reviewed before store release. FLUX.2-klein
 compilation is communicated as a one-time cached step — the verified 7.5 s → 0.2 s
 initialisation delta makes caching mandatory, not optional.
 
+**NFR6 Observability.** A product whose core promise is long unattended jobs on
+thermally constrained hardware must be diagnosable when one of those jobs fails
+overnight. Every job writes a durable `JobRecord` capturing per-stage timings,
+the backend actually used per stage, every thermal transition, every backend
+fallback, and the terminating cause. Records are retained for the last 20 jobs
+and are readable in-app from the job history.
+
+The diagnostics bundle is **local by default and shared only by explicit user
+action** through the system share sheet. It contains timings, backend
+selections, thermal events, SoC identification, model names and versions, and
+error text. It contains no media, no file paths outside the app sandbox, no
+transcript content, and no filenames of user footage. Crash reporting is opt-in
+and carries the same payload restriction.
+
+This requirement is deliberately compatible with FR6: a diagnostics bundle is
+not media, and the user chooses whether it leaves the device at all.
+
+**NFR7 Measurability.** NFR1 and NFR3 are stated as observable properties rather
+than absences. NFR1 is satisfied when the governor issues at least three derating
+actions before any pause and thermal headroom stays above the vendor-reported
+throttle point for the duration of a job. NFR3 is satisfied when a frame-time
+trace captured over a ten-minute job shows no main-thread block exceeding 100 ms.
+Neither is claimed by the absence of a complaint.
+
 ## 7. Entitlement and payment architecture
 
 **Gating: yes.**

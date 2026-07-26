@@ -453,3 +453,36 @@ never delete `dist/`; if a clean is needed it renames aside to
 - `git ls-files scripts/update-version.sh scripts/build-release.sh | wc -l` returns 2
 - `grep -c 'dist.bak' scripts/build-release.sh` returns at least 1
 - `grep -c 'rm -rf' scripts/build-release.sh` returns 0
+
+---
+
+## Stanza 5 — Diagnosability
+
+### [ ] T20 — Job diagnostics
+
+**Files:** create `crates/forge-core/src/diagnostics.rs`; modify
+`crates/forge-core/src/lib.rs` and `crates/forge-core/src/scheduler.rs`
+
+**Entities:** `DiagnosticEvent`, `JobRecord`, `DiagnosticsSink`,
+`JobRecord::to_bundle`
+
+**Consumes:** `NodeId` (T2), `Backend`, `ThermalState`, `RunOutcome`,
+`SegmentId` (T3, T8, T10)
+
+**Do:** Implement per §3 and AD-11. Extend `Scheduler::run` to take a
+`&mut dyn DiagnosticsSink` alongside its existing `ProgressSink`, and emit a
+`StageStarted` and `StageFinished` per segment, a `BackendFallback` whenever
+`EngineRegistry::acquire` falls down the chain, a `ThermalTransition` on every
+governor state change, and a `Failed` on termination by error. Retain the last
+20 `JobRecord`s, evicting oldest first.
+
+`DiagnosticEvent` must have no variant capable of holding a media buffer, a
+user-chosen file path, or transcript text. Write a test asserting that a
+serialised bundle from a job whose pipeline references a user file at a known
+path does not contain that path anywhere in its output — this is the mechanical
+check behind the privacy claim, not a review comment.
+
+**Accept:**
+- `cargo test -p forge-core diagnostics` exits 0
+- `grep -o 'DiagnosticEvent' crates/forge-core/src/diagnostics.rs | wc -l` returns at least 3
+- `grep -c 'fn to_bundle' crates/forge-core/src/diagnostics.rs` returns 1

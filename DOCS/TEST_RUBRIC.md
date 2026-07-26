@@ -73,6 +73,9 @@ after shipping.
 | C3 | Telemetry is off by default and its payload contains timings and chip identification only — never media, filenames, or transcript content | S1 | ☐ |
 | C4 | No shipped user-facing string claims the app is offline, needs no network, or uses no internet permission | S1 | ☐ |
 | C5 | The persistent media-local indicator is present on every non-modal screen | S2 | ☐ |
+| C6 | A serialised `JobRecord` bundle from a job referencing a user file at a known path does not contain that path, any media buffer, or transcript text anywhere in its output | S1 | ☐ |
+| C7 | `DiagnosticEvent` has no variant whose type can hold a buffer, a user file path, or transcript text — the restriction is structural, not conventional | S1 | ☐ |
+| C8 | Every job produces a durable `JobRecord` with per-stage timings, the backend used per stage, thermal transitions, backend fallbacks, and terminating cause; the last 20 are readable in-app | S2 | ☐ |
 
 ## Section D — Licensing (agent-executed)
 

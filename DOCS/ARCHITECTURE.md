@@ -100,6 +100,18 @@ node the silicon cannot run can never render as a lock, a price, or a credit
 cost. Credits spend from a locally-held signed reserve drawn in blocks while
 online, so a generation never blocks on a network round-trip.
 
+**AD-11 — Diagnosability is a product requirement, not a debug affordance.** The
+product sells unattended overnight jobs on hardware that throttles. When one
+fails at 3 a.m. the user has no console, no logcat, and no way to describe what
+happened. Every job therefore writes a durable `JobRecord` with per-stage
+timings, the backend actually used per stage, every thermal transition, every
+backend fallback, and the terminating cause. `DiagnosticsSink` sits alongside
+`ProgressSink` so the scheduler emits both from one pass. Records stay on the
+device and leave only by explicit user action through the share sheet. The
+payload is structurally incapable of carrying media: `DiagnosticEvent` has no
+variant that holds a buffer, a user file path, or transcript text, which is
+what makes the FR6 promise checkable rather than merely asserted.
+
 **AD-10 — Desktop-first testability.** `forge-cli` runs the graph model,
 validator, scheduler, tiler, asset store and the ONNX Runtime CPU path on desktop
 Linux with no device attached. The same pipeline document runs there and on the
@@ -150,6 +162,10 @@ the device can prove.
 | `ThermalAction` | `thermal.rs` | Governor output | `enum ThermalAction { Continue, Derate(Backend), WidenStride(u32), Pause }` |
 | `JobCheckpoint` | `checkpoint.rs` | Durable resume point | `struct JobCheckpoint { job_id: String, last_segment: SegmentId, plan_hash: String }` |
 | `CheckpointStore::resume` | `checkpoint.rs` | Restores a killed job at its last completed segment | `fn resume(&self, job_id: &str) -> Result<Option<JobCheckpoint>, CoreError>` |
+| `DiagnosticEvent` | `diagnostics.rs` | One recorded occurrence. **No variant carries a buffer, a user file path, or transcript text** — the type makes a media leak structurally impossible rather than merely forbidden | `enum DiagnosticEvent { StageStarted { node: NodeId, backend: Backend }, StageFinished { node: NodeId, elapsed_ms: u64 }, BackendFallback { node: NodeId, from: Backend, to: Backend, reason: String }, ThermalTransition { from: ThermalState, to: ThermalState, headroom: f32 }, Failed { node: NodeId, cause: String } }` |
+| `JobRecord` | `diagnostics.rs` | Durable per-job history; last 20 retained and readable in-app | `struct JobRecord { job_id: String, pipeline_name: String, soc_id: String, started_unix: u64, outcome: RunOutcome, events: Vec<DiagnosticEvent> }` |
+| `DiagnosticsSink` | `diagnostics.rs` | Emission point, alongside `ProgressSink` so the scheduler emits both in one pass | `trait DiagnosticsSink { fn record(&mut self, event: DiagnosticEvent); }` |
+| `JobRecord::to_bundle` | `diagnostics.rs` | Serialises for the share sheet. Local by default; leaves the device only by explicit user action | `fn to_bundle(&self) -> Result<String, CoreError>` |
 
 ### `crates/forge-engines` — inference adapters
 
