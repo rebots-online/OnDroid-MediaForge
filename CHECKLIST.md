@@ -290,7 +290,7 @@ round-trips to an identical `Graph` and passes `validate_graph` on a desktop
 
 ## Stanza 3 — Engines
 
-### [ ] T12 — Engine trait and registry
+### [X] T12 — Engine trait and registry
 
 **Files:** create `crates/forge-engines/src/lib.rs`,
 `crates/forge-engines/src/registry.rs`

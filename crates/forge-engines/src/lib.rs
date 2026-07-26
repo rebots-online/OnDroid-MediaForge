@@ -8,6 +8,7 @@
 //! that budget. Outputs are owned, allocated from a [`TensorPool`] so steady
 //! state does not churn the heap.
 
+pub mod ort;
 pub mod registry;
 
 use std::path::PathBuf;

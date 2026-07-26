@@ -7,4 +7,5 @@ publish.workspace = true
 
 [dependencies]
 forge-core.workspace = true
+ort.workspace = true
 thiserror.workspace = true
