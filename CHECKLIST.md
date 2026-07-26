@@ -227,7 +227,7 @@ series produces at least three non-`Pause` actions before the first `Pause`.
 
 ---
 
-### [ ] T9 — Asset store and checkpoints
+### [X] T9 — Asset store and checkpoints
 
 **Files:** create `crates/forge-core/src/assets.rs`,
 `crates/forge-core/src/checkpoint.rs`; modify `lib.rs`
