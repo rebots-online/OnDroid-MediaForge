@@ -873,6 +873,7 @@ name = "forge-ffi"
 version = "0.1.0"
 dependencies = [
  "forge-core",
+ "serde_json",
  "tauri",
  "tauri-build",
 ]

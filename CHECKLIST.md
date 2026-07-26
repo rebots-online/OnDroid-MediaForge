@@ -379,7 +379,7 @@ visual pattern.
 
 ---
 
-### [ ] T16 — Tauri commands, dispatch-only
+### [X] T16 — Tauri commands, dispatch-only
 
 **Files:** modify `crates/forge-ffi/src/lib.rs`
 
