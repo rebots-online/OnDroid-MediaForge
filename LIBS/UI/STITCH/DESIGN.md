@@ -216,6 +216,17 @@ geometry so type survives colour blindness and small size:
 Edges inherit the source port's hue and geometry marker. A type mismatch renders
 the edge in `error` with a dashed stroke.
 
+> **This table governs; the frozen screens do not.** The screens under
+> `screens/` were generated before the port hues were made unique, so they
+> illustrate ports using the earlier values — `port-audio` as `#ffb077` and
+> `port-video` as `#7fd6cb`, among others. Those are now the values of `primary`
+> and `secondary`. The screens were not retro-fitted because the old port hues
+> are indistinguishable, by value, from legitimate uses of the accent colours in
+> the same files: `#ffb077` occurs 76 times across the complement and is the
+> primary action colour in most of them, so a blanket substitution would break
+> the accent everywhere it is correct. Take port colours from this table, take
+> layout and structure from the screens.
+
 **Node states** — the gating vocabulary, used identically everywhere a node
 appears: `state-ready` (green), `state-experimental` (amber), `state-limited`
 (muted grey), `state-metered` (brass), `state-pro` (copper). These five tokens

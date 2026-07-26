@@ -261,6 +261,19 @@ IDs. The complement is 24 screens:
 implementation exposes a UI gap, the frozen complement is extended before coding
 continues — UI is never improvised in prose.
 
+**Precedence between the two artifacts.** `DESIGN.md` governs colour, type and
+spacing tokens. The screens govern layout, structure, component composition and
+copy. Where a screen's markup shows a hex that disagrees with `DESIGN.md`, the
+file wins and the screen is treated as illustrative — this applies specifically
+to the port hues, which were made unique after the screens were generated. Take
+token values from `DESIGN.md`, never by sampling the markup.
+
+**One screen departs from its intended device class.** `c5-canvas-unfolded` was
+generated as `DESKTOP` rather than `TABLET`. Five consecutive TABLET generations
+timed out while every MOBILE and DESKTOP call succeeded, so the device type was
+substituted to obtain the screen at all. It stands in for the unfolded inner
+display and its two-pane layout is correct; only its generation metadata differs.
+
 ## 6. Operator verification protocol
 
 These are verified by the operator on real hardware. They are **not** CHECKLIST
