@@ -1,0 +1,25 @@
+# Scratch — I-8: never /tmp, always project-relative
+.tmp/
+
+# Agent/session state
+.claude/
+.claude-code-history/
+.codegraph/
+
+# Build output
+target/
+node_modules/
+**/build/
+gen/
+
+# Credentials — I-15
+*.keystore
+*.jks
+*.p12
+*.env
+!*.env.example
+
+# Release artifacts are TRACKED from the root dist/ (BUILD phase rule).
+# Nested per-app dist/ stays ignored.
+dist/
+!/dist/
