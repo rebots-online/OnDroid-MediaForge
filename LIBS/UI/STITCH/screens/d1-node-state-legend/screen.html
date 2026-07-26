@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>What the badges mean</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Chivo:wght@600;700&amp;family=Inter:wght@400;700&amp;family=JetBrains+Mono:wght@400;450&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "surface-graphite": "#121316",
+                        "tertiary-fixed": "#cfe5ff",
+                        "port-mask": "#e88ac4",
+                        "surface-dim": "#121316",
+                        "tertiary-container": "#009af3",
+                        "on-secondary-container": "#9cf4e8",
+                        "error-container": "#93000a",
+                        "on-tertiary-fixed-variant": "#004a78",
+                        "plate-highlight": "#3f4045",
+                        "heat-throttle": "#ffb300",
+                        "heat-hot": "#ff5722",
+                        "background": "#121316",
+                        "surface-container": "#1d1f23",
+                        "primary": "#ffb077",
+                        "surface-variant": "#2c2e34",
+                        "secondary-container": "#00726a",
+                        "on-error": "#690005",
+                        "inverse-on-surface": "#3b2e27",
+                        "surface-container-high": "#24262b",
+                        "on-tertiary-fixed": "#001d34",
+                        "surface-tint": "#ffb077",
+                        "on-surface": "#e8e6e3",
+                        "molten-copper-bright": "#ffb077",
+                        "primary-container": "#ed7014",
+                        "error": "#ffb4ab",
+                        "on-primary-fixed-variant": "#773300",
+                        "on-secondary": "#003732",
+                        "heat-idle": "#5a5b60",
+                        "primary-fixed-dim": "#ffb077",
+                        "on-primary-fixed": "#331200",
+                        "surface-container-highest": "#2c2e34",
+                        "plate-shadow": "#08090a",
+                        "on-tertiary-container": "#002f4f",
+                        "secondary-fixed": "#9bf2e7",
+                        "on-tertiary": "#003355",
+                        "on-error-container": "#ffdad6",
+                        "port-text": "#a8c7e8",
+                        "on-secondary-fixed-variant": "#00504a",
+                        "surface-bright": "#44362f",
+                        "primary-fixed": "#ffdbca",
+                        "port-image": "#9ad67f",
+                        "surface": "#121316",
+                        "on-surface-variant": "#b3afa9",
+                        "on-background": "#e8e6e3",
+                        "inverse-surface": "#e8e6e3",
+                        "tertiary-fixed-dim": "#a8c7e8",
+                        "on-secondary-fixed": "#00201d",
+                        "tertiary": "#a8c7e8",
+                        "surface-container-low": "#181a1e",
+                        "port-tensor": "#d4c77f",
+                        "surface-container-lowest": "#08090a",
+                        "inverse-primary": "#9c4500",
+                        "outline-variant": "#3f4045",
+                        "on-primary": "#542200",
+                        "secondary-fixed-dim": "#7fd6cb",
+                        "secondary": "#7fd6cb",
+                        "outline": "#8a857e",
+                        "on-primary-container": "#4e1f00",
+                        "row-bg": "#1d1f23",
+                        "row-grey": "#6a6a6d"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    spacing: {
+                        "base": "8px",
+                        "margin-mobile": "20px",
+                        "node-row-height": "72px",
+                        "touch-min": "44px",
+                        "gutter": "16px"
+                    },
+                    fontFamily: {
+                        "headline-sm": ["Chivo", "sans-serif"],
+                        "headline-md": ["Chivo", "sans-serif"],
+                        "telemetry-sm": ["JetBrains Mono", "monospace"],
+                        "body-lg": ["Inter", "sans-serif"],
+                        "headline-lg": ["Chivo", "sans-serif"],
+                        "body-md": ["Inter", "sans-serif"],
+                        "telemetry": ["JetBrains Mono", "monospace"],
+                        "label-caps": ["Inter", "sans-serif"],
+                        "body-sm": ["Inter", "sans-serif"]
+                    },
+                    fontSize: {
+                        "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+                        "headline-md": ["22px", { "lineHeight": "28px", "fontWeight": "700" }],
+                        "telemetry-sm": ["11px", { "lineHeight": "16px", "fontWeight": "400" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-lg": ["30px", { "lineHeight": "38px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "telemetry": ["13px", { "lineHeight": "20px", "fontWeight": "450" }],
+                        "label-caps": ["11px", { "lineHeight": "16px", "letterSpacing": "0.06em", "fontWeight": "700" }],
+                        "body-sm": ["13px", { "lineHeight": "18px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .plate-effect {
+            box-shadow: inset 0 1px 0 0 theme('colors.plate-highlight'), 0 2px 4px -1px rgba(8,9,10,0.5);
+        }
+        .text-copper { color: #ffb077; }
+        .text-header-grey { color: #e8e6e3; }
+        .border-copper { border-color: #ed7014; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface-graphite text-on-surface min-h-screen flex flex-col font-body-md antialiased pb-24">
+<!-- TopAppBar (from JSON) -->
+<header class="bg-surface-container dark:bg-surface-container w-full top-0 left-0 sticky border-b border-plate-highlight shadow-[0_1px_0_0_rgba(8,9,10,1)] z-40">
+<div class="flex justify-between items-center px-margin-mobile h-[72px] w-full">
+<div class="flex items-center gap-4">
+<button class="w-touch-min h-touch-min flex items-center justify-center text-primary active:scale-95 duration-75 hover:bg-plate-highlight transition-colors rounded">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<h1 class="font-headline-sm text-headline-sm font-chivo text-primary tracking-tighter">Node states</h1>
+</div>
+<div class="flex items-center gap-2">
+<!-- Thermal Chip -->
+<div class="flex items-center gap-1.5 bg-surface-variant border border-outline-variant rounded px-2 h-7 font-telemetry-sm text-telemetry-sm text-[#5a5b60] plate-effect">
+<span class="material-symbols-outlined text-[14px]">thermostat</span>
+                    IDLE
+                </div>
+<!-- Privacy Chip -->
+<div class="flex items-center bg-surface-variant border border-outline-variant rounded px-2 h-7 font-label-caps text-label-caps text-on-surface-variant uppercase plate-effect">
+                    MEDIA STAYS ON DEVICE
+                </div>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-1 px-margin-mobile max-w-3xl mx-auto w-full pt-8 pb-12 flex flex-col gap-8">
+<!-- Header Section -->
+<section class="flex flex-col gap-2">
+<h2 class="font-headline-lg text-headline-lg text-header-grey">What the badges mean</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Every node in MediaForge is in exactly one of these seven states.</p>
+</section>
+<!-- Node Cards Grid -->
+<section class="flex flex-col gap-4">
+<!-- 1. READY -->
+<div class="flex flex-col gap-1.5">
+<div class="bg-row-bg border border-plate-highlight rounded-xl plate-effect flex flex-col justify-center min-h-node-row-height px-4 py-3">
+<div class="flex justify-between items-center w-full">
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-on-surface">Upscale 2x</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Real-ESRGAN x2</span>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-1.5 bg-surface-variant border border-outline-variant rounded px-2 py-0.5">
+<div class="w-1.5 h-1.5 rounded-full bg-secondary"></div>
+<span class="font-label-caps text-label-caps text-on-surface">Ready</span>
+</div>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant bg-surface-dim px-1.5 rounded border border-outline-variant">GPU</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant">2.1 s</span>
+</div>
+</div>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant px-2">Runs on your device now.</span>
+</div>
+<!-- 2. ACCELERATED -->
+<div class="flex flex-col gap-1.5">
+<div class="bg-row-bg border border-plate-highlight rounded-xl plate-effect flex flex-col justify-center min-h-node-row-height px-4 py-3">
+<div class="flex justify-between items-center w-full">
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-on-surface">Transcribe</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Whisper small</span>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-1.5 bg-surface-variant border border-outline-variant rounded px-2 py-0.5">
+<div class="w-1.5 h-1.5 rounded-full bg-secondary"></div>
+<span class="material-symbols-outlined text-[12px] text-secondary">bolt</span>
+<span class="font-label-caps text-label-caps text-on-surface">Accelerated</span>
+</div>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant bg-surface-dim px-1.5 rounded border border-outline-variant">NPU</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant">0.8 s</span>
+</div>
+</div>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant px-2">Runs on your neural engine.</span>
+</div>
+<!-- 3. NEEDS MODEL -->
+<div class="flex flex-col gap-1.5">
+<div class="bg-surface-graphite border border-dashed border-plate-highlight rounded-xl flex flex-col justify-center min-h-node-row-height px-4 py-3">
+<div class="flex justify-between items-center w-full opacity-80">
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-on-surface">Separate stems</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Demucs v4</span>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-1.5 bg-surface border border-outline-variant rounded px-2 py-0.5">
+<span class="material-symbols-outlined text-[12px] text-primary">download</span>
+<span class="font-telemetry-sm text-telemetry-sm text-primary">466 MB</span>
+</div>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant bg-surface-dim px-1.5 rounded border border-outline-variant">MIT</span>
+</div>
+</div>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant px-2">Download the model once.</span>
+</div>
+<!-- 4. EXPERIMENTAL -->
+<div class="flex flex-col gap-1.5">
+<div class="bg-row-bg border border-plate-highlight border-l-2 border-l-heat-throttle rounded-xl plate-effect flex flex-col justify-center min-h-node-row-height px-4 py-3">
+<div class="flex justify-between items-center w-full">
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-on-surface">Generative fill</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">SD-Turbo (unofficial path)</span>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-1.5 bg-surface-variant border border-outline-variant rounded px-2 py-0.5">
+<span class="material-symbols-outlined text-[12px] text-heat-throttle">science</span>
+<span class="font-label-caps text-label-caps text-heat-throttle">Experimental</span>
+</div>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant">30–90 s</span>
+</div>
+</div>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant px-2">Works on this chip but is slow and unproven.</span>
+</div>
+<!-- 5. METERED -->
+<div class="flex flex-col gap-1.5">
+<div class="bg-row-bg border border-plate-highlight rounded-xl plate-effect flex flex-col justify-center min-h-node-row-height px-4 py-3">
+<div class="flex justify-between items-center w-full">
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-on-surface">Voice clone</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">XTTS v2</span>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-1.5 bg-surface-variant border border-outline-variant rounded px-2 py-0.5">
+<span class="font-label-caps text-label-caps text-port-tensor">Metered</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-telemetry-sm text-telemetry-sm text-port-tensor border border-port-tensor/50 bg-surface-dim px-1.5 rounded">1 credit</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant">balance 24</span>
+</div>
+</div>
+</div>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant px-2">Pay per run, or unlock Pro.</span>
+</div>
+<!-- 6. PRO -->
+<div class="flex flex-col gap-1.5">
+<div class="bg-row-bg border border-plate-highlight border-l-2 border-copper rounded-xl plate-effect flex flex-col justify-center min-h-node-row-height px-4 py-3">
+<div class="flex justify-between items-center w-full">
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-on-surface">Slow motion</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">RIFE 4.6 interpolation</span>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-1.5 bg-surface-variant border border-copper/50 rounded px-2 py-0.5">
+<span class="material-symbols-outlined text-[12px] text-copper">lock</span>
+<span class="font-label-caps text-label-caps text-copper">Pro</span>
+</div>
+</div>
+</div>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant px-2">Included with Pro.</span>
+</div>
+<!-- 7. NEEDS NEWER SILICON -->
+<div class="flex flex-col gap-1.5">
+<div class="bg-row-bg border border-plate-highlight rounded-xl plate-effect flex flex-col justify-center min-h-node-row-height px-4 py-3 opacity-55">
+<div class="flex justify-between items-center w-full">
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-row-grey">FLUX generative fill</span>
+<span class="font-body-sm text-body-sm text-row-grey">FLUX.2-klein</span>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-1.5 bg-surface border border-outline-variant rounded px-2 py-0.5">
+<span class="material-symbols-outlined text-[12px] text-row-grey">memory</span>
+<span class="font-label-caps text-label-caps text-row-grey">Needs newer silicon</span>
+</div>
+<span class="font-telemetry-sm text-telemetry-sm text-row-grey">needs 8 Gen 3+</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col px-2">
+<span class="font-body-sm text-body-sm text-row-grey">Runs here instead: LaMa object removal</span>
+<span class="font-body-sm text-body-sm text-row-grey">Your chip can't run this. Here's what can.</span>
+</div>
+</div>
+</section>
+<!-- Footnote Panel -->
+<section class="mt-8 bg-surface-container-low border-y border-outline-variant py-4 px-4 plate-effect w-full rounded">
+<p class="font-body-sm text-body-sm text-on-surface-variant text-center">
+                Grey means hardware. Copper means purchase. They never mix — if a node is both, it shows only as grey.
+            </p>
+</section>
+</main>
+<!-- BottomNavBar (from JSON) -->
+<nav class="bg-surface-container-highest dark:bg-surface-container-highest fixed bottom-0 w-full z-50 h-[80px] border-t border-plate-highlight shadow-[0_-4px_12px_rgba(8,9,10,0.5)] md:hidden">
+<div class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-safe h-full">
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-2 opacity-70 hover:text-primary transition-all duration-200">
+<span class="material-symbols-outlined mb-1">memory</span>
+<span class="font-label-caps text-label-caps">COMPUTE</span>
+</button>
+<button class="flex flex-col items-center justify-center text-primary border-l-2 border-primary bg-surface-variant px-4 py-2 transition-all duration-200">
+<span class="material-symbols-outlined mb-1">layers</span>
+<span class="font-label-caps text-label-caps">CANVAS</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-2 opacity-70 hover:text-primary transition-all duration-200">
+<span class="material-symbols-outlined mb-1">settings_input_component</span>
+<span class="font-label-caps text-label-caps">ENGINE</span>
+</button>
+</div>
+</nav>
+<!-- Footer (from JSON - Desktop Only) -->
+<footer class="bg-surface-container-lowest dark:bg-surface-container-lowest w-full py-4 border-t border-outline-variant hidden md:flex flex-col items-center gap-2 px-margin-mobile mb-[80px]">
+<div class="flex gap-4">
+<a class="font-telemetry-sm text-telemetry-sm font-jetbrains-mono uppercase text-on-surface-variant hover:text-molten-copper-bright cursor-pointer" href="#">HARDWARE_DOCS</a>
+<a class="font-telemetry-sm text-telemetry-sm font-jetbrains-mono uppercase text-on-surface-variant hover:text-molten-copper-bright cursor-pointer" href="#">THERMAL_LOGS</a>
+</div>
+<p class="font-telemetry-sm text-telemetry-sm font-jetbrains-mono uppercase text-on-surface-variant opacity-50">SYSTEM_STABLE // NO_EXTERNAL_LEAK</p>
+</footer>
+</body></html>

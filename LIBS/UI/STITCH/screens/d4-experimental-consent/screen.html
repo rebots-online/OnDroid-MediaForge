@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Generative fill is experimental on this chip</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Chivo:ital,wght@0,100..900;1,100..900&amp;family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-surface-variant": "#b3afa9",
+                        "on-primary-container": "#4e1f00",
+                        "plate-shadow": "#08090a",
+                        "outline": "#8a857e",
+                        "surface-dim": "#121316",
+                        "on-error-container": "#ffdad6",
+                        "inverse-on-surface": "#3b2e27",
+                        "surface-tint": "#ffb077",
+                        "surface-bright": "#44362f",
+                        "outline-variant": "#3f4045",
+                        "primary": "#ffb077",
+                        "surface-container": "#1d1f23",
+                        "on-error": "#690005",
+                        "tertiary-fixed": "#cfe5ff",
+                        "heat-hot": "#ff5722",
+                        "port-tensor": "#d4c77f",
+                        "on-tertiary-fixed": "#001d34",
+                        "surface-container-lowest": "#08090a",
+                        "primary-fixed": "#ffdbca",
+                        "surface-container-highest": "#2c2e34",
+                        "port-mask": "#e88ac4",
+                        "heat-throttle": "#ffb300",
+                        "error-container": "#93000a",
+                        "on-surface": "#e8e6e3",
+                        "tertiary-container": "#009af3",
+                        "heat-idle": "#5a5b60",
+                        "surface-variant": "#2c2e34",
+                        "port-image": "#9ad67f",
+                        "tertiary-fixed-dim": "#a8c7e8",
+                        "on-tertiary-container": "#002f4f",
+                        "on-tertiary": "#003355",
+                        "on-background": "#e8e6e3",
+                        "inverse-primary": "#9c4500",
+                        "on-primary-fixed-variant": "#773300",
+                        "error": "#ffb4ab",
+                        "surface-container-high": "#24262b",
+                        "on-secondary": "#003732",
+                        "on-primary-fixed": "#331200",
+                        "secondary": "#7fd6cb",
+                        "secondary-fixed-dim": "#7fd6cb",
+                        "on-tertiary-fixed-variant": "#004a78",
+                        "tertiary": "#a8c7e8",
+                        "primary-fixed-dim": "#ffb077",
+                        "on-primary": "#542200",
+                        "port-text": "#a8c7e8",
+                        "molten-copper-bright": "#ffb077",
+                        "surface-container-low": "#181a1e",
+                        "secondary-fixed": "#9bf2e7",
+                        "plate-highlight": "#3f4045",
+                        "on-secondary-fixed-variant": "#00504a",
+                        "on-secondary-fixed": "#00201d",
+                        "surface": "#121316",
+                        "inverse-surface": "#e8e6e3",
+                        "surface-graphite": "#121316",
+                        "primary-container": "#ed7014",
+                        "on-secondary-container": "#9cf4e8",
+                        "secondary-container": "#00726a",
+                        "background": "#121316"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "touch-min": "44px",
+                        "node-row-height": "72px",
+                        "base": "8px",
+                        "gutter": "16px",
+                        "margin-mobile": "20px"
+                    },
+                    "fontFamily": {
+                        "telemetry-sm": ["JetBrains Mono"],
+                        "label-caps": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-lg": ["Chivo"],
+                        "headline-sm": ["Chivo"],
+                        "telemetry": ["JetBrains Mono"],
+                        "headline-md": ["Chivo"],
+                        "body-lg": ["Inter"],
+                        "body-sm": ["Inter"]
+                    },
+                    "fontSize": {
+                        "telemetry-sm": ["11px", { "lineHeight": "16px", "fontWeight": "400" }],
+                        "label-caps": ["11px", { "lineHeight": "16px", "letterSpacing": "0.06em", "fontWeight": "700" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-lg": ["30px", { "lineHeight": "38px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+                        "telemetry": ["13px", { "lineHeight": "20px", "fontWeight": "450" }],
+                        "headline-md": ["22px", { "lineHeight": "28px", "fontWeight": "700" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "body-sm": ["13px", { "lineHeight": "18px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        /* Custom overrides for the amber theme requested */
+        .bg-graphite { background-color: #121316; }
+        .bg-plate-container { background-color: #1d1f23; }
+        .border-plate-highlight { border-color: #3f4045; }
+        .text-amber-custom { color: #ffb300; }
+        .bg-amber-custom { background-color: #ffb300; }
+        .border-amber-custom { border-color: #ffb300; }
+        .text-amber-dark { color: #2e1200; }
+        .bg-plate-low { background-color: #16181b; }
+        .bullet-amber::before {
+            content: "•";
+            color: #ffb300;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+            font-weight: bold;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-graphite text-on-surface h-screen w-full flex items-end justify-center overflow-hidden font-body-md antialiased selection:bg-amber-custom/30 selection:text-amber-custom">
+<!-- Scrim (Dimmed node canvas background) -->
+<div aria-hidden="true" class="absolute inset-0 bg-black/60 z-40"></div>
+<!-- Background Mock Canvas (visible through scrim) -->
+<div class="absolute inset-0 z-0 opacity-40 p-4 flex flex-col gap-4">
+<!-- Mock Node 1 -->
+<div class="h-32 w-full border border-outline-variant bg-surface-container rounded-lg p-4">
+<div class="h-4 w-1/3 bg-surface-variant rounded mb-2"></div>
+<div class="h-3 w-1/4 bg-surface-variant rounded"></div>
+</div>
+<!-- Mock Node 2 -->
+<div class="h-48 w-full border border-outline-variant bg-surface-container rounded-lg p-4">
+<div class="h-4 w-1/2 bg-surface-variant rounded mb-2"></div>
+<div class="h-3 w-1/3 bg-surface-variant rounded"></div>
+</div>
+</div>
+<!-- Bottom Sheet -->
+<div class="relative z-50 w-full max-w-2xl bg-plate-container rounded-t-xl border-t border-plate-highlight border-x border-x-plate-highlight shadow-[0_-8px_24px_rgba(8,9,10,0.55)] flex flex-col max-h-[795px]">
+<!-- Drag Handle -->
+<div class="w-full flex justify-center pt-3 pb-2 cursor-grab active:cursor-grabbing">
+<div class="w-12 h-1 bg-surface-variant rounded-full"></div>
+</div>
+<!-- Scrollable Content Area -->
+<div class="flex-col overflow-y-auto px-6 pb-6 pt-2">
+<!-- Header Section -->
+<div class="flex items-start gap-4 mb-6">
+<!-- Icon Plate -->
+<div class="shrink-0 w-12 h-12 rounded flex items-center justify-center border border-amber-custom bg-amber-custom/5">
+<span class="material-symbols-outlined text-amber-custom" style="font-variation-settings: 'FILL' 1;">science</span>
+</div>
+<!-- Title -->
+<div class="flex-1 pt-1">
+<h2 class="text-headline-md font-headline-md text-on-surface tracking-tight">Generative fill is experimental on this chip</h2>
+</div>
+</div>
+<!-- Body Section -->
+<div class="mb-8">
+<ul class="space-y-4 pl-4 text-on-surface-variant text-body-md font-body-md">
+<li class="bullet-amber">
+                        It runs on your <span class="font-telemetry text-telemetry text-on-surface bg-surface px-1 py-0.5 rounded border border-outline-variant">Hexagon 780</span> through a path the vendor doesn't officially support.
+                    </li>
+<li class="bullet-amber">
+                        Expect roughly <span class="font-telemetry text-telemetry text-amber-custom bg-amber-custom/10 px-1 py-0.5 rounded border border-amber-custom/30">30 to 90 seconds</span> per image.
+                    </li>
+<li class="bullet-amber">
+                        It may fail partway and fall back to <span class="font-telemetry text-telemetry text-on-surface bg-surface px-1 py-0.5 rounded border border-outline-variant">CPU</span>, which is slower still.
+                    </li>
+<li class="bullet-amber">
+                        Your device will get warm while it runs.
+                    </li>
+</ul>
+</div>
+<!-- Telemetry Strip -->
+<div class="bg-plate-low border border-plate-highlight rounded p-4 mb-8 flex flex-wrap gap-x-8 gap-y-4">
+<div class="flex flex-col gap-1">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Est. Duration</span>
+<span class="font-telemetry text-telemetry text-amber-custom">30-90 s / image</span>
+</div>
+<div class="flex flex-col gap-1">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Failsafe</span>
+<span class="font-telemetry text-telemetry text-amber-custom">fallback CPU</span>
+</div>
+<div class="flex flex-col gap-1">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Thermal Load</span>
+<span class="font-telemetry text-telemetry text-amber-custom">RISING</span>
+</div>
+</div>
+<!-- Checkbox Row -->
+<div class="flex items-center gap-3 mb-8">
+<div class="relative flex items-center justify-center w-5 h-5">
+<input class="peer appearance-none w-5 h-5 border border-outline-variant rounded bg-transparent checked:bg-amber-custom checked:border-amber-custom cursor-pointer transition-colors" id="dont-ask" type="checkbox"/>
+<span class="material-symbols-outlined text-[16px] text-amber-dark absolute pointer-events-none opacity-0 peer-checked:opacity-100 transition-opacity" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<label class="text-body-md font-body-md text-on-surface-variant cursor-pointer select-none" for="dont-ask">
+                    Don't ask again for this node
+                </label>
+</div>
+<!-- Action Buttons (Pinned to bottom visually within scroll area, could be fixed if needed, but per prompt inside flow) -->
+<div class="flex gap-4 justify-end pt-4 border-t border-plate-highlight">
+<button class="px-6 h-touch-min min-w-[100px] flex items-center justify-center rounded border border-outline-variant bg-transparent text-on-surface font-headline-sm text-headline-sm hover:bg-surface-variant/50 transition-colors focus:outline-none focus:ring-2 focus:ring-amber-custom/50" type="button">
+                    Not now
+                </button>
+<button class="px-6 h-touch-min min-w-[140px] flex items-center justify-center rounded bg-amber-custom text-amber-dark font-headline-sm text-headline-sm hover:brightness-110 active:brightness-90 transition-all focus:outline-none focus:ring-2 focus:ring-amber-custom focus:ring-offset-2 focus:ring-offset-graphite" type="button">
+                    Run it anyway
+                </button>
+</div>
+</div>
+</div>
+</body></html>
