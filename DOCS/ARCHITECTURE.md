@@ -345,7 +345,7 @@ IDs. The complement is 24 screens:
   `a3-model-packs`, `a4-storage-grant`
 - **Home and presets** — `b1-home`, `b2-preset-gallery`, `b3-preset-detail`
 - **Editor** — `c1-recipe-view`, `c2-node-palette`, `c3-node-inspector`,
-  `c4-validation-error`, `c5-canvas-tablet` (tablet, two-pane)
+  `c4-validation-error`, `c5-canvas-unfolded` (unfolded inner display, two-pane)
 - **Gating and entitlements** — `d1-node-state-legend`,
   `d2-paywall-device-aware`, `d3-tier-limited-sheet`, `d4-experimental-consent`,
   `d5-wallet-entitlement`
