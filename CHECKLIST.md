@@ -456,7 +456,38 @@ never delete `dist/`; if a clean is needed it renames aside to
 
 ---
 
-## Stanza 5 — Diagnosability
+## Stanza 5 — Diagnosability and coverage gaps
+
+### [ ] T21 — Port table tests
+
+> Why this exists: `ports_for` is declared the single source of port typing for
+> all 22 node kinds, and T2 shipped it with no tests because T2's contract never
+> asked for any. The exhaustive `match` means the compiler catches a *missing*
+> variant, but nothing catches a variant wired to the *wrong* port type — and
+> every graph validation in the product is derived from this one table.
+
+**Files:** modify `crates/forge-core/src/graph.rs` (test module only)
+
+**Entities:** `ports_for`, `Port`, `PortType`, `NodeKind`
+
+**Do:** Add a test module asserting the port table is correct, not merely total.
+Cover: every one of the 22 `NodeKind` variants returns from `ports_for` without
+panicking; the three source kinds have zero inputs; the two sink kinds have zero
+outputs; `AudioSplit` returns exactly two audio outputs named `voice` and
+`music`; `AudioStems` returns exactly four audio outputs; `ImageObjectRemove`
+takes an `Image` and a `Mask` and returns an `Image`; `GenerativeFill` takes
+`Image`, `Mask` and `Text`; `CaptionFrames` takes `Video` and returns `Text`;
+`AvMux` takes both `Video` and `Audio`. Add one test that iterates all 22
+variants and asserts no port name is repeated within the same direction on the
+same node.
+
+**Accept:**
+- `cargo test -p forge-core graph` exits 0
+- `cargo test -p forge-core graph 2>&1 | grep -c 'test result: ok'` returns at least 1
+
+---
+
+## Stanza 6 — Diagnosability
 
 ### [ ] T20 — Job diagnostics
 
