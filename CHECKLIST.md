@@ -191,7 +191,7 @@ credits, used by `forge-cli`.
 
 ## Stanza 2 — Execution
 
-### [X] T7 — Tiler
+### [✅] T7 — Tiler
 
 **Files:** create `crates/forge-core/src/tiler.rs`; modify `lib.rs`
 
@@ -208,7 +208,7 @@ reproduces the input within one least-significant bit.
 
 ---
 
-### [X] T8 — Thermal governor
+### [✅] T8 — Thermal governor
 
 **Files:** create `crates/forge-core/src/thermal.rs`; modify `lib.rs`
 
@@ -227,7 +227,7 @@ series produces at least three non-`Pause` actions before the first `Pause`.
 
 ---
 
-### [X] T9 — Asset store and checkpoints
+### [✅] T9 — Asset store and checkpoints
 
 **Files:** create `crates/forge-core/src/assets.rs`,
 `crates/forge-core/src/checkpoint.rs`; modify `lib.rs`
@@ -242,11 +242,16 @@ yields one file and equal keys, and that `resume` returns `None` for an unknown
 job.
 
 **Accept:**
-- `cargo test -p forge-core assets checkpoint` exits 0
+- `cargo test -p forge-core -- assets checkpoint` exits 0
+
+> Clause note: this originally omitted the `--`. Cargo accepts only one
+> positional test-name argument, so the clause errored with
+> `unexpected argument 'checkpoint' found` and could never pass as written.
+> libtest takes multiple filters once arguments are forwarded past `--`.
 
 ---
 
-### [X] T10 — Scheduler
+### [✅] T10 — Scheduler
 
 **Files:** create `crates/forge-core/src/scheduler.rs`; modify `lib.rs`
 
@@ -270,7 +275,7 @@ each segment exactly once.
 
 ---
 
-### [X] T11 — Pipeline document serde
+### [✅] T11 — Pipeline document serde
 
 **Files:** create `crates/forge-core/src/pipeline.rs`; modify `lib.rs`; create
 `tests/fixtures/podcast-cleanup.json`
@@ -290,7 +295,7 @@ round-trips to an identical `Graph` and passes `validate_graph` on a desktop
 
 ## Stanza 3 — Engines
 
-### [X] T12 — Engine trait and registry
+### [✅] T12 — Engine trait and registry
 
 **Files:** create `crates/forge-engines/src/lib.rs`,
 `crates/forge-engines/src/registry.rs`
@@ -311,7 +316,7 @@ whose first entry fails to load yields the second entry's engine.
 
 ---
 
-### [X] T13 — ONNX Runtime engine, CPU path
+### [✅] T13 — ONNX Runtime engine, CPU path
 
 **Files:** create `crates/forge-engines/src/ort.rs`; modify
 `crates/forge-engines/src/lib.rs` and `crates/forge-engines/Cargo.toml`
@@ -333,7 +338,7 @@ context binary exists for the model it is used rather than recompiling. Reports
 
 ---
 
-### [X] T14 — Desktop harness
+### [✅] T14 — Desktop harness
 
 **Files:** modify `crates/forge-cli/src/main.rs`, `crates/forge-cli/Cargo.toml`
 
@@ -484,6 +489,47 @@ same node.
 **Accept:**
 - `cargo test -p forge-core graph` exits 0
 - `cargo test -p forge-core graph 2>&1 | grep -c 'test result: ok'` returns at least 1
+
+---
+
+### [ ] T22 — Reconcile the model catalogue against the architecture
+
+> Why this exists: `model_requirement` in `availability.rs` was implemented with
+> invented figures, because the architecture carried no model catalogue for the
+> coder to cite. It was correctly flagged as unverified rather than passed off as
+> fact. `DOCS/ARCHITECTURE.md` §4a now holds the normative table, sourced from
+> the verified research report.
+
+**Files:** modify `crates/forge-core/src/availability.rs`
+
+**Entities:** `model_requirement`, `ModelReq`
+
+**Do:** Replace every size and licence in `model_requirement` with the values in
+`DOCS/ARCHITECTURE.md` §4a. Four corrections are load-bearing and must not be
+missed:
+
+- `GenerativeFill` currently reports `FLUX-1-dev-non-commercial`. The architecture
+  specifies **FLUX.2-klein-4B, Apache-2.0**, at ~4 GB. A non-commercial licence on
+  a paid product's flagship generative feature is a shipping blocker, and the two
+  models are not interchangeable.
+- `ImageObjectRemove` currently reports `Apache-2.0`. LaMa-Dilated carries a
+  **Qualcomm AI Hub per-model licence** requiring review.
+- `AudioDenoise` currently reports `Apache-2.0`. GTCRN is **MIT**.
+- `MetadataGen` and `CaptionFrames` currently report `Gemma-Terms-of-Use`. The
+  Gemma 4 E2B LiteRT build is **Apache-2.0**; FastVLM-0.5B is **apple-amlr**.
+
+Also correct `VideoUpscale` to kilobytes — QuickSRNet-M is 42 KB to 1 MB, not
+6 MB. Add a `review_required: bool` field to `ModelReq`, set true for the four
+entries the architecture flags, so the licence sheet can surface that a model's
+terms are unresolved rather than presenting them as settled.
+
+Write a test asserting no licence string in the catalogue contains the substring
+`non-commercial`.
+
+**Accept:**
+- `cargo test -p forge-core availability` exits 0
+- `grep -c 'non-commercial' crates/forge-core/src/availability.rs` returns 1 (the test's own assertion only)
+- `grep -o 'review_required' crates/forge-core/src/availability.rs | wc -l` returns at least 5
 
 ---
 

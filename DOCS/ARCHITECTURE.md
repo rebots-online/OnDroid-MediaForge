@@ -144,10 +144,19 @@ the device can prove.
 | `NodeAvailability` | `availability.rs` | The seven UI states | `enum NodeAvailability { Ready(Backend), Accelerated, NeedsModel { bytes: u64, license: String }, Experimental { estimate_ms: u64 }, Metered { credits: u32 }, ProLocked, TierLimited { required: DeviceTier, substitute: Option<NodeKind> } }` |
 | `NodePricing` | `availability.rs` | Single source of per-node credit cost. Without it `resolve_availability` would have to invent the price it reports | `struct NodePricing(HashMap<NodeKind, u32>)` with `fn cost(&self, kind: NodeKind) -> Option<u32>` |
 | `resolve_availability` | `availability.rs` | **The precedence rule lives here and nowhere else.** `TierLimited` is returned before any commercial state is considered. `balance` is what the user holds; `pricing` is what a node costs — the two were conflated in v0.1 and are now distinct | `fn resolve_availability(kind: NodeKind, caps: &SocProfile, ent: &Entitlement, balance: u32, pricing: &NodePricing, model_present: bool) -> NodeAvailability` |
+| `required_tier` | `capability.rs` | The minimum tier a node kind needs. Only `GenerativeFill` is above the floor (`T2`); raising a floor for any other kind would assert a hardware fact the research does not establish, and would break the invariant that `TierLimited` always carries a substitute | `fn required_tier(kind: NodeKind) -> DeviceTier` |
+| `StageFamily::of` | `capability.rs` | Maps a node kind to its model class for co-residency exclusion | `fn of(kind: NodeKind) -> Option<StageFamily>` |
+| `ModelReq` | `availability.rs` | One catalogue row: the weights a node needs. Values are normative and come from §4a — never estimated | `struct ModelReq { bytes: u64, license: &'static str, estimate_ms: u64, review_required: bool }` |
+| `model_requirement` | `availability.rs` | Catalogue lookup; `None` for kinds holding no weights (sources, sinks, muxer, demux) | `fn model_requirement(kind: NodeKind) -> Option<ModelReq>` |
 | `Entitlement` | `entitlement.rs` | Commercial state | `enum Entitlement { Free, Pro { perpetual_version: Option<String> } }` |
+| `EntitlementService::pricing` | `entitlement.rs` | Supplies the price table to the gate. `gated_with_entitlement` must distinguish `Metered` from `ProLocked` and its frozen signature carries no `NodePricing`, so the service provides one. Defaulted, so implementations that do not meter need not supply it | `fn pricing(&self) -> NodePricing { NodePricing::default() }` |
 | `EntitlementService` | `entitlement.rs` | The swappable seam | `trait EntitlementService { fn entitlement(&self) -> Entitlement; fn credit_balance(&self) -> u32; fn reserve_credits(&mut self, n: u32) -> Result<CreditReserve, EntitlementError>; fn reconcile(&mut self) -> Result<(), EntitlementError>; }` |
 | `CreditReserve` | `entitlement.rs` | Locally-held signed block of credits spent offline, reconciled later | `struct CreditReserve { granted: u32, spent: u32, signature: Vec<u8> }` |
 | `gated_with_entitlement` | `entitlement.rs` | Wrapper enforcing gating at the single choke point | `fn gated_with_entitlement<T>(kind: NodeKind, svc: &mut dyn EntitlementService, caps: &SocProfile, f: impl FnOnce() -> T) -> Result<T, GateError>` |
+| `Scheduler` | `scheduler.rs` | Owns the asset store, governor and checkpoint store for a run | `struct Scheduler { assets: AssetStore, governor: ThermalGovernor, checkpoints: CheckpointStore }` |
+| `SegmentId` | `scheduler.rs` | Ordinal identity of a segment within its plan | `struct SegmentId(u32)` |
+| `SegmentState` | `scheduler.rs` | Per-segment progress | `enum SegmentState { Pending, Done }` |
+| `SegmentRunner` | `scheduler.rs` | The seam through which segment work reaches an engine. `forge-core` must not depend on `forge-engines`, so the scheduler receives execution capability rather than importing it; `forge-cli` supplies an implementation backed by `EngineRegistry::acquire` | `trait SegmentRunner { fn run_segment(&mut self, seg: &Segment, node: &NodeSpec) -> Result<(), CoreError>; }` |
 | `Segment` | `scheduler.rs` | One resumable unit of work | `struct Segment { id: SegmentId, node: NodeId, range: Range<u64>, state: SegmentState }` |
 | `JobPlan` | `scheduler.rs` | The full segment list produced before execution, which is what makes progress deterministic | `struct JobPlan { job_id: String, segments: Vec<Segment>, total: usize }` |
 | `Scheduler::plan` | `scheduler.rs` | Graph to segment plan | `fn plan(&self, g: &Graph, caps: &SocProfile) -> Result<JobPlan, Vec<ValidationError>>` |
@@ -156,12 +165,15 @@ the device can prove.
 | `Scheduler::run` | `scheduler.rs` | Executes a plan, honouring the governor and the cancel token, emitting progress | `fn run(&mut self, plan: &JobPlan, sink: &mut dyn ProgressSink, cancel: &CancelToken) -> Result<RunOutcome, CoreError>` |
 | `ProgressSink` | `scheduler.rs` | Progress transport to UI | `trait ProgressSink { fn segment_done(&mut self, id: SegmentId, elapsed_ms: u64); fn thermal(&mut self, state: ThermalState); }` |
 | `AssetStore` | `assets.rs` | Content-addressed intermediate storage | `struct AssetStore { root: PathBuf }` with `fn put(&self, bytes: &[u8]) -> Result<AssetKey, CoreError>` and `fn get(&self, key: &AssetKey) -> Result<Vec<u8>, CoreError>` |
+| `AssetKey` | `assets.rs` | Content address — the SHA-256 of the payload, which is what makes `put` idempotent | `struct AssetKey(String)` |
 | `Tiler` | `tiler.rs` | Fixed-shape tiling with overlap blending | `struct Tiler { tile: u32, overlap: u32 }` with `fn tile(&self, w: u32, h: u32) -> Vec<TileSpec>` and `fn blend(&self, tiles: &[(TileSpec, Vec<u8>)], w: u32, h: u32) -> Vec<u8>` |
 | `ThermalState` | `thermal.rs` | Five-state heat model driving the UI chip | `enum ThermalState { Idle, Running, Sustained, Throttling, Cooling }` |
+| `ThermalPolicy` | `thermal.rs` | User-selected aggressiveness, surfaced in settings as Balanced, Sustained and Maximum | `enum ThermalPolicy { Balanced, Sustained, Maximum }` |
 | `ThermalGovernor::step` | `thermal.rs` | Degrades before pausing: NPU burst to GPU sustained, then widen stride, then pause | `fn step(&mut self, headroom: f32) -> ThermalAction` |
 | `ThermalAction` | `thermal.rs` | Governor output | `enum ThermalAction { Continue, Derate(Backend), WidenStride(u32), Pause }` |
 | `JobCheckpoint` | `checkpoint.rs` | Durable resume point | `struct JobCheckpoint { job_id: String, last_segment: SegmentId, plan_hash: String }` |
-| `CheckpointStore::resume` | `checkpoint.rs` | Restores a killed job at its last completed segment | `fn resume(&self, job_id: &str) -> Result<Option<JobCheckpoint>, CoreError>` |
+| `CheckpointStore` | `checkpoint.rs` | Durable checkpoint storage rooted beside the asset store | `struct CheckpointStore { root: PathBuf }` |
+| `CheckpointStore::resume` | `checkpoint.rs` | Restores a killed job at its last completed segment. A `plan_hash` mismatch discards the checkpoint and restarts rather than erroring — a parameter edit must not silently produce output mixed across two pipeline versions | `fn resume(&self, job_id: &str) -> Result<Option<JobCheckpoint>, CoreError>` |
 | `DiagnosticEvent` | `diagnostics.rs` | One recorded occurrence. **No variant carries a buffer, a user file path, or transcript text** — the type makes a media leak structurally impossible rather than merely forbidden | `enum DiagnosticEvent { StageStarted { node: NodeId, backend: Backend }, StageFinished { node: NodeId, elapsed_ms: u64 }, BackendFallback { node: NodeId, from: Backend, to: Backend, reason: String }, ThermalTransition { from: ThermalState, to: ThermalState, headroom: f32 }, Failed { node: NodeId, cause: String } }` |
 | `JobRecord` | `diagnostics.rs` | Durable per-job history; last 20 retained and readable in-app | `struct JobRecord { job_id: String, pipeline_name: String, soc_id: String, started_unix: u64, outcome: RunOutcome, events: Vec<DiagnosticEvent> }` |
 | `DiagnosticsSink` | `diagnostics.rs` | Emission point, alongside `ProgressSink` so the scheduler emits both in one pass | `trait DiagnosticsSink { fn record(&mut self, event: DiagnosticEvent); }` |
@@ -174,6 +186,10 @@ the device can prove.
 | Entity | Module | Role | Signature |
 | --- | --- | --- | --- |
 | `Engine` | `lib.rs` | Uniform inference interface. Inputs and outputs are **named and plural** — a diffusion UNet step takes latents, timestep and encoder hidden states, and Whisper takes mel features plus decoder state, so a single-tensor signature cannot express the models this product depends on | `trait Engine { fn load(&mut self, model: &ModelRef) -> Result<(), EngineError>; fn run(&mut self, inputs: &[(&str, TensorRef<'_>)]) -> Result<Vec<(String, TensorIo)>, EngineError>; fn backend(&self) -> Backend; }` |
+| `ModelRef` | `lib.rs` | Points an engine at weights on disk | `struct ModelRef { path: PathBuf, kind: NodeKind }` |
+| `DType` | `lib.rs` | Tensor element type across all engines | `enum DType { F32, F16, I8, U8, I32 }` |
+| `EngineError` | `lib.rs` | Load or inference failure. `Unsupported` is what makes `EngineRegistry::acquire` fall down the chain rather than abort | `enum EngineError { Load(String), Run(String), Unsupported { backend: Backend }, Shape(String) }` |
+| `EngineRegistry` | `registry.rs` | Holds constructed engines and hands out the first that loads for a chain | `struct EngineRegistry { engines: Vec<Box<dyn Engine>> }` |
 | `TensorRef` | `lib.rs` | Borrowed input tensor. Inputs are borrowed rather than owned because a 1080p RGB frame is roughly 6 MB and the super-resolution budget is 2.2 ms per frame — an owned copy per stage per frame would dominate that budget | `struct TensorRef<'a> { shape: &'a [usize], dtype: DType, data: &'a [u8] }` |
 | `TensorIo` | `lib.rs` | Owned output tensor, allocated from `TensorPool` | `struct TensorIo { shape: Vec<usize>, dtype: DType, data: Vec<u8> }` |
 | `TensorPool` | `lib.rs` | Reuses output buffers across segments so steady-state inference does not churn the heap | `struct TensorPool { buffers: Vec<Vec<u8>> }` with `fn take(&mut self, bytes: usize) -> Vec<u8>` and `fn give(&mut self, buf: Vec<u8>)` |
@@ -229,6 +245,45 @@ Deterministic, JSON-serialisable, and shareable — the unit of virality.
   }
 }
 ```
+
+## 4a. Model catalogue
+
+Normative. Every figure is taken from `ondevicemediapipelinereport.md`, whose
+claims were verified against live primary sources. `availability.rs` reports
+these values through `NodeAvailability::NeedsModel`, and the model manager and
+licence sheet render them. **Nothing here may be estimated or recalled** — a
+wrong licence string on a paid product is a legal exposure, not a cosmetic bug,
+and NFR4 requires every shipped model's licence be surfaced in-app.
+
+| NodeKind | Model | Size | Licence |
+| --- | --- | --- | --- |
+| `AudioDenoise` | GTCRN (~48K params) | ~1 MB | MIT |
+| `AudioIsolateVoice` | UVR-MDX via sherpa-onnx | ~20–60 MB | Apache-2.0 (per-model varies) |
+| `AudioStems` | HTDemucs v4, ONNX export | ~80–160 MB | MIT |
+| `Transcribe` | whisper.cpp small | 466 MiB | MIT |
+| `Diarize` | sherpa-onnx segmentation + embedding | ~50 MB | Apache-2.0 |
+| `ImageUpscale` | Real-ESRGAN-x4plus | ~17–64 MB | BSD-3 |
+| `ImageObjectRemove` | LaMa-Dilated | ~200 MB class | **Qualcomm AI Hub per-model — review before ship** |
+| `GenerativeFill` (T2) | FLUX.2-klein-4B int8 LiteRT | ~4 GB | **Apache-2.0** |
+| `GenerativeFill` (T1, experimental T0) | SD1.5-inpaint w8a16 | ~1–1.5 GB | **CreativeML OpenRAIL-M + Qualcomm asset licence — review before ship** |
+| `ImageCutout` | BiRefNet-lite | ~170 MB | MIT |
+| `MaskHelper` | MobileSAM / FastSAM | ~40 MB | Apache-2.0 |
+| `VideoUpscale` | QuickSRNet-M | 42 KB – 1 MB | BSD-3 |
+| `VideoRemoveBg` | RVM (mobilenetv3) | ~15 MB | **GPL-3 repo vs MIT weights — unresolved; substitute MODNet (~25 MB, Apache-2.0) if unresolved** |
+| `VideoInterpolate` | RIFE, ncnn-Vulkan | ~40 MB | MIT |
+| `MetadataGen` | Gemma 4 E2B, LiteRT-LM | ~2–3 GB | **Apache-2.0** (the LiteRT build) |
+| `CaptionFrames` | FastVLM-0.5B, LiteRT | <1 GB | **apple-amlr — review before ship** |
+
+Four entries carry a review flag. `GenerativeFill` at T2 is deliberately
+FLUX.2-klein rather than any FLUX-1-dev variant: klein is Apache-2.0 while
+FLUX-1-dev is non-commercial, and this is a paid product. The report names
+FLUX.2-klein "the cleanest license of the generative set" and prefers it for any
+generative marketing claim; a non-commercial model must never appear in this
+table.
+
+`QuickSRNet-M` is kilobytes, not megabytes. That is not a typo — the model is
+33.3K parameters, 41.7 KB quantised, and reaches 2.2 ms per 1080p frame. Its
+smallness is the reason video upscaling is viable at all on this hardware.
 
 ## 5. UI Design Reference
 
