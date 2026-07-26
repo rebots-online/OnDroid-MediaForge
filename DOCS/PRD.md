@@ -70,11 +70,23 @@ on that display.
 view is the default; canvas view is the advanced toggle. Validation runs before
 execution and catches type mismatches and tier-unavailable nodes.
 
-**FR2 Node library.** The sixteen v1 nodes defined in the research report §3.2
-are normative: sources, audio (denoise, isolate, stems, transcribe, diarize),
-image (upscale, object-remove, generative-fill, cutout), video (upscale,
-remove-bg, interpolate, object-remove-experimental), text (metadata, caption),
-and sinks.
+**FR2 Node library.** The normative list is the 22 `NodeKind` variants in
+`DOCS/ARCHITECTURE.md` §3, not a count in another document. Sixteen of them are
+the user-facing operations from the research report §3.2; the remaining six are
+structural and source/sink kinds the report's table omits.
+
+- **Sources** — `SourceVideo`, `SourceImage`, `SourceAudio`
+- **Audio** — `AudioSplit`, `AudioDenoise`, `AudioIsolateVoice`, `AudioStems`,
+  `Transcribe`, `Diarize`
+- **Image** — `ImageUpscale`, `ImageObjectRemove`, `GenerativeFill`,
+  `ImageCutout`
+- **Video** — `VideoUpscale`, `VideoRemoveBg`, `VideoInterpolate`
+- **Text** — `MetadataGen`, `CaptionFrames`
+- **Structural** — `MaskHelper`, `AvMux`
+- **Sinks** — `SinkGallery`, `SinkFiles`
+
+`MaskHelper`, `AvMux` and `SinkGallery` are reachable in the node palette like
+any other kind; nothing in the library is internal-only.
 
 **FR3 Presets.** At least six shipped preset pipelines. Import and export as JSON.
 Presets open as editable graphs. **Running an imported preset never requires a

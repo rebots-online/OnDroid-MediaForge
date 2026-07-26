@@ -326,7 +326,10 @@ context binary exists for the model it is used rather than recompiling. Reports
 
 **Accept:**
 - `cargo check -p forge-engines` exits 0
-- `grep -c 'ctx_cache' crates/forge-engines/src/ort.rs` returns at least 2
+- `grep -o 'ctx_cache' crates/forge-engines/src/ort.rs | wc -l` returns at least 2
+
+> Clause note: `grep -c` counts matching *lines*, not occurrences, so two uses on
+> one line would report 1 and fail spuriously.
 
 ---
 
@@ -401,7 +404,11 @@ price and no credit cost anywhere in its markup.
 
 **Accept:**
 - `git ls-files ui/src/screens | wc -l` returns at least 24
-- `grep -rc 'TierLimited' ui/src/screens | wc -l` returns at least 1
+- `grep -rho 'TierLimited' ui/src/screens | wc -l` returns at least 1
+
+> Clause note: this previously used `grep -rc … | wc -l`, which counts *files
+> listed* — including files with zero matches — and so passed as long as any file
+> existed. `grep -rho` emits one line per actual occurrence.
 
 ---
 
@@ -420,8 +427,14 @@ Engine binaries are consumed as published Maven artifacts per AD-3 — nothing i
 built from source.
 
 **Accept:**
-- Gradle assemble for the android module ends `BUILD SUCCESSFUL`
+- `./gradlew :android:compileReleaseKotlin` ends `BUILD SUCCESSFUL`
 - `git ls-files android/*.kt | wc -l` returns 6
+
+> Clause note: this previously gated on a full `assemble`, which compiles the
+> Rust core, the FFI layer and the web bundle. Under hermetic per-task verify a
+> task's gate checks only its own output — a transitive gate turns one upstream
+> failure into a cascade of downstream escalations. The full assemble belongs to
+> T19.
 
 ---
 
