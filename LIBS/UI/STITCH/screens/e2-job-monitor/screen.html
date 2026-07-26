@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Active job monitor - OnDroid MediaForge</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Chivo:wght@400;600;700&amp;family=Inter:wght@400;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-primary-fixed": "#331200",
+                      "secondary-container": "#00726a",
+                      "surface-dim": "#1c110b",
+                      "port-tensor": "#d4c77f",
+                      "plate-shadow": "#08090a",
+                      "surface-container-low": "#251913",
+                      "primary-fixed-dim": "#ffb68e",
+                      "heat-hot": "#ff5722",
+                      "outline-variant": "#584237",
+                      "background": "#1c110b",
+                      "heat-idle": "#5a5b60",
+                      "plate-highlight": "#3f4045",
+                      "error": "#ffb4ab",
+                      "surface-graphite": "#121316",
+                      "surface-container-highest": "#40322b",
+                      "on-error": "#690005",
+                      "tertiary-fixed-dim": "#99cbff",
+                      "port-text": "#a8c7e8",
+                      "tertiary-fixed": "#cfe5ff",
+                      "surface-bright": "#44362f",
+                      "on-tertiary-fixed": "#001d34",
+                      "molten-copper-bright": "#ffb077",
+                      "tertiary-container": "#009af3",
+                      "secondary-fixed-dim": "#7fd6cb",
+                      "on-tertiary-fixed-variant": "#004a78",
+                      "surface-tint": "#ffb68e",
+                      "on-secondary-fixed-variant": "#00504a",
+                      "secondary-fixed": "#9bf2e7",
+                      "port-image": "#9ad67f",
+                      "on-primary": "#542200",
+                      "secondary": "#7fd6cb",
+                      "on-surface-variant": "#dfc0b1",
+                      "on-tertiary": "#003355",
+                      "on-background": "#f5ded3",
+                      "surface-container": "#291d17",
+                      "port-mask": "#e88ac4",
+                      "on-error-container": "#ffdad6",
+                      "heat-throttle": "#ffb300",
+                      "surface": "#1c110b",
+                      "on-secondary-fixed": "#00201d",
+                      "tertiary": "#99cbff",
+                      "on-primary-fixed-variant": "#773300",
+                      "surface-container-high": "#342720",
+                      "on-secondary-container": "#9cf4e8",
+                      "surface-variant": "#40322b",
+                      "primary": "#ffb68e",
+                      "on-secondary": "#003732",
+                      "inverse-on-surface": "#3b2e27",
+                      "outline": "#a78b7d",
+                      "error-container": "#93000a",
+                      "inverse-surface": "#f5ded3",
+                      "on-surface": "#f5ded3",
+                      "on-tertiary-container": "#002f4f",
+                      "surface-container-lowest": "#160c07",
+                      "on-primary-container": "#4e1f00",
+                      "primary-fixed": "#ffdbca",
+                      "primary-container": "#ed7014",
+                      "inverse-primary": "#9c4500"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "node-row-height": "72px",
+                      "margin-mobile": "20px",
+                      "gutter": "16px",
+                      "touch-min": "44px",
+                      "base": "8px"
+              },
+              "fontFamily": {
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "headline-md": [
+                              "Chivo"
+                      ],
+                      "headline-sm": [
+                              "Chivo"
+                      ],
+                      "telemetry": [
+                              "JetBrains Mono"
+                      ],
+                      "headline-lg": [
+                              "Chivo"
+                      ],
+                      "label-caps": [
+                              "Inter"
+                      ],
+                      "body-lg": [
+                              "Inter"
+                      ],
+                      "telemetry-sm": [
+                              "JetBrains Mono"
+                      ],
+                      "body-sm": [
+                              "Inter"
+                      ]
+              },
+              "fontSize": {
+                      "body-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-md": [
+                              "22px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-sm": [
+                              "18px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "telemetry": [
+                              "13px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "450"
+                              }
+                      ],
+                      "headline-lg": [
+                              "30px",
+                              {
+                                      "lineHeight": "38px",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "label-caps": [
+                              "11px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.06em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-lg": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "telemetry-sm": [
+                              "11px",
+                              {
+                                      "lineHeight": "16px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-sm": [
+                              "13px",
+                              {
+                                      "lineHeight": "18px",
+                                      "fontWeight": "400"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface font-body-md h-screen flex flex-col antialiased selection:bg-primary-container selection:text-on-primary">
+<!-- Top App Bar (Shared Component mapped) -->
+<header class="docked full-width top-0 border-b border-outline-variant bg-surface-graphite dark:bg-surface-graphite flex justify-between items-center w-full px-margin-mobile h-node-row-height z-40">
+<div class="flex items-center gap-3">
+<button aria-label="Back" class="h-touch-min w-touch-min flex items-center justify-center text-on-surface-variant hover:bg-plate-highlight transition-colors duration-150 rounded">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<h1 class="font-headline-sm text-headline-sm font-bold text-primary dark:text-primary tracking-tighter">Old footage revival</h1>
+</div>
+<div class="flex items-center gap-2">
+<!-- Privacy Chip -->
+<div class="hidden sm:flex border border-outline-variant bg-surface-container px-2 py-1 items-center rounded" style="box-shadow: inset 0 1px 0 theme('colors.plate-highlight');">
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant uppercase">ON-DEVICE</span>
+</div>
+<!-- Thermal Chip -->
+<div class="flex border border-primary-container bg-surface-container-highest px-3 py-1 items-center gap-1.5 rounded-full" style="box-shadow: inset 0 1px 0 theme('colors.plate-highlight');">
+<span class="material-symbols-outlined text-primary-container text-[16px]" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+<span class="font-telemetry text-telemetry text-primary-container uppercase tracking-wide">RUNNING</span>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 overflow-y-auto px-margin-mobile py-6 flex flex-col gap-8 max-w-4xl mx-auto w-full pb-24">
+<!-- Hero Progress Section -->
+<section class="flex flex-col gap-3">
+<!-- Segmented Bar -->
+<div class="flex h-10 w-full gap-[2px]">
+<!-- Filled -->
+<script>
+                    for(let i=0; i<15; i++) document.write(`<div class="flex-1 bg-primary-container border-y border-x border-primary-container"></div>`);
+                </script>
+<!-- Unfilled -->
+<script>
+                    for(let i=0; i<30; i++) document.write(`<div class="flex-1 bg-surface-container border border-outline-variant"></div>`);
+                </script>
+</div>
+<!-- Telemetry Details -->
+<div class="flex justify-between items-center px-1">
+<p class="font-telemetry text-telemetry text-on-background">segment 51/148 · elapsed 3m 42s · about 7m left</p>
+<!-- Stats Row -->
+<div class="flex gap-2">
+<div class="flex items-center gap-1.5 border border-outline-variant bg-surface-container px-2 py-1 rounded shadow-sm" style="box-shadow: inset 0 1px 0 theme('colors.plate-highlight');">
+<span class="material-symbols-outlined text-[14px] text-on-surface-variant">memory</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant">GPU</span>
+</div>
+<div class="flex items-center border border-outline-variant bg-surface-container px-2 py-1 rounded shadow-sm" style="box-shadow: inset 0 1px 0 theme('colors.plate-highlight');">
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface">1.4 seg/s</span>
+</div>
+</div>
+</div>
+</section>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<!-- Vertical Stage Timeline -->
+<section class="flex flex-col gap-4">
+<h2 class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider border-b border-outline-variant pb-2">PIPELINE</h2>
+<div class="flex flex-col">
+<!-- Stage 1: Done -->
+<div class="flex gap-4 relative h-node-row-height group">
+<div class="w-[2px] bg-outline-variant absolute left-[15px] top-6 bottom-0 -z-10 group-last:hidden"></div>
+<div class="flex flex-col items-center pt-1 z-10 w-8">
+<div class="w-8 h-8 rounded-full bg-surface-container border border-secondary flex items-center justify-center">
+<span class="material-symbols-outlined text-[16px] text-secondary">check</span>
+</div>
+</div>
+<div class="flex-1 border border-outline-variant bg-surface-container rounded p-3 flex justify-between items-center" style="box-shadow: inset 0 1px 0 theme('colors.plate-highlight'), 0 2px 4px theme('colors.plate-shadow');">
+<div>
+<p class="font-headline-sm text-headline-sm text-on-surface">Decode</p>
+<p class="font-telemetry-sm text-telemetry-sm text-secondary">done</p>
+</div>
+<span class="font-telemetry text-telemetry text-on-surface-variant">0m 48s</span>
+</div>
+</div>
+<!-- Stage 2: Current -->
+<div class="flex gap-4 relative h-node-row-height group mt-2">
+<div class="w-[2px] bg-outline-variant absolute left-[15px] top-6 bottom-0 -z-10 group-last:hidden"></div>
+<div class="flex flex-col items-center pt-1 z-10 w-8">
+<div class="w-4 h-4 bg-primary-container rounded-sm mt-2 ring-4 ring-background"></div>
+</div>
+<div class="flex-1 border border-outline-variant border-l-2 border-l-primary-container bg-surface-container-high rounded p-3 flex justify-between items-center" style="box-shadow: inset 0 1px 0 theme('colors.plate-highlight');">
+<div>
+<p class="font-headline-sm text-headline-sm text-on-surface">Upscale</p>
+<p class="font-telemetry-sm text-telemetry-sm text-primary-container">running</p>
+</div>
+<span class="font-telemetry text-telemetry text-on-surface">2m 54s</span>
+</div>
+</div>
+<!-- Stage 3: Pending -->
+<div class="flex gap-4 relative h-node-row-height group mt-2 opacity-55">
+<div class="w-[2px] bg-outline-variant absolute left-[15px] top-6 bottom-0 -z-10 group-last:hidden"></div>
+<div class="flex flex-col items-center pt-1 z-10 w-8">
+<div class="w-4 h-4 border-2 border-outline-variant rounded-sm mt-2 bg-background"></div>
+</div>
+<div class="flex-1 border border-outline-variant bg-surface rounded p-3 flex justify-between items-center">
+<div>
+<p class="font-headline-sm text-headline-sm text-on-surface">Interpolate</p>
+<p class="font-telemetry-sm text-telemetry-sm text-on-surface-variant">pending</p>
+</div>
+<span class="font-telemetry text-telemetry text-on-surface-variant">--</span>
+</div>
+</div>
+<!-- Stage 4: Pending -->
+<div class="flex gap-4 relative h-node-row-height group mt-2 opacity-55">
+<div class="w-[2px] bg-outline-variant absolute left-[15px] top-6 bottom-0 -z-10 group-last:hidden"></div>
+<div class="flex flex-col items-center pt-1 z-10 w-8">
+<div class="w-4 h-4 border-2 border-outline-variant rounded-sm mt-2 bg-background"></div>
+</div>
+<div class="flex-1 border border-outline-variant bg-surface rounded p-3 flex justify-between items-center">
+<div>
+<p class="font-headline-sm text-headline-sm text-on-surface">Encode</p>
+<p class="font-telemetry-sm text-telemetry-sm text-on-surface-variant">pending</p>
+</div>
+<span class="font-telemetry text-telemetry text-on-surface-variant">--</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Live Preview -->
+<section class="flex flex-col gap-4">
+<div class="flex justify-between items-end border-b border-outline-variant pb-2">
+<h2 class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider">LIVE PREVIEW</h2>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant">tiles 14/24</span>
+</div>
+<!-- Tile Grid -->
+<div class="aspect-video w-full bg-surface-container border border-outline-variant p-2 grid grid-cols-6 grid-rows-4 gap-1 shadow-inner rounded" style="box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);">
+<script>
+                        // Generate 24 tiles (6x4)
+                        for(let i=1; i<=24; i++) {
+                            if(i < 14) { // Processed
+                                document.write(`<div class="bg-surface-variant border border-outline-variant rounded-[1px]"></div>`);
+                            } else if (i === 14) { // Current
+                                document.write(`<div class="bg-surface-container-high border border-primary rounded-[1px] relative overflow-hidden"><div class="absolute inset-0 bg-primary-container opacity-20"></div></div>`);
+                            } else { // Queued
+                                document.write(`<div class="bg-surface border border-outline-variant/30 rounded-[1px]"></div>`);
+                            }
+                        }
+                    </script>
+</div>
+</section>
+</div>
+</main>
+<!-- Bottom Action Bar (Contextual override for transaction/job) -->
+<div class="fixed bottom-0 w-full z-50 bg-surface-container-high border-t border-outline-variant p-4 flex gap-4 justify-end items-center" style="box-shadow: 0 -4px 12px theme('colors.plate-shadow');">
+<button class="h-touch-min px-6 flex items-center gap-2 border border-outline bg-transparent rounded font-headline-sm text-headline-sm text-molten-copper-bright hover:bg-plate-highlight transition-colors">
+<span class="material-symbols-outlined text-[20px]">pause</span>
+            Pause
+        </button>
+<button class="h-touch-min px-6 flex items-center gap-2 border border-error bg-transparent rounded font-headline-sm text-headline-sm text-error hover:bg-error/10 transition-colors">
+            Cancel
+        </button>
+</div>
+</body></html>

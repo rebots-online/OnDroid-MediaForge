@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Model Manager - MediaForge</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Chivo:wght@400;600;700&amp;family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "tertiary-container": "#009af3",
+                      "on-surface": "#f5ded3",
+                      "on-primary-fixed": "#331200",
+                      "port-tensor": "#d4c77f",
+                      "secondary-fixed": "#9bf2e7",
+                      "surface-container-lowest": "#160c07",
+                      "surface-container-highest": "#40322b",
+                      "tertiary": "#99cbff",
+                      "tertiary-fixed-dim": "#99cbff",
+                      "secondary": "#7fd6cb",
+                      "port-mask": "#e88ac4",
+                      "plate-shadow": "#08090a",
+                      "port-text": "#a8c7e8",
+                      "heat-idle": "#5a5b60",
+                      "inverse-on-surface": "#3b2e27",
+                      "heat-throttle": "#ffb300",
+                      "primary-fixed": "#ffdbca",
+                      "on-tertiary": "#003355",
+                      "surface-container-low": "#251913",
+                      "surface-bright": "#44362f",
+                      "inverse-primary": "#9c4500",
+                      "background": "#1c110b",
+                      "surface-graphite": "#121316",
+                      "on-background": "#f5ded3",
+                      "surface-variant": "#40322b",
+                      "error": "#ffb4ab",
+                      "on-tertiary-fixed-variant": "#004a78",
+                      "surface-container-high": "#342720",
+                      "on-secondary-fixed": "#00201d",
+                      "surface-dim": "#1c110b",
+                      "on-primary-container": "#4e1f00",
+                      "tertiary-fixed": "#cfe5ff",
+                      "primary-fixed-dim": "#ffb68e",
+                      "on-primary": "#542200",
+                      "on-primary-fixed-variant": "#773300",
+                      "on-tertiary-container": "#002f4f",
+                      "on-secondary-container": "#9cf4e8",
+                      "outline": "#a78b7d",
+                      "inverse-surface": "#f5ded3",
+                      "heat-hot": "#ff5722",
+                      "secondary-container": "#00726a",
+                      "port-image": "#9ad67f",
+                      "on-error": "#690005",
+                      "secondary-fixed-dim": "#7fd6cb",
+                      "error-container": "#93000a",
+                      "primary-container": "#ed7014",
+                      "surface": "#1c110b",
+                      "on-secondary-fixed-variant": "#00504a",
+                      "primary": "#ffb68e",
+                      "on-secondary": "#003732",
+                      "on-surface-variant": "#dfc0b1",
+                      "on-tertiary-fixed": "#001d34",
+                      "surface-container": "#291d17",
+                      "outline-variant": "#584237",
+                      "on-error-container": "#ffdad6",
+                      "molten-copper-bright": "#ffb077",
+                      "surface-tint": "#ffb68e",
+                      "plate-highlight": "#3f4045",
+                      "plate-bg": "#1d1f23"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "base": "8px",
+                      "touch-min": "44px",
+                      "node-row-height": "72px",
+                      "margin-mobile": "20px",
+                      "gutter": "16px"
+              },
+              "fontFamily": {
+                      "headline-md": [
+                              "Chivo"
+                      ],
+                      "telemetry-sm": [
+                              "JetBrains Mono"
+                      ],
+                      "label-caps": [
+                              "Inter"
+                      ],
+                      "headline-sm": [
+                              "Chivo"
+                      ],
+                      "telemetry": [
+                              "JetBrains Mono"
+                      ],
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "body-lg": [
+                              "Inter"
+                      ],
+                      "body-sm": [
+                              "Inter"
+                      ],
+                      "headline-lg": [
+                              "Chivo"
+                      ]
+              },
+              "fontSize": {
+                      "headline-md": [
+                              "22px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "telemetry-sm": [
+                              "11px",
+                              {
+                                      "lineHeight": "16px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-caps": [
+                              "11px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.06em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-sm": [
+                              "18px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "telemetry": [
+                              "13px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "450"
+                              }
+                      ],
+                      "body-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-lg": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-sm": [
+                              "13px",
+                              {
+                                      "lineHeight": "18px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-lg": [
+                              "30px",
+                              {
+                                      "lineHeight": "38px",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "700"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+        .plate-effect {
+            background-color: theme('colors.plate-bg');
+            border: 1px solid theme('colors.outline-variant');
+            box-shadow: inset 0 1px 0 0 theme('colors.plate-highlight'), 0 2px 4px -1px theme('colors.plate-shadow');
+        }
+        
+        /* Custom scrollbar for webkit */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: theme('colors.surface-graphite');
+        }
+        ::-webkit-scrollbar-thumb {
+            background: theme('colors.outline-variant');
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: theme('colors.outline');
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface-graphite text-on-surface font-body-md min-h-screen flex flex-col antialiased selection:bg-primary selection:text-on-primary">
+<!-- Top Bar: Task-focused, so Bottom Nav is suppressed per logic -->
+<header class="bg-surface-graphite border-b border-outline-variant w-full px-margin-mobile h-node-row-height flex justify-between items-center shrink-0 z-10 sticky top-0">
+<div class="flex items-center gap-gutter">
+<button aria-label="Go back" class="w-touch-min h-touch-min flex items-center justify-center text-on-surface-variant hover:text-primary transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">chevron_left</span>
+</button>
+<h1 class="font-headline-md text-headline-md tracking-tight text-primary">Models</h1>
+</div>
+<div class="flex items-center gap-2">
+<!-- Thermal Chip -->
+<div class="flex items-center bg-surface-container-high border border-outline-variant rounded px-2 h-7 gap-1">
+<span class="material-symbols-outlined text-[14px] text-heat-idle" style="font-variation-settings: 'FILL' 1;">device_thermostat</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant uppercase tracking-wider">[IDLE]</span>
+</div>
+<!-- Privacy Chip -->
+<div class="hidden md:flex items-center bg-surface-container-high border border-outline-variant rounded px-2 h-7 gap-1">
+<span class="material-symbols-outlined text-[14px] text-on-surface-variant" style="font-variation-settings: 'FILL' 1;">lock</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant uppercase tracking-wider">[ON-DEVICE]</span>
+</div>
+</div>
+</header>
+<main class="flex-1 flex flex-col max-w-4xl w-full mx-auto p-margin-mobile gap-8">
+<!-- Storage Summary -->
+<section class="flex flex-col gap-4">
+<div>
+<h2 class="font-telemetry text-telemetry text-on-surface mb-1">
+<span class="text-primary font-bold">2.1 GB</span> of models installed
+                </h2>
+<p class="font-telemetry-sm text-telemetry-sm text-on-surface-variant">device free 47.3 GB</p>
+</div>
+<!-- Segmented tick bar -->
+<div class="w-full h-2 flex gap-1">
+<div class="bg-primary h-full w-[2%] rounded-sm"></div>
+<div class="bg-surface-container-highest h-full flex-1 rounded-sm"></div>
+</div>
+</section>
+<!-- INSTALLED Section -->
+<section class="flex flex-col gap-4">
+<div class="flex items-center gap-3">
+<h3 class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest">Installed</h3>
+<span class="bg-surface-container-high text-on-surface-variant font-telemetry-sm text-telemetry-sm px-2 py-0.5 rounded border border-outline-variant">4</span>
+<div class="h-px bg-outline-variant flex-1 ml-2"></div>
+</div>
+<div class="flex flex-col gap-2">
+<!-- Row 1 -->
+<div class="plate-effect rounded-lg p-3 flex items-center justify-between min-h-[72px]">
+<div class="flex flex-col gap-1">
+<div class="font-headline-sm text-headline-sm text-on-surface">GTCRN</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Speech noise removal</div>
+<div class="flex flex-wrap gap-2 mt-1">
+<span class="font-telemetry-sm text-telemetry-sm text-port-text bg-surface-container-highest border border-outline-variant px-1.5 py-0.5 rounded">[1 MB]</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant bg-surface-container-highest border border-outline-variant px-1.5 py-0.5 rounded">[MIT]</span>
+<span class="font-telemetry-sm text-telemetry-sm text-secondary bg-surface-container-highest border border-outline-variant px-1.5 py-0.5 rounded">[Play AI Pack]</span>
+</div>
+</div>
+<button aria-label="Delete GTCRN" class="w-touch-min h-touch-min flex items-center justify-center text-on-surface-variant hover:text-error transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-error rounded">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">delete</span>
+</button>
+</div>
+<!-- Row 2 -->
+<div class="plate-effect rounded-lg p-3 flex items-center justify-between min-h-[72px]">
+<div class="flex flex-col gap-1">
+<div class="font-headline-sm text-headline-sm text-on-surface">Whisper small</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Speech to text</div>
+<div class="flex flex-wrap gap-2 mt-1">
+<span class="font-telemetry-sm text-telemetry-sm text-port-text bg-surface-container-highest border border-outline-variant px-1.5 py-0.5 rounded">[466 MB]</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant bg-surface-container-highest border border-outline-variant px-1.5 py-0.5 rounded">[MIT]</span>
+<span class="font-telemetry-sm text-telemetry-sm text-secondary bg-surface-container-highest border border-outline-variant px-1.5 py-0.5 rounded">[CDN]</span>
+</div>
+</div>
+<button aria-label="Delete Whisper small" class="w-touch-min h-touch-min flex items-center justify-center text-on-surface-variant hover:text-error transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-error rounded">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">delete</span>
+</button>
+</div>
+<!-- Row 3 -->
+<div class="plate-effect rounded-lg p-3 flex items-center justify-between min-h-[72px]">
+<div class="flex flex-col gap-1">
+<div class="font-headline-sm text-headline-sm text-on-surface">LaMa</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Object removal / inpainting</div>
+<div class="flex flex-wrap gap-2 mt-1">
+<span class="font-telemetry-sm text-telemetry-sm text-port-text bg-surface-container-highest border border-outline-variant px-1.5 py-0.5 rounded">[200 MB]</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant bg-surface-container-highest border border-outline-variant px-1.5 py-0.5 rounded">[Apache-2.0]</span>
+<span class="font-telemetry-sm text-telemetry-sm text-secondary bg-surface-container-highest border border-outline-variant px-1.5 py-0.5 rounded">[CDN]</span>
+</div>
+</div>
+<button aria-label="Delete LaMa" class="w-touch-min h-touch-min flex items-center justify-center text-on-surface-variant hover:text-error transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-error rounded">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">delete</span>
+</button>
+</div>
+<!-- Row 4 -->
+<div class="plate-effect rounded-lg p-3 flex items-center justify-between min-h-[72px]">
+<div class="flex flex-col gap-1">
+<div class="font-headline-sm text-headline-sm text-on-surface">QuickSRNet</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Fast image upscale</div>
+<div class="flex flex-wrap gap-2 mt-1">
+<span class="font-telemetry-sm text-telemetry-sm text-port-text bg-surface-container-highest border border-outline-variant px-1.5 py-0.5 rounded">[42 KB]</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant bg-surface-container-highest border border-outline-variant px-1.5 py-0.5 rounded">[BSD-3]</span>
+<span class="font-telemetry-sm text-telemetry-sm text-secondary bg-surface-container-highest border border-outline-variant px-1.5 py-0.5 rounded">[Play AI Pack]</span>
+</div>
+</div>
+<button aria-label="Delete QuickSRNet" class="w-touch-min h-touch-min flex items-center justify-center text-on-surface-variant hover:text-error transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-error rounded">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">delete</span>
+</button>
+</div>
+</div>
+</section>
+<!-- AVAILABLE Section -->
+<section class="flex flex-col gap-4 mb-8">
+<div class="flex items-center gap-3">
+<h3 class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest">Available</h3>
+<div class="h-px bg-outline-variant flex-1 ml-2"></div>
+</div>
+<div class="flex flex-col gap-2">
+<!-- Row 1: Experimental -->
+<div class="plate-effect rounded-lg p-3 flex items-start sm:items-center justify-between min-h-[72px] border-l-[3px] !border-l-heat-throttle relative overflow-hidden">
+<!-- Subtle amber tint background overlay for experimental state -->
+<div class="absolute inset-0 bg-heat-throttle/5 pointer-events-none"></div>
+<div class="flex flex-col gap-1 z-10 w-full pr-12 sm:pr-0 sm:w-auto">
+<div class="font-headline-sm text-headline-sm text-on-surface flex items-center gap-2">
+                            SD1.5 inpaint
+                        </div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Generative fill</div>
+<!-- Experimental Note -->
+<div class="flex items-center gap-1.5 mt-1 text-heat-throttle">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">science</span>
+<span class="font-telemetry-sm text-telemetry-sm">Experimental on this chip — expect slow runs</span>
+</div>
+<div class="flex flex-wrap gap-2 mt-2">
+<span class="font-telemetry-sm text-telemetry-sm text-port-text bg-surface-container-highest border border-outline-variant px-1.5 py-0.5 rounded">[1.4 GB]</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant bg-surface-container-highest border border-outline-variant px-1.5 py-0.5 rounded">[CreativeML Open RAIL-M]</span>
+</div>
+</div>
+<button aria-label="Download SD1.5 inpaint" class="w-touch-min h-touch-min flex items-center justify-center text-primary hover:bg-primary/10 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded absolute sm:relative right-2 top-2 sm:right-auto sm:top-auto z-10">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">download</span>
+</button>
+</div>
+<!-- Row 2: Tier Limited (Disabled) -->
+<div class="plate-effect rounded-lg p-3 flex items-start sm:items-center justify-between min-h-[72px] opacity-55 cursor-not-allowed">
+<div class="flex flex-col gap-1 w-full">
+<div class="font-headline-sm text-headline-sm text-on-surface-variant">FLUX.2-klein</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">High quality generative fill</div>
+<!-- Hardware limitation note -->
+<div class="flex items-center gap-1.5 mt-1 text-on-surface-variant">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">memory</span>
+<span class="font-telemetry-sm text-telemetry-sm">Needs 8 Gen 3 or newer</span>
+</div>
+<div class="flex flex-wrap gap-2 mt-2">
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant bg-surface-container-highest border border-outline-variant px-1.5 py-0.5 rounded">[4 GB]</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant bg-surface-container-highest border border-outline-variant px-1.5 py-0.5 rounded">[Apache-2.0]</span>
+</div>
+</div>
+<!-- No download button for disabled state -->
+</div>
+</div>
+</section>
+</main>
+</body></html>

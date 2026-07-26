@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MediaForge - Validation Error</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Chivo:wght@400;700&amp;family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "port-tensor": "#d4c77f",
+                        "on-error-container": "#ffdad6",
+                        "on-tertiary": "#003355",
+                        "surface-graphite": "#121316",
+                        "secondary-container": "#00726a",
+                        "port-text": "#a8c7e8",
+                        "surface-dim": "#1c110b",
+                        "port-image": "#9ad67f",
+                        "tertiary-container": "#009af3",
+                        "surface-variant": "#40322b",
+                        "on-secondary-fixed": "#00201d",
+                        "surface-container-highest": "#40322b",
+                        "inverse-surface": "#f5ded3",
+                        "secondary-fixed": "#9bf2e7",
+                        "plate-highlight": "#3f4045",
+                        "primary-fixed": "#ffdbca",
+                        "on-background": "#f5ded3",
+                        "surface-bright": "#44362f",
+                        "plate-shadow": "#08090a",
+                        "on-surface-variant": "#dfc0b1",
+                        "outline": "#a78b7d",
+                        "on-primary-container": "#4e1f00",
+                        "heat-throttle": "#ffb300",
+                        "secondary": "#7fd6cb",
+                        "on-secondary": "#003732",
+                        "port-mask": "#e88ac4",
+                        "inverse-on-surface": "#3b2e27",
+                        "molten-copper-bright": "#ffb077",
+                        "on-secondary-fixed-variant": "#00504a",
+                        "heat-hot": "#ff5722",
+                        "surface": "#1c110b",
+                        "on-primary-fixed-variant": "#773300",
+                        "surface-container-high": "#342720",
+                        "primary-fixed-dim": "#ffb68e",
+                        "primary": "#ffb68e",
+                        "error-container": "#93000a",
+                        "heat-idle": "#5a5b60",
+                        "surface-container-low": "#251913",
+                        "secondary-fixed-dim": "#7fd6cb",
+                        "tertiary": "#99cbff",
+                        "outline-variant": "#584237",
+                        "background": "#121316",
+                        "inverse-primary": "#9c4500",
+                        "on-error": "#690005",
+                        "error": "#ffb4ab",
+                        "surface-container": "#291d17",
+                        "tertiary-fixed-dim": "#99cbff",
+                        "on-surface": "#f5ded3",
+                        "on-tertiary-fixed-variant": "#004a78",
+                        "on-primary-fixed": "#331200",
+                        "primary-container": "#ed7014",
+                        "on-tertiary-fixed": "#001d34",
+                        "surface-tint": "#ffb68e",
+                        "surface-container-lowest": "#160c07",
+                        "on-secondary-container": "#9cf4e8",
+                        "on-tertiary-container": "#002f4f",
+                        "tertiary-fixed": "#cfe5ff",
+                        "on-primary": "#542200"
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.125rem",
+                        lg: "0.25rem",
+                        xl: "0.5rem",
+                        full: "0.75rem"
+                    },
+                    spacing: {
+                        "margin-mobile": "20px",
+                        base: "8px",
+                        "node-row-height": "72px",
+                        gutter: "16px",
+                        "touch-min": "44px"
+                    },
+                    fontFamily: {
+                        "label-caps": ["Inter"],
+                        "headline-md": ["Chivo"],
+                        "body-sm": ["Inter"],
+                        "headline-sm": ["Chivo"],
+                        "body-md": ["Inter"],
+                        telemetry: ["JetBrains Mono"],
+                        "headline-lg": ["Chivo"],
+                        "telemetry-sm": ["JetBrains Mono"],
+                        "body-lg": ["Inter"]
+                    },
+                    fontSize: {
+                        "label-caps": ["11px", { lineHeight: "16px", letterSpacing: "0.06em", fontWeight: "700" }],
+                        "headline-md": ["22px", { lineHeight: "28px", fontWeight: "700" }],
+                        "body-sm": ["13px", { lineHeight: "18px", fontWeight: "400" }],
+                        "headline-sm": ["18px", { lineHeight: "24px", fontWeight: "600" }],
+                        "body-md": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+                        telemetry: ["13px", { lineHeight: "20px", fontWeight: "450" }],
+                        "headline-lg": ["30px", { lineHeight: "38px", letterSpacing: "-0.01em", fontWeight: "700" }],
+                        "telemetry-sm": ["11px", { lineHeight: "16px", fontWeight: "400" }],
+                        "body-lg": ["16px", { lineHeight: "24px", fontWeight: "400" }]
+                    }
+                }
+            }
+        };
+    </script>
+<style>
+        .plate-effect {
+            border-top: 1px solid theme('colors.plate-highlight');
+            border-right: 1px solid theme('colors.outline-variant');
+            border-bottom: 1px solid theme('colors.outline-variant');
+            border-left: 1px solid theme('colors.outline-variant');
+            box-shadow: 0 4px 6px -1px theme('colors.plate-shadow');
+        }
+        
+        .error-plate-effect {
+            border: 1px solid #ff8a80;
+            border-top: 1px solid #ff8a80; 
+            box-shadow: 0 4px 6px -1px theme('colors.plate-shadow');
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface-graphite text-on-surface min-h-screen flex flex-col font-body-md pb-24">
+<!-- Top AppBar (Linear flow, no main nav needed) -->
+<header class="bg-surface-graphite sticky top-0 z-50 px-4 py-3 flex flex-col gap-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<button class="h-touch-min w-touch-min flex items-center justify-center -ml-2 text-on-surface-variant hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<h1 class="font-headline-sm text-headline-sm text-on-surface">Reel from talk</h1>
+</div>
+</div>
+<!-- Thermal & Privacy Chips -->
+<div class="flex items-center gap-2">
+<div class="flex items-center gap-1.5 bg-surface-container-high border border-outline-variant rounded px-2 py-1">
+<span class="material-symbols-outlined text-[16px] text-heat-idle">thermostat</span>
+<span class="font-telemetry-sm text-telemetry-sm text-heat-idle">[IDLE]</span>
+</div>
+<div class="flex items-center bg-surface-container-high border border-outline-variant rounded px-2 py-1">
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant">[MEDIA STAYS ON DEVICE]</span>
+</div>
+</div>
+<!-- Segmented Toggle -->
+<div class="flex bg-surface-container-high p-1 rounded-lg border border-outline-variant">
+<button class="flex-1 py-1.5 bg-primary-container text-on-primary-container rounded font-label-caps text-label-caps text-center">RECIPE</button>
+<button class="flex-1 py-1.5 text-on-surface-variant border border-transparent rounded font-label-caps text-label-caps text-center">CANVAS</button>
+</div>
+</header>
+<!-- Canvas (Recipe List) -->
+<main class="flex-1 px-4 py-4 flex flex-col gap-4">
+<!-- Node 1: Source Video -->
+<div class="bg-surface-container-low rounded-xl plate-effect p-4 flex justify-between items-center relative">
+<div class="flex flex-col gap-1">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Source video</h3>
+<div class="flex items-center gap-2">
+<span class="font-telemetry text-telemetry text-on-surface-variant">talk_2024.mp4</span>
+<div class="flex items-center gap-1">
+<div class="w-2 h-2 rounded-full bg-secondary"></div>
+<span class="font-telemetry-sm text-telemetry-sm text-secondary">Ready</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-7 h-7 bg-secondary flex items-center justify-center rounded-sm" title="Video Out">
+<span class="font-telemetry-sm text-[10px] text-on-secondary font-bold">OUT</span>
+</div>
+</div>
+<!-- Connector Line Down -->
+<div class="absolute left-1/2 -bottom-4 w-px h-4 bg-outline-variant"></div>
+</div>
+<!-- Node 2: Split audio -->
+<div class="bg-surface-container-low rounded-xl plate-effect p-4 flex justify-between items-center relative mt-2">
+<!-- Connector Line Up -->
+<div class="absolute left-1/2 -top-2 w-px h-2 bg-outline-variant"></div>
+<div class="flex items-center gap-3">
+<!-- IN Port -->
+<div class="w-7 h-7 bg-secondary flex items-center justify-center rounded-sm" title="Video In">
+<span class="font-telemetry-sm text-[10px] text-on-secondary font-bold">IN</span>
+</div>
+<div class="flex flex-col gap-1">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Split audio</h3>
+<div class="flex items-center gap-2 font-telemetry-sm text-telemetry-sm text-on-surface-variant">
+<span>ffmpeg demux</span>
+<span>•</span>
+<span>CPU</span>
+<span>•</span>
+<span>0m 04s</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<!-- OUT Ports -->
+<div class="flex gap-2">
+<div class="w-7 h-7 bg-secondary flex items-center justify-center rounded-sm"></div>
+<div class="w-7 h-7 rounded-full border-2 border-heat-throttle flex items-center justify-center relative">
+<div class="absolute -bottom-4 text-[9px] font-telemetry text-heat-throttle">AUDIO</div>
+</div>
+</div>
+</div>
+<!-- Connector Line Down (Error starts here) -->
+<div class="absolute left-3/4 -bottom-6 w-px h-6 bg-transparent"></div>
+</div>
+<!-- Node 3: Error State - Denoise Voice -->
+<div class="bg-surface-container-low rounded-xl error-plate-effect p-4 flex justify-between items-center relative mt-6">
+<div class="flex flex-col gap-1">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Denoise voice</h3>
+<div class="flex items-center gap-2 font-telemetry-sm text-telemetry-sm text-on-surface-variant">
+<span>GTCRN</span>
+<span>•</span>
+<span>CPU</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-7 h-7 rounded-full border-2 border-heat-throttle flex items-center justify-center relative">
+<div class="absolute -bottom-4 text-[9px] font-telemetry text-heat-throttle">AUDIO</div>
+</div>
+</div>
+<!-- Error Connection Graphic -->
+<div class="absolute left-[85%] -bottom-10 h-10 w-0 border-l-[3px] border-dashed border-[#ff8a80] flex items-center justify-center z-10">
+<div class="bg-surface-container-low rounded-full p-0.5 border border-[#ff8a80]">
+<span class="material-symbols-outlined text-[#ff8a80] text-[16px]">warning</span>
+</div>
+</div>
+</div>
+<!-- Node 4: Error State - Upscale Frames -->
+<div class="bg-surface-container-low rounded-xl error-plate-effect p-4 flex justify-between items-center relative mt-8">
+<div class="flex items-center gap-3">
+<!-- IN Port (Image) -->
+<div class="w-7 h-7 flex items-center justify-center relative">
+<svg class="transform rotate-180" fill="none" height="24" stroke="theme('colors.secondary')" stroke-width="2" viewbox="0 0 24 24" width="24">
+<polygon fill="theme('colors.surface-container-low')" points="12,2 22,20 2,20"></polygon>
+</svg>
+<div class="absolute -bottom-4 text-[9px] font-telemetry text-secondary">IMAGE</div>
+</div>
+<div class="flex flex-col gap-1">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Upscale frames</h3>
+<div class="flex items-center gap-2 font-telemetry-sm text-telemetry-sm text-on-surface-variant">
+<span>Real-ESRGAN</span>
+<span>•</span>
+<span>GPU</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Inline Error Message -->
+<div class="bg-[#3b0906] border border-[#8c2118] rounded-xl p-4 flex flex-col gap-2 mt-2">
+<div class="flex items-start gap-2">
+<span class="material-symbols-outlined text-[#ff8a80] text-[20px]">error</span>
+<p class="font-body-sm text-body-sm text-[#ffd6d1]">Audio output can't connect to an image input</p>
+</div>
+<a class="font-body-sm text-body-sm text-molten-copper-bright underline ml-7" href="#">Insert a step that converts audio to frames</a>
+</div>
+<!-- Node 5: Tier-Limited -->
+<div class="bg-surface-container-low rounded-xl plate-effect p-4 flex flex-col gap-3 mt-4 opacity-55 relative">
+<div class="flex justify-between items-start">
+<div class="flex flex-col gap-1">
+<h3 class="font-headline-sm text-headline-sm text-[#6a6a6d]">Video object removal</h3>
+<div class="flex items-center gap-2 font-telemetry-sm text-telemetry-sm text-[#6a6a6d]">
+<span>ProPainter</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-2 bg-surface-variant w-fit px-2 py-1 rounded">
+<span class="material-symbols-outlined text-[14px] text-[#6a6a6d]">memory</span>
+<span class="font-telemetry-sm text-telemetry-sm text-[#6a6a6d]">Needs 8 Gen 3 or newer</span>
+</div>
+<button class="w-full mt-1 py-2 border border-outline-variant text-on-surface-variant font-body-sm text-body-sm rounded">
+                Use LaMa object removal instead
+            </button>
+<div class="absolute left-1/2 -bottom-4 w-px h-4 bg-outline-variant"></div>
+</div>
+<!-- Node 6: Output -->
+<div class="bg-surface-container-low rounded-xl plate-effect p-4 flex items-center gap-3 mt-4 opacity-60 relative">
+<div class="absolute left-1/2 -top-4 w-px h-4 bg-outline-variant"></div>
+<!-- IN Port -->
+<div class="w-7 h-7 bg-secondary flex items-center justify-center rounded-sm">
+<span class="font-telemetry-sm text-[10px] text-on-secondary font-bold">IN</span>
+</div>
+<div class="flex flex-col gap-1">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Output</h3>
+<span class="font-telemetry text-telemetry text-on-surface-variant">reel_01.mp4</span>
+</div>
+</div>
+</main>
+<!-- Bottom Bar -->
+<div class="fixed bottom-0 w-full bg-[#181a1e] border-t border-plate-highlight p-4 pb-safe flex justify-between items-center shadow-[0_-4px_12px_rgba(0,0,0,0.5)] z-50">
+<div class="font-body-md text-body-md text-[#b3afa9]">
+            Fix 1 connection to run
+        </div>
+<button class="h-[48px] px-8 bg-[#2c2e34] text-on-surface-variant font-body-md text-body-md font-semibold rounded cursor-not-allowed" disabled="">
+            Run
+        </button>
+</div>
+</body></html>

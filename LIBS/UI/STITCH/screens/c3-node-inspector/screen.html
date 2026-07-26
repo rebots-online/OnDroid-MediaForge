@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>OnDroid MediaForge - Node Inspector</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Chivo:wght@400;600;700&amp;family=Inter:wght@400;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "background": "#1c110b",
+                        "surface-container-low": "#251913",
+                        "primary": "#ffb68e",
+                        "error": "#ffb4ab",
+                        "surface": "#1c110b",
+                        "surface-container": "#291d17",
+                        "surface-bright": "#44362f",
+                        "port-tensor": "#d4c77f",
+                        "surface-dim": "#1c110b",
+                        "on-surface": "#f5ded3",
+                        "plate-highlight": "#3f4045",
+                        "on-error": "#690005",
+                        "inverse-primary": "#9c4500",
+                        "surface-container-high": "#342720",
+                        "secondary-fixed-dim": "#7fd6cb",
+                        "on-secondary": "#003732",
+                        "port-image": "#9ad67f",
+                        "on-primary": "#542200",
+                        "molten-copper-bright": "#ffb077",
+                        "heat-idle": "#5a5b60",
+                        "on-tertiary": "#003355",
+                        "secondary-container": "#00726a",
+                        "heat-throttle": "#ffb300",
+                        "plate-shadow": "#08090a",
+                        "surface-container-highest": "#40322b",
+                        "on-tertiary-container": "#002f4f",
+                        "surface-graphite": "#121316",
+                        "secondary-fixed": "#9bf2e7",
+                        "tertiary": "#99cbff",
+                        "surface-container-lowest": "#160c07",
+                        "error-container": "#93000a",
+                        "primary-fixed": "#ffdbca",
+                        "primary-fixed-dim": "#ffb68e",
+                        "on-error-container": "#ffdad6",
+                        "on-primary-fixed": "#331200",
+                        "on-secondary-container": "#9cf4e8",
+                        "port-mask": "#e88ac4",
+                        "on-secondary-fixed": "#00201d",
+                        "inverse-on-surface": "#3b2e27",
+                        "tertiary-fixed-dim": "#99cbff",
+                        "on-background": "#f5ded3",
+                        "primary-container": "#ed7014",
+                        "outline": "#a78b7d",
+                        "tertiary-fixed": "#cfe5ff",
+                        "tertiary-container": "#009af3",
+                        "on-primary-container": "#4e1f00",
+                        "on-tertiary-fixed-variant": "#004a78",
+                        "surface-tint": "#ffb68e",
+                        "on-primary-fixed-variant": "#773300",
+                        "heat-hot": "#ff5722",
+                        "on-tertiary-fixed": "#001d34",
+                        "on-secondary-fixed-variant": "#00504a",
+                        "inverse-surface": "#f5ded3",
+                        "port-text": "#a8c7e8",
+                        "secondary": "#7fd6cb",
+                        "surface-variant": "#40322b",
+                        "on-surface-variant": "#dfc0b1",
+                        "outline-variant": "#584237"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "touch-min": "44px",
+                        "node-row-height": "72px",
+                        "margin-mobile": "20px",
+                        "gutter": "16px",
+                        "base": "8px"
+                    },
+                    "fontFamily": {
+                        "telemetry": ["JetBrains Mono"],
+                        "headline-md": ["Chivo"],
+                        "body-lg": ["Inter"],
+                        "telemetry-sm": ["JetBrains Mono"],
+                        "body-md": ["Inter"],
+                        "headline-sm": ["Chivo"],
+                        "label-caps": ["Inter"],
+                        "headline-lg": ["Chivo"],
+                        "body-sm": ["Inter"]
+                    },
+                    "fontSize": {
+                        "telemetry": ["13px", { "lineHeight": "20px", "fontWeight": "450" }],
+                        "headline-md": ["22px", { "lineHeight": "28px", "fontWeight": "700" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "telemetry-sm": ["11px", { "lineHeight": "16px", "fontWeight": "400" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+                        "label-caps": ["11px", { "lineHeight": "16px", "letterSpacing": "0.06em", "fontWeight": "700" }],
+                        "headline-lg": ["30px", { "lineHeight": "38px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "body-sm": ["13px", { "lineHeight": "18px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .plate-effect {
+            box-shadow: inset 0 1px 0 theme('colors.plate-highlight'), 0 2px 4px theme('colors.plate-shadow');
+            border: 1px solid theme('colors.outline-variant');
+        }
+        .scrim {
+            background-color: rgba(0, 0, 0, 0.6);
+        }
+        /* Custom styles for specific elements not fully covered by tokens */
+        .sheet-bg { background-color: #1d1f23; }
+        .plate-bg { background-color: #181a1e; }
+        .slider-thumb {
+            width: 24px;
+            height: 32px;
+            background-color: #e8e6e3;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .slider-track {
+            height: 8px;
+            background-color: #3f4045;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .slider-fill {
+            height: 100%;
+            background-color: theme('colors.primary-container');
+            width: 65%;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface h-screen w-screen overflow-hidden flex flex-col antialiased selection:bg-primary-container selection:text-on-primary-container relative">
+<!-- Background Layer (Inactive Recipe Editor) -->
+<div class="absolute inset-0 p-margin-mobile flex flex-col gap-base filter blur-[1px]">
+<div class="flex justify-between items-center h-touch-min mb-4">
+<h1 class="font-headline-lg text-headline-lg">Portrait retouch</h1>
+<div class="flex items-center gap-2 bg-surface-container-high border border-outline-variant rounded px-3 h-8 plate-effect">
+<span class="material-symbols-outlined text-molten-copper-bright text-[16px]">device_thermostat</span>
+<span class="font-telemetry text-telemetry text-molten-copper-bright uppercase">RUNNING</span>
+</div>
+</div>
+<!-- Dummy node card edge -->
+<div class="plate-bg plate-effect rounded-lg p-4 opacity-50">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Face Detection</h3>
+<p class="font-telemetry-sm text-telemetry-sm text-on-surface-variant mt-2">NPU active</p>
+</div>
+</div>
+<!-- Scrim -->
+<div class="absolute inset-0 scrim z-10"></div>
+<!-- Bottom Sheet -->
+<div class="absolute bottom-0 left-0 w-full h-[636px] sheet-bg z-20 rounded-t-xl shadow-[0_-8px_24px_rgba(8,9,10,0.55)] flex flex-col">
+<!-- Drag Handle -->
+<div class="w-full flex justify-center pt-3 pb-2">
+<div class="w-[40px] h-[4px] bg-[#8a857e] rounded-full"></div>
+</div>
+<!-- Sheet Header -->
+<div class="px-margin-mobile pb-4 flex justify-between items-center border-b border-outline-variant">
+<h2 class="font-headline-md text-headline-md">Generative fill</h2>
+<div class="flex gap-2">
+<!-- Port Shapes (Touch targets 44px) -->
+<div class="w-touch-min h-touch-min flex items-center justify-center border border-outline-variant rounded plate-bg">
+<div class="w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-b-[14px] border-b-port-image"></div>
+</div>
+<div class="w-touch-min h-touch-min flex items-center justify-center border border-outline-variant rounded plate-bg">
+<div class="w-3 h-3 bg-port-mask rotate-45"></div>
+</div>
+<div class="w-touch-min h-touch-min flex items-center justify-center border border-outline-variant rounded plate-bg">
+<div class="w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-b-[14px] border-b-port-image"></div>
+</div>
+</div>
+</div>
+<!-- Scrollable Content -->
+<div class="flex-1 overflow-y-auto p-margin-mobile flex flex-col gap-base pb-24">
+<!-- MODEL -->
+<div class="plate-bg plate-effect rounded-lg p-4 flex flex-col gap-2">
+<span class="font-label-caps text-label-caps text-on-surface-variant">MODEL</span>
+<div class="flex justify-between items-center w-full min-h-touch-min">
+<span class="font-telemetry text-telemetry">SD1.5 inpaint (w8a16)</span>
+<span class="material-symbols-outlined text-on-surface-variant">expand_more</span>
+</div>
+</div>
+<!-- BACKEND -->
+<div class="plate-bg plate-effect rounded-lg p-4 flex flex-col gap-2">
+<span class="font-label-caps text-label-caps text-on-surface-variant">BACKEND</span>
+<div class="flex items-center gap-3 min-h-touch-min">
+<div class="bg-surface-container-high border border-outline-variant rounded px-2 h-6 flex items-center gap-1">
+<span class="material-symbols-outlined text-molten-copper-bright text-[14px]">memory</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface">NPU</span>
+</div>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant flex-1">1.1 s per image</span>
+<span class="font-body-sm text-body-sm text-secondary">Accelerated</span>
+</div>
+</div>
+<!-- STRENGTH -->
+<div class="plate-bg plate-effect rounded-lg p-4 flex flex-col gap-4">
+<div class="flex justify-between items-center">
+<span class="font-label-caps text-label-caps text-on-surface-variant">STRENGTH</span>
+<span class="font-telemetry text-telemetry text-primary">0.65</span>
+</div>
+<div class="relative w-full h-8 flex items-center min-h-touch-min">
+<div class="absolute w-full slider-track">
+<div class="slider-fill"></div>
+</div>
+<div class="absolute slider-thumb" style="left: 65%; transform: translateX(-50%);"></div>
+</div>
+</div>
+<!-- STEPS & SEED Row -->
+<div class="flex gap-base">
+<!-- STEPS -->
+<div class="plate-bg plate-effect rounded-lg p-4 flex-1 flex flex-col gap-2">
+<span class="font-label-caps text-label-caps text-on-surface-variant">STEPS</span>
+<div class="flex justify-between items-center min-h-touch-min">
+<button class="w-8 h-8 rounded bg-surface-container flex items-center justify-center text-molten-copper-bright hover:bg-surface-bright active:scale-95 transition-all">
+<span class="material-symbols-outlined">remove</span>
+</button>
+<span class="font-telemetry text-telemetry text-[16px]">20</span>
+<button class="w-8 h-8 rounded bg-surface-container flex items-center justify-center text-molten-copper-bright hover:bg-surface-bright active:scale-95 transition-all">
+<span class="material-symbols-outlined">add</span>
+</button>
+</div>
+</div>
+<!-- SEED -->
+<div class="plate-bg plate-effect rounded-lg p-4 flex-[1.5] flex flex-col gap-2">
+<span class="font-label-caps text-label-caps text-on-surface-variant">SEED</span>
+<div class="flex justify-between items-center min-h-touch-min bg-surface-container-low px-2 rounded border border-outline-variant">
+<span class="font-telemetry text-telemetry text-on-surface">184203771</span>
+<button class="flex items-center gap-1 text-primary hover:text-molten-copper-bright active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[18px]">casino</span>
+</button>
+</div>
+</div>
+</div>
+<!-- PROMPT -->
+<div class="plate-bg plate-effect rounded-lg p-4 flex flex-col gap-2">
+<span class="font-label-caps text-label-caps text-on-surface-variant">PROMPT</span>
+<textarea class="w-full bg-transparent border-none text-on-surface font-body-md text-body-md p-0 focus:ring-0 resize-none h-16 min-h-touch-min" placeholder="Enter prompt...">soft daylight from the left, clean plaster wall</textarea>
+</div>
+<!-- METERED NOTE -->
+<div class="plate-bg plate-effect rounded-lg p-4 flex flex-col gap-1 border-l-2 border-l-heat-throttle bg-[#292211]">
+<p class="font-telemetry text-telemetry text-port-tensor">This node costs 1 credit per generation</p>
+<p class="font-telemetry-sm text-telemetry-sm text-on-surface-variant">Balance 14 credits</p>
+</div>
+</div>
+<!-- Pinned Action Bar -->
+<div class="absolute bottom-0 w-full plate-bg border-t border-outline-variant p-4 flex justify-between items-center">
+<button class="min-w-[100px] h-touch-min flex items-center justify-center bg-transparent border border-outline text-[#ff8a80] rounded hover:bg-surface-bright active:scale-95 transition-all font-headline-sm text-headline-sm">
+                Remove
+            </button>
+<button class="min-w-[120px] h-touch-min flex items-center justify-center bg-primary-container text-on-primary-container rounded hover:bg-molten-copper-bright active:scale-95 transition-all font-headline-sm text-headline-sm px-6">
+                Done
+            </button>
+</div>
+</div>
+</body></html>

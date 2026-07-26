@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Model License Bottom Sheet</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Chivo:wght@400;600;700&amp;family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-tint": "#ffb68e",
+                      "port-mask": "#e88ac4",
+                      "surface-bright": "#44362f",
+                      "on-primary-fixed-variant": "#773300",
+                      "heat-idle": "#5a5b60",
+                      "on-secondary-fixed-variant": "#00504a",
+                      "heat-throttle": "#ffb300",
+                      "surface-container": "#291d17",
+                      "on-tertiary-container": "#002f4f",
+                      "primary-fixed": "#ffdbca",
+                      "molten-copper-bright": "#ffb077",
+                      "surface-container-low": "#251913",
+                      "on-secondary-container": "#9cf4e8",
+                      "plate-shadow": "#08090a",
+                      "primary-fixed-dim": "#ffb68e",
+                      "on-primary": "#542200",
+                      "tertiary-container": "#009af3",
+                      "surface-container-lowest": "#160c07",
+                      "surface": "#1c110b",
+                      "on-error-container": "#ffdad6",
+                      "inverse-primary": "#9c4500",
+                      "on-tertiary-fixed-variant": "#004a78",
+                      "inverse-surface": "#f5ded3",
+                      "on-secondary": "#003732",
+                      "surface-dim": "#1c110b",
+                      "surface-container-highest": "#40322b",
+                      "outline": "#a78b7d",
+                      "inverse-on-surface": "#3b2e27",
+                      "background": "#1c110b",
+                      "secondary-container": "#00726a",
+                      "on-background": "#f5ded3",
+                      "primary-container": "#ed7014",
+                      "on-surface": "#f5ded3",
+                      "surface-variant": "#40322b",
+                      "secondary-fixed-dim": "#7fd6cb",
+                      "error": "#ffb4ab",
+                      "secondary-fixed": "#9bf2e7",
+                      "on-secondary-fixed": "#00201d",
+                      "on-primary-container": "#4e1f00",
+                      "on-tertiary-fixed": "#001d34",
+                      "tertiary": "#99cbff",
+                      "tertiary-fixed-dim": "#99cbff",
+                      "plate-highlight": "#3f4045",
+                      "surface-container-high": "#342720",
+                      "primary": "#ffb68e",
+                      "on-error": "#690005",
+                      "outline-variant": "#584237",
+                      "on-primary-fixed": "#331200",
+                      "surface-graphite": "#121316",
+                      "on-tertiary": "#003355",
+                      "port-text": "#a8c7e8",
+                      "on-surface-variant": "#dfc0b1",
+                      "secondary": "#7fd6cb",
+                      "heat-hot": "#ff5722",
+                      "tertiary-fixed": "#cfe5ff",
+                      "port-image": "#9ad67f",
+                      "port-tensor": "#d4c77f",
+                      "error-container": "#93000a"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "node-row-height": "72px",
+                      "margin-mobile": "20px",
+                      "base": "8px",
+                      "touch-min": "44px",
+                      "gutter": "16px"
+              },
+              "fontFamily": {
+                      "telemetry-sm": [
+                              "JetBrains Mono"
+                      ],
+                      "body-lg": [
+                              "Inter"
+                      ],
+                      "headline-lg": [
+                              "Chivo"
+                      ],
+                      "headline-md": [
+                              "Chivo"
+                      ],
+                      "headline-sm": [
+                              "Chivo"
+                      ],
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "telemetry": [
+                              "JetBrains Mono"
+                      ],
+                      "label-caps": [
+                              "Inter"
+                      ],
+                      "body-sm": [
+                              "Inter"
+                      ]
+              },
+              "fontSize": {
+                      "telemetry-sm": [
+                              "11px",
+                              {
+                                      "lineHeight": "16px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-lg": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-lg": [
+                              "30px",
+                              {
+                                      "lineHeight": "38px",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-md": [
+                              "22px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-sm": [
+                              "18px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "telemetry": [
+                              "13px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "450"
+                              }
+                      ],
+                      "label-caps": [
+                              "11px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.06em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-sm": [
+                              "13px",
+                              {
+                                      "lineHeight": "18px",
+                                      "fontWeight": "400"
+                              }
+                      ]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        .machined-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .machined-scrollbar::-webkit-scrollbar-track {
+            background: #121316;
+            border-radius: 2px;
+        }
+        .machined-scrollbar::-webkit-scrollbar-thumb {
+            background: #584237;
+            border-radius: 2px;
+        }
+        .machined-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #a78b7d;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface min-h-screen relative font-body-md overflow-hidden">
+<!-- Background Content (Faintly visible) -->
+<div class="absolute inset-0 z-0 p-margin-mobile opacity-40">
+<h1 class="font-headline-md text-headline-md mb-gutter">Available Models</h1>
+<div class="space-y-base">
+<div class="border border-outline-variant bg-surface-container p-gutter rounded relative">
+<div class="absolute top-0 left-0 right-0 h-[1px] bg-plate-highlight rounded-t"></div>
+<h2 class="font-headline-sm text-headline-sm">Stable Diffusion 1.5</h2>
+<p class="font-telemetry-sm text-telemetry-sm text-on-surface-variant mt-1">1.4 GB / NPU Ready</p>
+</div>
+<div class="border border-outline-variant bg-surface-container p-gutter rounded relative">
+<div class="absolute top-0 left-0 right-0 h-[1px] bg-plate-highlight rounded-t"></div>
+<h2 class="font-headline-sm text-headline-sm">Llama 3 8B Instruct</h2>
+<p class="font-telemetry-sm text-telemetry-sm text-on-surface-variant mt-1">4.2 GB / GPU Only</p>
+</div>
+</div>
+</div>
+<!-- Overlay -->
+<div class="absolute inset-0 bg-background/80 z-10 transition-opacity"></div>
+<!-- Bottom Sheet -->
+<div class="absolute bottom-0 left-0 right-0 h-[636px] bg-[#1d1f23] rounded-t-xl z-20 flex flex-col border-t border-x border-[#3f4045] shadow-[0_-8px_24px_rgba(8,9,10,0.55)]">
+<!-- Top Highlight -->
+<div class="absolute top-0 left-0 right-0 h-[1px] bg-plate-highlight rounded-t-xl opacity-50"></div>
+<!-- Drag Handle -->
+<div class="w-full flex justify-center py-3 shrink-0">
+<div class="w-12 h-1 bg-[#8a857e] rounded-full"></div>
+</div>
+<!-- Scrollable Content -->
+<div class="flex-1 overflow-y-auto px-margin-mobile pb-gutter machined-scrollbar">
+<!-- Header -->
+<div class="mb-6 mt-2">
+<h2 class="font-headline-md text-headline-md">Stable Diffusion 1.5 inpaint</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">Generative fill · runs on this device</p>
+</div>
+<!-- Specification Plate -->
+<div class="border border-outline-variant rounded bg-surface-container-low mb-6 relative">
+<div class="absolute top-0 left-0 right-0 h-[1px] bg-plate-highlight rounded-t opacity-30"></div>
+<div class="flex justify-between items-center px-4 py-3 border-b border-outline-variant">
+<span class="font-body-sm text-body-sm text-on-surface-variant">License</span>
+<span class="font-body-sm text-body-sm">CreativeML Open RAIL-M</span>
+</div>
+<div class="flex justify-between items-center px-4 py-3 border-b border-outline-variant">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Download size</span>
+<span class="font-telemetry-sm text-telemetry-sm">1.4 GB</span>
+</div>
+<div class="flex justify-between items-center px-4 py-3 border-b border-outline-variant">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Publisher</span>
+<span class="font-body-sm text-body-sm">Runway / Stability AI</span>
+</div>
+<div class="flex justify-between items-center px-4 py-3">
+<span class="font-body-sm text-body-sm text-on-surface-variant flex flex-col">
+<span>Quantisation</span>
+<span class="text-[10px] leading-[14px]">8-bit weights, 16-bit activations</span>
+</span>
+<span class="font-telemetry-sm text-telemetry-sm">w8a16</span>
+</div>
+</div>
+<!-- Amber Callout -->
+<div class="border-l-[3px] border-heat-throttle bg-[#ffb300]/10 p-4 mb-6 rounded-r flex gap-3">
+<span class="material-symbols-outlined text-heat-throttle shrink-0" data-icon="description" data-weight="fill" style="font-variation-settings: 'FILL' 1;">description</span>
+<div>
+<p class="font-body-sm text-body-sm text-on-surface mb-2">
+                        This license places restrictions on usage, including prohibitions against generating illegal or harmful content. You must agree to the terms outlined in Attachment A.
+                    </p>
+</div>
+</div>
+<!-- License Text Area -->
+<div class="mb-4">
+<label class="font-label-caps text-label-caps text-on-surface-variant block mb-2 uppercase">License Text</label>
+<div class="bg-surface-graphite border border-outline-variant rounded-lg p-4 h-48 overflow-y-auto machined-scrollbar font-telemetry-sm text-telemetry-sm text-on-surface-variant leading-relaxed">
+<p class="mb-4 text-on-surface font-semibold">Section I: PREAMBLE</p>
+<p class="mb-4">This license enables you to use the model weights and associated code for research and commercial purposes, subject to the restrictions herein.</p>
+<p class="mb-4 text-on-surface font-semibold">Section II: USAGE EXEMPTIONS</p>
+<p class="mb-4">You agree not to use the model to deliberately produce or share illegal or harmful content, as defined in Attachment A.</p>
+<p class="mb-4 text-on-surface font-semibold">Attachment A: RESTRICTIONS</p>
+<p class="mb-4">1. Hate speech, discrimination, or violence.<br/>2. Defamatory or harassing content.<br/>3. Non-consensual explicit content.<br/>4. Fraudulent or deceptive material.</p>
+<p>Failure to comply with these terms will result in immediate termination of this license.</p>
+</div>
+</div>
+</div>
+<!-- Pinned Actions -->
+<div class="p-margin-mobile border-t border-outline-variant bg-[#1d1f23] shrink-0">
+<div class="flex gap-4">
+<button class="flex-1 h-touch-min border border-[#8a857e] rounded text-molten-copper-bright font-label-caps text-label-caps uppercase flex items-center justify-center transition-colors hover:bg-surface-variant">
+                    Cancel
+                </button>
+<div class="flex-[2] flex flex-col items-center">
+<button class="w-full h-touch-min bg-primary-container rounded text-[#2e1200] font-label-caps text-label-caps uppercase flex items-center justify-center gap-2 transition-transform active:scale-95">
+<span class="material-symbols-outlined text-[18px]" data-icon="download">download</span>
+                        Accept and download
+                    </button>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant mt-2 block text-center w-full">1.4 GB over your connection</span>
+</div>
+</div>
+</div>
+</div>
+</body></html>
