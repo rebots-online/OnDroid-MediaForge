@@ -43,7 +43,7 @@ as a `thiserror` enum with variants `Io(std::io::Error)`, `Serde(serde_json::Err
 
 ---
 
-### [ ] T2 — Graph types
+### [X] T2 — Graph types
 
 **Files:** create `crates/forge-core/src/graph.rs`; modify
 `crates/forge-core/src/lib.rs` to add `pub mod graph;`
