@@ -10,6 +10,7 @@ pub mod assets;
 pub mod availability;
 pub mod capability;
 pub mod checkpoint;
+pub mod diagnostics;
 pub mod entitlement;
 pub mod graph;
 pub mod pipeline;

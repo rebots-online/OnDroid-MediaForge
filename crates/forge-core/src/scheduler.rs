@@ -14,8 +14,9 @@ use std::sync::{Arc, Mutex};
 use std::time::Instant;
 
 use crate::assets::AssetStore;
-use crate::capability::SocProfile;
+use crate::capability::{Backend, SocProfile};
 use crate::checkpoint::{plan_hash, CheckpointStore, JobCheckpoint};
+use crate::diagnostics::{DiagnosticEvent, DiagnosticsSink};
 use crate::graph::{Graph, NodeId};
 use crate::thermal::{ThermalAction, ThermalGovernor, ThermalState};
 use crate::validate::{validate_graph, ValidationError};
@@ -234,6 +235,7 @@ impl Scheduler {
         &mut self,
         plan: &JobPlan,
         sink: &mut dyn ProgressSink,
+        diag: &mut dyn DiagnosticsSink,
         cancel: &CancelToken,
     ) -> Result<RunOutcome, CoreError> {
         let hash = self
@@ -255,6 +257,8 @@ impl Scheduler {
             None => None,
         };
 
+        let mut prev_thermal = self.governor.state();
+
         for segment in &plan.segments {
             if resume_after.is_some_and(|last| segment.id <= last) {
                 continue;
@@ -263,21 +267,71 @@ impl Scheduler {
                 return Ok(RunOutcome::Cancelled { at: segment.id });
             }
             if self.governor.step(self.headroom) == ThermalAction::Pause {
-                sink.thermal(self.governor.state());
+                let now = self.governor.state();
+                if now != prev_thermal {
+                    diag.record(DiagnosticEvent::ThermalTransition {
+                        from: prev_thermal,
+                        to: now,
+                        headroom: self.headroom,
+                    });
+                }
+                sink.thermal(now);
                 return Ok(RunOutcome::PausedForHeat { at: segment.id });
             }
-            sink.thermal(self.governor.state());
+            let now = self.governor.state();
+            if now != prev_thermal {
+                diag.record(DiagnosticEvent::ThermalTransition {
+                    from: prev_thermal,
+                    to: now,
+                    headroom: self.headroom,
+                });
+                prev_thermal = now;
+            }
+            sink.thermal(now);
+
+            let backend = best_backend_for(self.headroom);
+            diag.record(DiagnosticEvent::StageStarted {
+                node: segment.node.clone(),
+                backend,
+            });
 
             let started = Instant::now();
-            let output = self.runner.run_segment(segment)?;
+            let output = match self.runner.run_segment(segment) {
+                Ok(output) => output,
+                Err(e) => {
+                    diag.record(DiagnosticEvent::Failed {
+                        node: segment.node.clone(),
+                        cause: e.to_string(),
+                    });
+                    return Err(e);
+                }
+            };
+            let elapsed_ms = started.elapsed().as_millis() as u64;
             self.assets.put(&output)?;
             self.checkpoints
                 .record(&JobCheckpoint::new(&plan.job_id, segment.id, &hash))?;
-            sink.segment_done(segment.id, started.elapsed().as_millis() as u64);
+            sink.segment_done(segment.id, elapsed_ms);
+            diag.record(DiagnosticEvent::StageFinished {
+                node: segment.node.clone(),
+                elapsed_ms,
+            });
         }
 
         self.checkpoints.clear(&plan.job_id)?;
         Ok(RunOutcome::Completed)
+    }
+}
+
+/// The backend a segment runs on given the current thermal headroom. The
+/// governor degrades NPU → GPU → CPU as headroom falls; this helper reports
+/// which backend is in effect so `StageStarted` carries a real value.
+fn best_backend_for(headroom: f32) -> Backend {
+    if headroom > 0.5 {
+        Backend::Npu
+    } else if headroom > 0.15 {
+        Backend::Gpu
+    } else {
+        Backend::Cpu
     }
 }
 

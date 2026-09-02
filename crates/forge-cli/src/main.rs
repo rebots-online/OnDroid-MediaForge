@@ -17,6 +17,7 @@ use anyhow::{anyhow, bail, Context};
 use forge_core::assets::AssetStore;
 use forge_core::capability::{probe_device, DeviceTier, SocProfile};
 use forge_core::checkpoint::CheckpointStore;
+use forge_core::diagnostics::VecSink;
 use forge_core::entitlement::{gated_with_entitlement, NullEntitlementService};
 use forge_core::graph::{NodeId, NodeKind};
 use forge_core::pipeline::PipelineDoc;
@@ -263,8 +264,9 @@ fn run(options: Options) -> anyhow::Result<()> {
         last_state: None,
     };
     let started = Instant::now();
+    let mut diag = VecSink::default();
     let outcome = scheduler
-        .run(&plan, &mut sink, &CancelToken::new())
+        .run(&plan, &mut sink, &mut diag, &CancelToken::new())
         .context("running the plan")?;
     summarise(&plan, &sink, &outcome, started.elapsed().as_millis());
 

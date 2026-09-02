@@ -3,6 +3,7 @@
 
 use super::*;
 use crate::capability::{Backend, DeviceTier, PROBE_SCHEMA_VERSION};
+use crate::diagnostics::VecSink;
 use crate::graph::{Edge, NodeKind, NodeSpec};
 use crate::testdir::TestDir;
 use std::path::Path;
@@ -150,7 +151,8 @@ fn a_killed_and_resumed_run_executes_each_segment_exactly_once() {
     );
     let plan = first.plan(&chain(), &profile(DeviceTier::T0)).expect("plan");
     let mut sink = RecordingSink::default();
-    let outcome = first.run(&plan, &mut sink, &token).expect("first run");
+    let mut diag = VecSink::default();
+    let outcome = first.run(&plan, &mut sink, &mut diag, &token).expect("first run");
     assert_eq!(outcome, RunOutcome::Cancelled { at: SegmentId(3) });
     assert_eq!(sink.done, vec![SegmentId(0), SegmentId(1), SegmentId(2)]);
 
@@ -167,8 +169,9 @@ fn a_killed_and_resumed_run_executes_each_segment_exactly_once() {
     let replan = second.plan(&chain(), &profile(DeviceTier::T0)).expect("plan");
     assert_eq!(replan.job_id, plan.job_id, "the same graph is the same job");
     let mut sink = RecordingSink::default();
+    let mut diag = VecSink::default();
     let fresh = CancelToken::new();
-    let outcome = second.run(&replan, &mut sink, &fresh).expect("second run");
+    let outcome = second.run(&replan, &mut sink, &mut diag, &fresh).expect("second run");
     assert_eq!(outcome, RunOutcome::Completed);
     assert_eq!(
         sink.done,
@@ -203,7 +206,8 @@ fn an_edited_pipeline_does_not_resume_onto_the_old_checkpoint() {
     );
     let plan = first.plan(&chain(), &profile(DeviceTier::T0)).expect("plan");
     let mut sink = RecordingSink::default();
-    first.run(&plan, &mut sink, &token).expect("first run");
+    let mut diag = VecSink::default();
+    first.run(&plan, &mut sink, &mut diag, &token).expect("first run");
 
     // Same shape, different parameters: the job id is unchanged but the
     // plan hash is not, so the checkpoint is discarded.
@@ -224,8 +228,9 @@ fn an_edited_pipeline_does_not_resume_onto_the_old_checkpoint() {
     let replan = second.plan(&edited, &profile(DeviceTier::T0)).expect("plan");
     assert_eq!(replan.job_id, plan.job_id);
     let mut sink = RecordingSink::default();
+    let mut diag = VecSink::default();
     let outcome = second
-        .run(&replan, &mut sink, &CancelToken::new())
+        .run(&replan, &mut sink, &mut diag, &CancelToken::new())
         .expect("second run");
     assert_eq!(outcome, RunOutcome::Completed);
     assert_eq!(
@@ -242,8 +247,9 @@ fn a_hot_device_pauses_instead_of_running_the_next_segment() {
     let plan = s.plan(&chain(), &profile(DeviceTier::T0)).expect("plan");
     s.set_headroom(1.0);
     let mut sink = RecordingSink::default();
+    let mut diag = VecSink::default();
     let outcome = s
-        .run(&plan, &mut sink, &CancelToken::new())
+        .run(&plan, &mut sink, &mut diag, &CancelToken::new())
         .expect("run");
 
     // Three derations run their segments; the fourth boundary pauses.
