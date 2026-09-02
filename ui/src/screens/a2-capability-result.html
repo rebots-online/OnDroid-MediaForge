@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>OnDroid MediaForge - Hardware Capability Probe</title>
+<script src="/src/assets/tailwind.js"></script>
+<link rel="stylesheet" href="/src/assets/fonts.css"/>
+<link rel="stylesheet" href="/src/assets/fonts.css"/>
+<link rel="stylesheet" href="/src/assets/fonts.css"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "port-tensor": "#d4c77f",
+                        "outline": "#8a857e",
+                        "surface-container": "#1d1f23",
+                        "tertiary-fixed": "#cfe5ff",
+                        "on-background": "#e8e6e3",
+                        "on-secondary-fixed-variant": "#00504a",
+                        "heat-idle": "#5a5b60",
+                        "surface-bright": "#44362f",
+                        "on-error": "#690005",
+                        "on-surface-variant": "#b3afa9",
+                        "on-primary-fixed": "#331200",
+                        "secondary": "#7fd6cb",
+                        "primary-fixed-dim": "#ffb077",
+                        "plate-shadow": "#08090a",
+                        "inverse-primary": "#9c4500",
+                        "port-image": "#9ad67f",
+                        "inverse-on-surface": "#3b2e27",
+                        "surface-container-high": "#24262b",
+                        "surface-graphite": "#121316",
+                        "primary-fixed": "#ffdbca",
+                        "primary": "#ffb077",
+                        "error": "#ffb4ab",
+                        "surface-container-highest": "#2c2e34",
+                        "on-primary": "#542200",
+                        "secondary-container": "#00726a",
+                        "secondary-fixed": "#9bf2e7",
+                        "on-primary-fixed-variant": "#773300",
+                        "heat-throttle": "#ffb300",
+                        "heat-hot": "#ff5722",
+                        "on-tertiary": "#003355",
+                        "background": "#121316",
+                        "on-surface": "#e8e6e3",
+                        "tertiary-fixed-dim": "#a8c7e8",
+                        "surface-container-lowest": "#08090a",
+                        "tertiary-container": "#009af3",
+                        "on-secondary": "#003732",
+                        "on-secondary-container": "#9cf4e8",
+                        "surface": "#121316",
+                        "on-tertiary-fixed-variant": "#004a78",
+                        "surface-dim": "#121316",
+                        "on-primary-container": "#4e1f00",
+                        "primary-container": "#ed7014",
+                        "on-error-container": "#ffdad6",
+                        "surface-variant": "#2c2e34",
+                        "plate-highlight": "#3f4045",
+                        "error-container": "#93000a",
+                        "molten-copper-bright": "#ffb077",
+                        "inverse-surface": "#e8e6e3",
+                        "outline-variant": "#3f4045",
+                        "port-text": "#a8c7e8",
+                        "secondary-fixed-dim": "#7fd6cb",
+                        "port-mask": "#e88ac4",
+                        "surface-tint": "#ffb077",
+                        "on-secondary-fixed": "#00201d",
+                        "tertiary": "#a8c7e8",
+                        "surface-container-low": "#181a1e",
+                        "on-tertiary-container": "#002f4f",
+                        "on-tertiary-fixed": "#001d34"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "base": "8px",
+                        "touch-min": "44px",
+                        "margin-mobile": "20px",
+                        "gutter": "16px",
+                        "node-row-height": "72px"
+                    },
+                    "fontFamily": {
+                        "body-sm": ["Inter"],
+                        "telemetry-sm": ["JetBrains Mono"],
+                        "headline-sm": ["Chivo"],
+                        "headline-md": ["Chivo"],
+                        "headline-lg": ["Chivo"],
+                        "body-md": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "telemetry": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "body-sm": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+                        "telemetry-sm": ["11px", { "lineHeight": "16px", "fontWeight": "400" }],
+                        "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+                        "headline-md": ["22px", { "lineHeight": "28px", "fontWeight": "700" }],
+                        "headline-lg": ["30px", { "lineHeight": "38px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "label-caps": ["11px", { "lineHeight": "16px", "letterSpacing": "0.06em", "fontWeight": "700" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "telemetry": ["13px", { "lineHeight": "20px", "fontWeight": "450" }]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .plate-effect {
+            border: 1px solid var(--tw-colors-outline-variant, #3f4045);
+            border-top: 1px solid var(--tw-colors-plate-highlight, #3f4045);
+            box-shadow: 0 1px 2px 0 var(--tw-colors-plate-shadow, #08090a);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface-graphite text-on-surface antialiased min-h-screen flex flex-col font-body-md selection:bg-surface-variant selection:text-primary">
+<!-- Top Bar -->
+<header class="flex justify-between items-center w-full px-margin-mobile h-node-row-height border-b border-outline-variant bg-surface-graphite">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-headline-sm font-headline-sm text-primary">precision_manufacturing</span>
+<span class="text-headline-sm font-headline-sm font-bold text-on-surface tracking-tighter">MEDIAFORGE</span>
+</div>
+<div class="flex gap-gutter">
+<!-- Thermal Chip -->
+<div class="flex items-center gap-1 px-2 py-1 rounded-DEFAULT border border-outline-variant">
+<span class="material-symbols-outlined text-heat-idle text-[14px]">thermostat</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant">IDLE</span>
+</div>
+<!-- Privacy Chip -->
+<div class="flex items-center gap-1 px-2 py-1 rounded-DEFAULT border border-outline-variant hidden md:flex">
+<span class="material-symbols-outlined text-on-surface-variant text-[14px]">shield</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant">Media stays on device</span>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow p-margin-mobile flex flex-col gap-gutter max-w-3xl mx-auto w-full pb-32">
+<!-- Title -->
+<h1 class="font-headline-md text-headline-md text-on-surface mt-base">What this device can do</h1>
+<!-- Hardware Plate -->
+<section class="bg-surface-container rounded-lg plate-effect p-gutter flex flex-col gap-base mt-base">
+<div class="flex justify-between items-start">
+<div class="flex flex-col gap-1">
+<span class="font-telemetry text-telemetry text-on-surface">Snapdragon 888 · Hexagon 780 (V68) · 12 GB</span>
+</div>
+</div>
+<div class="inline-flex items-center px-2 py-1 rounded-DEFAULT border border-primary w-fit">
+<span class="font-label-caps text-label-caps text-primary uppercase">TIER 0 — BASELINE</span>
+</div>
+</section>
+<!-- Runs On This Device Section -->
+<section class="mt-margin-mobile flex flex-col gap-base">
+<h2 class="font-label-caps text-label-caps text-on-surface-variant uppercase">RUNS ON THIS DEVICE</h2>
+<div class="bg-surface-container rounded-lg plate-effect flex flex-col">
+<!-- Standard Rows -->
+<div class="flex items-center gap-3 p-gutter border-b border-outline-variant">
+<div class="w-2 h-2 rounded-full bg-port-image flex-shrink-0"></div>
+<span class="font-body-md text-body-md text-on-surface">Voice denoise</span>
+</div>
+<div class="flex items-center gap-3 p-gutter border-b border-outline-variant">
+<div class="w-2 h-2 rounded-full bg-port-image flex-shrink-0"></div>
+<span class="font-body-md text-body-md text-on-surface">Isolate voice</span>
+</div>
+<div class="flex items-center gap-3 p-gutter border-b border-outline-variant">
+<div class="w-2 h-2 rounded-full bg-port-image flex-shrink-0"></div>
+<span class="font-body-md text-body-md text-on-surface">Transcribe</span>
+</div>
+<div class="flex items-center gap-3 p-gutter border-b border-outline-variant">
+<div class="w-2 h-2 rounded-full bg-port-image flex-shrink-0"></div>
+<span class="font-body-md text-body-md text-on-surface">Speaker tags</span>
+</div>
+<div class="flex items-center gap-3 p-gutter border-b border-outline-variant">
+<div class="w-2 h-2 rounded-full bg-port-image flex-shrink-0"></div>
+<span class="font-body-md text-body-md text-on-surface">Photo and video upscale</span>
+</div>
+<div class="flex items-center gap-3 p-gutter border-b border-outline-variant">
+<div class="w-2 h-2 rounded-full bg-port-image flex-shrink-0"></div>
+<span class="font-body-md text-body-md text-on-surface">Object removal</span>
+</div>
+<div class="flex items-center gap-3 p-gutter border-b border-outline-variant">
+<div class="w-2 h-2 rounded-full bg-port-image flex-shrink-0"></div>
+<span class="font-body-md text-body-md text-on-surface">Background removal</span>
+</div>
+<div class="flex items-center gap-3 p-gutter border-b border-outline-variant">
+<div class="w-2 h-2 rounded-full bg-port-image flex-shrink-0"></div>
+<span class="font-body-md text-body-md text-on-surface">Slow-motion</span>
+</div>
+<div class="flex items-center gap-3 p-gutter border-b border-outline-variant">
+<div class="w-2 h-2 rounded-full bg-port-image flex-shrink-0"></div>
+<span class="font-body-md text-body-md text-on-surface">On-device metadata</span>
+</div>
+<!-- Experimental Row -->
+<div class="flex items-start gap-3 p-gutter">
+<div class="flex items-center justify-center w-6 h-6 rounded-DEFAULT border border-heat-throttle text-heat-throttle flex-shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[14px]">science</span>
+</div>
+<div class="flex flex-col">
+<span class="font-body-md text-body-md text-on-surface">Generative fill</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Experimental on this chip — roughly 30 to 90 seconds per image</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Needs Newer Silicon Section -->
+<section class="mt-margin-mobile flex flex-col gap-base opacity-55">
+<h2 class="font-label-caps text-label-caps text-on-surface-variant uppercase">NEEDS NEWER SILICON</h2>
+<div class="bg-surface-container rounded-lg plate-effect flex flex-col">
+<div class="flex items-center gap-3 p-gutter border-b border-outline-variant">
+<span class="material-symbols-outlined text-on-surface-variant text-[14px]">radio_button_unchecked</span>
+<div class="flex flex-col">
+<span class="font-body-md text-body-md text-on-surface-variant">SDXL fill</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Needs 8 Gen 3 or newer</span>
+</div>
+</div>
+<div class="flex items-center gap-3 p-gutter">
+<span class="material-symbols-outlined text-on-surface-variant text-[14px]">radio_button_unchecked</span>
+<div class="flex flex-col">
+<span class="font-body-md text-body-md text-on-surface-variant">FLUX.2-klein</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Needs 8 Gen 3 or newer</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Fixed Bottom Button Area -->
+<div class="fixed bottom-0 left-0 w-full p-margin-mobile bg-surface-graphite border-t border-outline-variant z-40">
+<button class="w-full bg-primary-container text-on-primary font-headline-sm text-headline-sm rounded-DEFAULT h-touch-min flex items-center justify-center hover:opacity-90 transition-opacity active:scale-[0.98]">
+            Continue
+        </button>
+</div>
+</body></html>

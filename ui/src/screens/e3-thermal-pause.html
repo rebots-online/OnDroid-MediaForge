@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MediaForge - Cooling</title>
+<script src="/src/assets/tailwind.js"></script>
+<link rel="stylesheet" href="/src/assets/fonts.css"/>
+<link rel="stylesheet" href="/src/assets/fonts.css"/>
+<link rel="stylesheet" href="/src/assets/fonts.css"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "port-mask": "#e88ac4",
+                        "surface-graphite": "#121316",
+                        "on-error-container": "#ffdad6",
+                        "surface-dim": "#121316",
+                        "secondary-container": "#00726a",
+                        "surface-container-highest": "#2c2e34",
+                        "on-secondary-container": "#9cf4e8",
+                        "surface-variant": "#2c2e34",
+                        "heat-hot": "#ff5722",
+                        "on-surface": "#e8e6e3",
+                        "primary-fixed-dim": "#ffb077",
+                        "tertiary-fixed": "#cfe5ff",
+                        "surface": "#121316",
+                        "inverse-primary": "#9c4500",
+                        "on-primary-fixed-variant": "#773300",
+                        "error-container": "#93000a",
+                        "primary": "#ffb077",
+                        "on-secondary-fixed": "#00201d",
+                        "on-secondary-fixed-variant": "#00504a",
+                        "port-tensor": "#d4c77f",
+                        "surface-container-low": "#181a1e",
+                        "surface-bright": "#44362f",
+                        "tertiary": "#a8c7e8",
+                        "inverse-on-surface": "#3b2e27",
+                        "heat-idle": "#5a5b60",
+                        "tertiary-container": "#009af3",
+                        "on-tertiary-fixed": "#001d34",
+                        "tertiary-fixed-dim": "#a8c7e8",
+                        "secondary-fixed": "#9bf2e7",
+                        "background": "#121316",
+                        "secondary": "#7fd6cb",
+                        "on-primary-fixed": "#331200",
+                        "on-surface-variant": "#b3afa9",
+                        "surface-tint": "#ffb077",
+                        "on-primary": "#542200",
+                        "surface-container-lowest": "#08090a",
+                        "on-background": "#e8e6e3",
+                        "outline": "#8a857e",
+                        "outline-variant": "#3f4045",
+                        "on-tertiary": "#003355",
+                        "on-primary-container": "#4e1f00",
+                        "on-tertiary-fixed-variant": "#004a78",
+                        "heat-throttle": "#ffb300",
+                        "secondary-fixed-dim": "#7fd6cb",
+                        "primary-fixed": "#ffdbca",
+                        "on-tertiary-container": "#002f4f",
+                        "molten-copper-bright": "#ffb077",
+                        "inverse-surface": "#e8e6e3",
+                        "surface-container-high": "#24262b",
+                        "port-text": "#a8c7e8",
+                        "plate-shadow": "#08090a",
+                        "on-secondary": "#003732",
+                        "plate-highlight": "#3f4045",
+                        "error": "#ffb4ab",
+                        "surface-container": "#1d1f23",
+                        "primary-container": "#ed7014",
+                        "on-error": "#690005",
+                        "port-image": "#9ad67f",
+                        "machined-panel": "#1d1f23",
+                        "machined-active": "#24262b",
+                        "machined-paused": "#8a857e"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "node-row-height": "72px",
+                        "margin-mobile": "20px",
+                        "touch-min": "44px",
+                        "gutter": "16px",
+                        "base": "8px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Chivo"],
+                        "body-lg": ["Inter"],
+                        "headline-md": ["Chivo"],
+                        "headline-sm": ["Chivo"],
+                        "telemetry": ["JetBrains Mono"],
+                        "telemetry-sm": ["JetBrains Mono"],
+                        "label-caps": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["30px", { "lineHeight": "38px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-md": ["22px", { "lineHeight": "28px", "fontWeight": "700" }],
+                        "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+                        "telemetry": ["13px", { "lineHeight": "20px", "fontWeight": "450" }],
+                        "telemetry-sm": ["11px", { "lineHeight": "16px", "fontWeight": "400" }],
+                        "label-caps": ["11px", { "lineHeight": "16px", "letterSpacing": "0.06em", "fontWeight": "700" }],
+                        "body-sm": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .plate-effect {
+            border-top: 1px solid #3f4045;
+            border-bottom: 1px solid #08090a;
+            border-left: 1px solid #3f4045;
+            border-right: 1px solid #3f4045;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface-graphite text-on-surface min-h-screen flex flex-col font-body-md select-none">
+<!-- TopAppBar -->
+<header class="flex justify-between items-center w-full px-margin-mobile h-node-row-height docked full-width top-0 border-b border-outline-variant bg-surface-graphite sticky z-10 flat no shadows transition-colors duration-150">
+<div class="flex items-center gap-4">
+<button class="h-touch-min w-touch-min flex items-center justify-center text-on-surface hover:bg-plate-highlight transition-colors rounded">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">arrow_back_ios_new</span>
+</button>
+<h1 class="font-headline-sm text-headline-sm font-bold text-on-surface tracking-tighter">Old footage revival</h1>
+</div>
+<div class="flex items-center gap-2">
+<div class="flex items-center gap-1.5 bg-machined-active px-2 py-1 rounded border border-outline-variant">
+<span class="font-telemetry-sm text-telemetry-sm text-machined-paused">ON-DEVICE</span>
+</div>
+<div class="flex items-center gap-1.5 bg-machined-active px-2 py-1 rounded border border-outline-variant plate-effect">
+<span class="material-symbols-outlined text-machined-paused text-[14px]">ac_unit</span>
+<span class="font-telemetry-sm text-telemetry-sm text-machined-paused uppercase tracking-widest">COOLING</span>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-1 px-margin-mobile py-6 flex flex-col gap-6 max-w-2xl mx-auto w-full pb-32">
+<!-- Progress Section -->
+<section class="flex flex-col gap-3">
+<div class="flex gap-[2px] h-4 w-full">
+<!-- Javascript will populate these blocks -->
+<script>
+                    document.write(Array.from({length: 15}, () => `<div class="flex-1 bg-machined-paused"></div>`).join(''));
+                    document.write(`<div class="flex-1 bg-machined-paused border border-molten-copper-bright"></div>`);
+                    document.write(Array.from({length: 30}, () => `<div class="flex-1 bg-machined-active border border-outline-variant"></div>`).join(''));
+                </script>
+</div>
+<div class="flex flex-col items-start gap-1">
+<div class="font-telemetry-sm text-telemetry-sm text-on-surface-variant uppercase">
+                    held at segment 51/148 · elapsed 3m 42s · paused 0m 26s
+                </div>
+<div class="flex items-center gap-1 text-machined-paused mt-1">
+<span class="material-symbols-outlined text-[14px]">pause</span>
+<span class="font-telemetry-sm text-telemetry-sm uppercase">PAUSED</span>
+</div>
+</div>
+</section>
+<!-- Main Status Plate -->
+<section class="bg-machined-panel rounded-lg plate-effect p-5 relative overflow-hidden flex flex-col gap-5 border-l-4 border-l-machined-paused">
+<div class="flex flex-col gap-1">
+<h2 class="font-headline-md text-headline-md text-on-surface">Paused to cool down.</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Resuming automatically.</p>
+</div>
+<!-- Thermal Gauge -->
+<div class="flex flex-col gap-2">
+<div class="flex justify-between items-end font-telemetry-sm text-telemetry-sm">
+<div class="flex flex-col">
+<span class="text-on-surface-variant">SKIN TEMP</span>
+<span class="text-on-surface">43.2 °C</span>
+</div>
+<div class="flex flex-col text-right">
+<span class="text-on-surface-variant">HEADROOM</span>
+<span class="text-heat-throttle">-1.8 °C</span>
+</div>
+</div>
+<div class="h-2 w-full flex justify-between">
+<script>
+                        for(let i=0; i<40; i++) {
+                            let color = i > 30 ? (i > 36 ? 'bg-heat-throttle' : 'bg-heat-throttle/70') : 'bg-machined-paused/40';
+                            let height = i % 5 === 0 ? 'h-full' : 'h-1/2';
+                            document.write(`<div class="w-[2px] ${height} ${color} self-end"></div>`);
+                        }
+                    </script>
+</div>
+<div class="flex justify-between items-center font-telemetry-sm text-telemetry-sm mt-1">
+<span class="text-on-surface-variant">Resuming in about <span class="text-on-surface">1m 40s</span></span>
+<span class="text-on-surface-variant">target 41.0 °C</span>
+</div>
+</div>
+</section>
+<!-- Explanatory Plate -->
+<section class="bg-surface-container-low rounded p-4 border border-outline-variant flex gap-3 items-start">
+<span class="material-symbols-outlined text-secondary mt-0.5">security</span>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                Your phone is being protected from overheating. Every finished segment is saved, so the job will pick up exactly where it stopped.
+            </p>
+</section>
+<!-- Suggestion Row -->
+<section class="bg-machined-panel rounded plate-effect p-4 flex justify-between items-center">
+<div class="flex flex-col gap-0.5">
+<span class="font-body-md text-body-md text-on-surface">Only run while charging</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Charging jobs are scheduled to run cooler</span>
+</div>
+<!-- Toggle Switch (Off state) -->
+<button class="w-12 h-6 bg-machined-active rounded-full border border-outline-variant relative flex items-center px-1">
+<div class="w-4 h-4 bg-machined-paused rounded-full plate-effect"></div>
+</button>
+</section>
+</main>
+<!-- Bottom Actions -->
+<footer class="fixed bottom-0 w-full bg-surface-graphite border-t border-outline-variant p-margin-mobile flex flex-col items-center gap-2 z-50">
+<button class="w-full h-touch-min border border-machined-paused rounded text-molten-copper-bright font-headline-sm text-headline-sm flex items-center justify-center hover:bg-plate-highlight transition-colors">
+            Resume anyway
+        </button>
+<span class="font-telemetry-sm text-telemetry-sm text-machined-paused uppercase tracking-wider">may increase throttling</span>
+</footer>
+</body></html>

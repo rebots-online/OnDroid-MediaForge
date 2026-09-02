@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Starter Models</title>
+<script src="/src/assets/tailwind.js"></script>
+<link rel="stylesheet" href="/src/assets/fonts.css"/>
+<link rel="stylesheet" href="/src/assets/fonts.css"/>
+<link rel="stylesheet" href="/src/assets/fonts.css"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-bright": "#44362f",
+                        "molten-copper-bright": "#ffb077",
+                        "surface-variant": "#2c2e34",
+                        "tertiary": "#a8c7e8",
+                        "surface": "#121316",
+                        "surface-container-lowest": "#08090a",
+                        "on-tertiary": "#003355",
+                        "surface-container-low": "#181a1e",
+                        "port-tensor": "#d4c77f",
+                        "secondary-fixed": "#9bf2e7",
+                        "primary-fixed-dim": "#ffb077",
+                        "on-tertiary-container": "#002f4f",
+                        "on-secondary-fixed-variant": "#00504a",
+                        "outline": "#8a857e",
+                        "port-text": "#a8c7e8",
+                        "on-primary-fixed-variant": "#773300",
+                        "tertiary-container": "#009af3",
+                        "on-background": "#e8e6e3",
+                        "outline-variant": "#3f4045",
+                        "plate-highlight": "#3f4045",
+                        "background": "#121316",
+                        "secondary": "#7fd6cb",
+                        "on-primary-fixed": "#331200",
+                        "heat-hot": "#ff5722",
+                        "surface-container-high": "#24262b",
+                        "surface-container": "#1d1f23",
+                        "surface-graphite": "#121316",
+                        "on-error-container": "#ffdad6",
+                        "on-primary": "#542200",
+                        "on-error": "#690005",
+                        "error-container": "#93000a",
+                        "inverse-on-surface": "#3b2e27",
+                        "on-primary-container": "#4e1f00",
+                        "heat-idle": "#5a5b60",
+                        "surface-tint": "#ffb077",
+                        "surface-container-highest": "#2c2e34",
+                        "primary": "#ffb077",
+                        "on-tertiary-fixed-variant": "#004a78",
+                        "on-secondary-container": "#9cf4e8",
+                        "surface-dim": "#121316",
+                        "port-mask": "#e88ac4",
+                        "on-surface": "#e8e6e3",
+                        "on-secondary-fixed": "#00201d",
+                        "on-tertiary-fixed": "#001d34",
+                        "tertiary-fixed-dim": "#a8c7e8",
+                        "secondary-fixed-dim": "#7fd6cb",
+                        "inverse-surface": "#e8e6e3",
+                        "inverse-primary": "#9c4500",
+                        "plate-shadow": "#08090a",
+                        "on-secondary": "#003732",
+                        "port-image": "#9ad67f",
+                        "error": "#ffb4ab",
+                        "on-surface-variant": "#b3afa9",
+                        "heat-throttle": "#ffb300",
+                        "secondary-container": "#00726a",
+                        "primary-fixed": "#ffdbca",
+                        "primary-container": "#ed7014",
+                        "tertiary-fixed": "#cfe5ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "touch-min": "44px",
+                        "node-row-height": "72px",
+                        "gutter": "16px",
+                        "base": "8px",
+                        "margin-mobile": "20px"
+                    },
+                    "fontFamily": {
+                        "body-sm": ["Inter"],
+                        "headline-sm": ["Chivo"],
+                        "telemetry": ["JetBrains Mono"],
+                        "headline-md": ["Chivo"],
+                        "telemetry-sm": ["JetBrains Mono"],
+                        "headline-lg": ["Chivo"],
+                        "body-lg": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-sm": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+                        "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+                        "telemetry": ["13px", { "lineHeight": "20px", "fontWeight": "450" }],
+                        "headline-md": ["22px", { "lineHeight": "28px", "fontWeight": "700" }],
+                        "telemetry-sm": ["11px", { "lineHeight": "16px", "fontWeight": "400" }],
+                        "headline-lg": ["30px", { "lineHeight": "38px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "label-caps": ["11px", { "lineHeight": "16px", "letterSpacing": "0.06em", "fontWeight": "700" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .plate-effect {
+            box-shadow: inset 0 1px 0 var(--plate-highlight), 0 2px 4px var(--plate-shadow);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface-graphite text-on-surface antialiased min-h-screen flex flex-col font-body-md overflow-x-hidden">
+<!-- Top Bar -->
+<header class="flex justify-between items-center w-full px-margin-mobile h-14 bg-surface-graphite sticky top-0 z-10 pt-safe">
+<div class="flex items-center gap-2 px-2 py-1 border border-outline-variant rounded bg-surface-container-low">
+<span class="material-symbols-outlined text-heat-idle text-sm" style="font-variation-settings: 'FILL' 0;">device_thermostat</span>
+<span class="font-telemetry-sm text-telemetry-sm text-heat-idle">[IDLE]</span>
+</div>
+<div class="flex items-center gap-2 px-2 py-1 border border-outline-variant rounded bg-surface-container-low">
+<span class="material-symbols-outlined text-on-surface-variant text-sm" style="font-variation-settings: 'FILL' 0;">shield</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Media stays on device</span>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-1 px-margin-mobile pb-32">
+<!-- Header -->
+<div class="mt-6 mb-6">
+<h1 class="font-headline-md text-headline-md text-on-surface">Starter models</h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">These run on this device. You can add more later.</p>
+</div>
+<!-- Models List (Machined Plate) -->
+<div class="bg-surface-container-high rounded-xl border border-plate-highlight plate-effect overflow-hidden relative">
+<!-- Row 1 -->
+<div class="flex items-center px-4 h-node-row-height border-b border-outline-variant">
+<div class="flex-shrink-0 mr-4">
+<input checked="" class="w-[18px] h-[18px] rounded bg-primary-container border-transparent text-on-primary-container focus:ring-primary-container focus:ring-offset-surface-container-high focus:ring-offset-2" type="checkbox"/>
+</div>
+<div class="flex-1 min-w-0">
+<div class="font-body-md text-body-md font-semibold text-on-surface truncate">GTCRN</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant truncate">Voice denoise</div>
+</div>
+<div class="flex flex-col items-end text-right ml-4">
+<div class="font-telemetry text-telemetry text-on-surface">1 MB</div>
+<div class="mt-1 px-1.5 py-0.5 border border-outline-variant rounded font-label-caps text-[9px] leading-tight text-on-surface-variant">MIT</div>
+</div>
+</div>
+<!-- Row 2 -->
+<div class="flex items-center px-4 h-node-row-height border-b border-outline-variant">
+<div class="flex-shrink-0 mr-4">
+<input checked="" class="w-[18px] h-[18px] rounded bg-primary-container border-transparent text-on-primary-container focus:ring-primary-container focus:ring-offset-surface-container-high focus:ring-offset-2" type="checkbox"/>
+</div>
+<div class="flex-1 min-w-0">
+<div class="font-body-md text-body-md font-semibold text-on-surface truncate">UVR</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant truncate">Voice isolation</div>
+</div>
+<div class="flex flex-col items-end text-right ml-4">
+<div class="font-telemetry text-telemetry text-on-surface">42 MB</div>
+<div class="mt-1 px-1.5 py-0.5 border border-outline-variant rounded font-label-caps text-[9px] leading-tight text-on-surface-variant">APACHE-2.0</div>
+</div>
+</div>
+<!-- Row 3 -->
+<div class="flex items-center px-4 h-node-row-height border-b border-outline-variant">
+<div class="flex-shrink-0 mr-4">
+<input checked="" class="w-[18px] h-[18px] rounded bg-primary-container border-transparent text-on-primary-container focus:ring-primary-container focus:ring-offset-surface-container-high focus:ring-offset-2" type="checkbox"/>
+</div>
+<div class="flex-1 min-w-0">
+<div class="font-body-md text-body-md font-semibold text-on-surface truncate">Whisper small</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant truncate">Transcribe speech to text</div>
+</div>
+<div class="flex flex-col items-end text-right ml-4">
+<div class="font-telemetry text-telemetry text-on-surface">466 MB</div>
+<div class="mt-1 px-1.5 py-0.5 border border-outline-variant rounded font-label-caps text-[9px] leading-tight text-on-surface-variant">MIT</div>
+</div>
+</div>
+<!-- Row 4 -->
+<div class="flex items-center px-4 h-node-row-height border-b border-outline-variant">
+<div class="flex-shrink-0 mr-4">
+<input checked="" class="w-[18px] h-[18px] rounded bg-primary-container border-transparent text-on-primary-container focus:ring-primary-container focus:ring-offset-surface-container-high focus:ring-offset-2" type="checkbox"/>
+</div>
+<div class="flex-1 min-w-0">
+<div class="font-body-md text-body-md font-semibold text-on-surface truncate">Speaker diarization</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant truncate">Label who is speaking</div>
+</div>
+<div class="flex flex-col items-end text-right ml-4">
+<div class="font-telemetry text-telemetry text-on-surface">50 MB</div>
+<div class="mt-1 px-1.5 py-0.5 border border-outline-variant rounded font-label-caps text-[9px] leading-tight text-on-surface-variant">APACHE-2.0</div>
+</div>
+</div>
+<!-- Row 5 -->
+<div class="flex items-center px-4 h-node-row-height border-b border-outline-variant">
+<div class="flex-shrink-0 mr-4">
+<input class="w-[18px] h-[18px] rounded bg-transparent border-outline-variant text-primary-container focus:ring-primary-container focus:ring-offset-surface-container-high focus:ring-offset-2" type="checkbox"/>
+</div>
+<div class="flex-1 min-w-0">
+<div class="font-body-md text-body-md font-semibold text-on-surface truncate">QuickSRNet</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant truncate">Photo and video upscale</div>
+</div>
+<div class="flex flex-col items-end text-right ml-4">
+<div class="font-telemetry text-telemetry text-on-surface">1 MB</div>
+<div class="mt-1 px-1.5 py-0.5 border border-outline-variant rounded font-label-caps text-[9px] leading-tight text-on-surface-variant">BSD-3</div>
+</div>
+</div>
+<!-- Row 6 -->
+<div class="flex items-center px-4 h-node-row-height border-b border-outline-variant">
+<div class="flex-shrink-0 mr-4">
+<input class="w-[18px] h-[18px] rounded bg-transparent border-outline-variant text-primary-container focus:ring-primary-container focus:ring-offset-surface-container-high focus:ring-offset-2" type="checkbox"/>
+</div>
+<div class="flex-1 min-w-0">
+<div class="font-body-md text-body-md font-semibold text-on-surface truncate">LaMa</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant truncate">Object removal</div>
+</div>
+<div class="flex flex-col items-end text-right ml-4">
+<div class="font-telemetry text-telemetry text-on-surface">200 MB</div>
+<div class="mt-1 px-1.5 py-0.5 border border-outline-variant rounded font-label-caps text-[9px] leading-tight text-on-surface-variant">APACHE-2.0</div>
+</div>
+</div>
+<!-- Row 7 -->
+<div class="flex items-center px-4 h-node-row-height">
+<div class="flex-shrink-0 mr-4">
+<input class="w-[18px] h-[18px] rounded bg-transparent border-outline-variant text-primary-container focus:ring-primary-container focus:ring-offset-surface-container-high focus:ring-offset-2" type="checkbox"/>
+</div>
+<div class="flex-1 min-w-0">
+<div class="font-body-md text-body-md font-semibold text-on-surface truncate">RVM</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant truncate">Background removal</div>
+</div>
+<div class="flex flex-col items-end text-right ml-4">
+<div class="font-telemetry text-telemetry text-on-surface">15 MB</div>
+<div class="mt-1 px-1.5 py-0.5 border border-outline-variant rounded font-label-caps text-[9px] leading-tight text-on-surface-variant">MIT</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Pinned Bottom Bar -->
+<div class="fixed bottom-0 left-0 w-full bg-surface-container-highest border-t border-plate-highlight px-margin-mobile py-4 flex items-center justify-between z-20 pb-safe">
+<div class="flex items-baseline gap-2">
+<span class="font-telemetry text-telemetry text-on-surface">1.2 GB</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">selected</span>
+</div>
+<button class="bg-primary-container text-on-primary-container font-headline-sm text-headline-sm px-6 h-[48px] rounded flex items-center justify-center active:scale-95 transition-transform">
+            Download
+        </button>
+</div>
+</body></html>

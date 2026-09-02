@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>OnDroid MediaForge - Folder Selection</title>
+<script src="/src/assets/tailwind.js"></script>
+<link rel="stylesheet" href="/src/assets/fonts.css"/>
+<link rel="stylesheet" href="/src/assets/fonts.css"/>
+<link rel="stylesheet" href="/src/assets/fonts.css"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-secondary-fixed": "#00201d",
+                        "surface-container-highest": "#2c2e34",
+                        "outline": "#8a857e",
+                        "on-primary": "#542200",
+                        "surface-container-low": "#181a1e",
+                        "on-surface-variant": "#b3afa9",
+                        "molten-copper-bright": "#ffb077",
+                        "on-surface": "#e8e6e3",
+                        "error-container": "#93000a",
+                        "plate-highlight": "#3f4045",
+                        "on-secondary": "#003732",
+                        "plate-shadow": "#08090a",
+                        "tertiary-fixed": "#cfe5ff",
+                        "secondary": "#7fd6cb",
+                        "primary": "#ffb077",
+                        "on-tertiary": "#003355",
+                        "on-primary-fixed-variant": "#773300",
+                        "surface-container-high": "#24262b",
+                        "on-primary-container": "#4e1f00",
+                        "surface-container-lowest": "#08090a",
+                        "secondary-container": "#00726a",
+                        "inverse-on-surface": "#3b2e27",
+                        "tertiary-fixed-dim": "#a8c7e8",
+                        "surface-variant": "#2c2e34",
+                        "secondary-fixed-dim": "#7fd6cb",
+                        "on-tertiary-fixed": "#001d34",
+                        "on-tertiary-container": "#002f4f",
+                        "port-text": "#a8c7e8",
+                        "surface-tint": "#ffb077",
+                        "secondary-fixed": "#9bf2e7",
+                        "primary-container": "#ed7014",
+                        "heat-throttle": "#ffb300",
+                        "surface-dim": "#121316",
+                        "on-primary-fixed": "#331200",
+                        "heat-hot": "#ff5722",
+                        "surface-graphite": "#121316",
+                        "outline-variant": "#3f4045",
+                        "inverse-primary": "#9c4500",
+                        "primary-fixed": "#ffdbca",
+                        "on-secondary-container": "#9cf4e8",
+                        "on-error": "#690005",
+                        "surface-bright": "#44362f",
+                        "port-mask": "#e88ac4",
+                        "heat-idle": "#5a5b60",
+                        "on-background": "#e8e6e3",
+                        "port-image": "#9ad67f",
+                        "on-secondary-fixed-variant": "#00504a",
+                        "tertiary-container": "#009af3",
+                        "background": "#121316",
+                        "primary-fixed-dim": "#ffb077",
+                        "on-tertiary-fixed-variant": "#004a78",
+                        "surface": "#121316",
+                        "error": "#ffb4ab",
+                        "port-tensor": "#d4c77f",
+                        "tertiary": "#a8c7e8",
+                        "on-error-container": "#ffdad6",
+                        "inverse-surface": "#e8e6e3",
+                        "surface-container": "#1d1f23"
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.125rem",
+                        lg: "0.25rem",
+                        xl: "0.5rem",
+                        full: "0.75rem"
+                    },
+                    spacing: {
+                        gutter: "16px",
+                        "margin-mobile": "20px",
+                        base: "8px",
+                        "node-row-height": "72px",
+                        "touch-min": "44px"
+                    },
+                    fontFamily: {
+                        "body-sm": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "headline-lg": ["Chivo"],
+                        "body-md": ["Inter"],
+                        "telemetry-sm": ["JetBrains Mono"],
+                        "headline-md": ["Chivo"],
+                        telemetry: ["JetBrains Mono"],
+                        "headline-sm": ["Chivo"]
+                    },
+                    fontSize: {
+                        "body-sm": ["13px", { lineHeight: "18px", fontWeight: "400" }],
+                        "body-lg": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+                        "label-caps": ["11px", { lineHeight: "16px", letterSpacing: "0.06em", fontWeight: "700" }],
+                        "headline-lg": ["30px", { lineHeight: "38px", letterSpacing: "-0.01em", fontWeight: "700" }],
+                        "body-md": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+                        "telemetry-sm": ["11px", { lineHeight: "16px", fontWeight: "400" }],
+                        "headline-md": ["22px", { lineHeight: "28px", fontWeight: "700" }],
+                        telemetry: ["13px", { lineHeight: "20px", fontWeight: "450" }],
+                        "headline-sm": ["18px", { lineHeight: "24px", fontWeight: "600" }]
+                    }
+                }
+            }
+        };
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface-graphite text-on-surface font-body-md h-screen flex flex-col m-0 overflow-hidden antialiased">
+<!-- Header Section -->
+<header class="flex justify-between items-center px-margin-mobile pt-margin-mobile pb-base w-full flex-shrink-0">
+<div class="flex items-center gap-2 border border-plate-highlight rounded-DEFAULT px-2 py-1 h-8">
+<span class="material-symbols-outlined text-[14px] text-heat-idle" style="font-variation-settings: 'FILL' 0;">device_thermostat</span>
+<span class="font-telemetry-sm text-telemetry-sm text-heat-idle uppercase tracking-wider">IDLE</span>
+</div>
+<div class="flex items-center gap-2 border border-plate-highlight rounded-DEFAULT px-2 py-1 h-8">
+<span class="material-symbols-outlined text-[14px] text-on-surface-variant" style="font-variation-settings: 'FILL' 0;">shield</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Media stays on device</span>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 flex flex-col px-margin-mobile overflow-y-auto">
+<div class="mt-8 mb-6">
+<h1 class="font-headline-md text-headline-md text-on-surface mb-4">Where should finished files go?</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed max-w-[340px]">
+                MediaForge writes finished results to a folder you choose. It reads the files you hand it and writes nothing anywhere else — no gallery scanning, no background indexing, no other folders touched.
+            </p>
+</div>
+<!-- Folder Display (Machined Plate) -->
+<div class="bg-surface-container-high border border-outline-variant rounded-xl p-4 min-h-node-row-height flex items-center gap-4 relative shadow-[inset_0_1px_0_0_#3f4045,0_2px_4px_rgba(8,9,10,0.5)]">
+<div class="flex-shrink-0 w-10 h-10 flex items-center justify-center bg-surface-container-low border border-plate-highlight rounded-DEFAULT">
+<span class="material-symbols-outlined text-secondary text-[20px]" style="font-variation-settings: 'FILL' 1;">folder</span>
+</div>
+<div class="flex-1 min-w-0 flex flex-col gap-1">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">SELECTED FOLDER</span>
+<span class="font-telemetry text-telemetry text-on-surface truncate" dir="rtl">‎/storage/emulated/0/MediaForge/Output‎</span>
+</div>
+</div>
+<div class="flex-1"></div>
+<!-- Bottom Actions -->
+<div class="flex flex-col gap-base pb-margin-mobile mt-8">
+<button class="w-full bg-primary-container text-on-primary-container font-headline-sm text-headline-sm rounded-lg h-touch-min flex items-center justify-center transition-transform active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-surface-graphite">
+                Choose folder
+            </button>
+<button class="w-full bg-transparent border border-outline text-molten-copper-bright font-headline-sm text-headline-sm rounded-lg h-touch-min flex items-center justify-center transition-colors hover:bg-surface-container-low active:bg-surface-container-high focus:outline-none focus:ring-2 focus:ring-molten-copper-bright focus:ring-offset-2 focus:ring-offset-surface-graphite">
+                Use default
+            </button>
+</div>
+</main>
+</body></html>

@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Video Processing Node Canvas</title>
+<script src="/src/assets/tailwind.js"></script>
+<link rel="stylesheet" href="/src/assets/fonts.css"/>
+<link rel="stylesheet" href="/src/assets/fonts.css"/>
+<link rel="stylesheet" href="/src/assets/fonts.css"/>
+<style>
+        .plate-effect {
+            box-shadow: inset 0 1px 0 0 theme('colors.plate-highlight');
+        }
+        .bezier-path {
+            fill: none;
+            stroke-width: 2;
+            stroke-dasharray: 4;
+            animation: dash 10s linear infinite;
+        }
+        .bezier-path-solid {
+            fill: none;
+            stroke-width: 2;
+        }
+        @keyframes dash {
+            to {
+                stroke-dashoffset: -100;
+            }
+        }
+        .canvas-grid {
+            background-size: 20px 20px;
+            background-image: radial-gradient(circle, #3f4045 1px, transparent 1px);
+        }
+        .port {
+            width: 14px;
+            height: 14px;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .port::after {
+            content: '';
+            position: absolute;
+            inset: -15px; /* 44px hit target (14 + 30) */
+            border-radius: 50%;
+        }
+        .port-in { left: -7px; }
+        .port-out { right: -7px; }
+        
+        .port-video { background-color: theme('colors.secondary-fixed-dim'); border-radius: 2px; }
+        .port-audio { background-color: theme('colors.molten-copper-bright'); border-radius: 50%; }
+        .port-image { background-color: theme('colors.port-image'); clip-path: polygon(50% 0%, 0% 100%, 100% 100%); }
+        .port-mask { background-color: theme('colors.port-mask'); clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%); }
+        .port-text { background-color: theme('colors.port-text'); clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%); }
+        .port-tensor { background-color: theme('colors.port-tensor'); border-radius: 2px; width: 6px; height: 14px; }
+
+        .port-halo-audio { box-shadow: 0 0 0 4px rgba(255, 176, 119, 0.2); transform: translateY(-50%) scale(1.2); }
+        .port-active-audio { box-shadow: 0 0 0 2px theme('colors.surface-container'), 0 0 0 4px theme('colors.molten-copper-bright'); }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "port-mask": "#e88ac4",
+                      "surface": "#121316",
+                      "inverse-surface": "#e8e6e3",
+                      "on-background": "#e8e6e3",
+                      "plate-highlight": "#3f4045",
+                      "surface-container": "#1d1f23",
+                      "tertiary-fixed-dim": "#a8c7e8",
+                      "heat-idle": "#5a5b60",
+                      "surface-container-high": "#24262b",
+                      "tertiary-container": "#009af3",
+                      "surface-container-lowest": "#08090a",
+                      "surface-graphite": "#121316",
+                      "secondary-container": "#00726a",
+                      "background": "#121316",
+                      "on-tertiary-fixed": "#001d34",
+                      "surface-container-low": "#181a1e",
+                      "heat-throttle": "#ffb300",
+                      "on-primary-fixed": "#331200",
+                      "primary-fixed": "#ffdbca",
+                      "heat-hot": "#ff5722",
+                      "inverse-primary": "#9c4500",
+                      "on-secondary-fixed-variant": "#00504a",
+                      "surface-container-highest": "#2c2e34",
+                      "molten-copper-bright": "#ffb077",
+                      "surface-bright": "#44362f",
+                      "on-primary": "#542200",
+                      "secondary-fixed-dim": "#7fd6cb",
+                      "tertiary-fixed": "#cfe5ff",
+                      "on-secondary": "#003732",
+                      "secondary-fixed": "#9bf2e7",
+                      "on-surface-variant": "#b3afa9",
+                      "on-secondary-container": "#9cf4e8",
+                      "on-error": "#690005",
+                      "on-error-container": "#ffdad6",
+                      "inverse-on-surface": "#3b2e27",
+                      "on-surface": "#e8e6e3",
+                      "error-container": "#93000a",
+                      "error": "#ffb4ab",
+                      "on-tertiary": "#003355",
+                      "on-primary-fixed-variant": "#773300",
+                      "surface-variant": "#2c2e34",
+                      "on-secondary-fixed": "#00201d",
+                      "primary-fixed-dim": "#ffb077",
+                      "port-image": "#9ad67f",
+                      "on-tertiary-fixed-variant": "#004a78",
+                      "port-tensor": "#d4c77f",
+                      "outline": "#8a857e",
+                      "primary-container": "#ed7014",
+                      "primary": "#ffb077",
+                      "tertiary": "#a8c7e8",
+                      "outline-variant": "#3f4045",
+                      "surface-dim": "#121316",
+                      "on-primary-container": "#4e1f00",
+                      "surface-tint": "#ffb077",
+                      "secondary": "#7fd6cb",
+                      "on-tertiary-container": "#002f4f",
+                      "plate-shadow": "#08090a",
+                      "port-text": "#a8c7e8"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "node-row-height": "72px",
+                      "margin-mobile": "20px",
+                      "base": "8px",
+                      "touch-min": "44px",
+                      "gutter": "16px"
+              },
+              "fontFamily": {
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "headline-lg": [
+                              "Chivo"
+                      ],
+                      "headline-sm": [
+                              "Chivo"
+                      ],
+                      "label-caps": [
+                              "Inter"
+                      ],
+                      "telemetry": [
+                              "JetBrains Mono"
+                      ],
+                      "body-sm": [
+                              "Inter"
+                      ],
+                      "telemetry-sm": [
+                              "JetBrains Mono"
+                      ],
+                      "headline-md": [
+                              "Chivo"
+                      ],
+                      "body-lg": [
+                              "Inter"
+                      ]
+              },
+              "fontSize": {
+                      "body-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-lg": [
+                              "30px",
+                              {
+                                      "lineHeight": "38px",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-sm": [
+                              "18px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "label-caps": [
+                              "11px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.06em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "telemetry": [
+                              "13px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "450"
+                              }
+                      ],
+                      "body-sm": [
+                              "13px",
+                              {
+                                      "lineHeight": "18px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "telemetry-sm": [
+                              "11px",
+                              {
+                                      "lineHeight": "16px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-md": [
+                              "22px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-lg": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+</head>
+<body class="bg-surface-graphite text-on-surface h-screen w-screen overflow-hidden flex flex-col font-body-md">
+<!-- TopNavBar -->
+<header class="bg-surface-container border-b border-outline-variant shadow-none flex justify-between items-center w-full px-margin-mobile h-14 shrink-0 z-20">
+<div class="font-headline-md text-headline-md font-bold text-primary tracking-tighter">
+            SILICON_PROCESSOR
+        </div>
+<div class="flex items-center gap-4">
+<!-- Navigation -->
+<div class="flex bg-surface-graphite p-1 rounded-sm border border-outline-variant plate-effect">
+<button class="text-on-surface-variant hover:text-on-surface px-4 py-1 font-label-caps text-label-caps uppercase transition-colors">Recipe</button>
+<button class="bg-primary-container text-on-primary-container font-bold px-4 py-1 rounded-sm font-label-caps text-label-caps uppercase active:scale-95 duration-100">Canvas</button>
+</div>
+<div class="w-px h-6 bg-outline-variant mx-2"></div>
+<!-- Chips -->
+<div class="flex gap-2">
+<div class="flex items-center gap-1.5 px-2 py-1 bg-surface-graphite border border-outline-variant rounded-sm">
+<span class="material-symbols-outlined text-[14px] text-heat-idle">thermostat</span>
+<span class="font-telemetry text-telemetry text-on-surface-variant uppercase">IDLE</span>
+</div>
+<div class="flex items-center px-2 py-1 bg-surface-graphite border border-outline-variant rounded-sm">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Media stays on device</span>
+</div>
+</div>
+<div class="flex gap-2 ml-2">
+<button class="w-8 h-8 flex items-center justify-center text-on-surface-variant hover:bg-surface-bright transition-colors rounded-sm"><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">shield</span></button>
+<button class="w-8 h-8 flex items-center justify-center text-on-surface-variant hover:bg-surface-bright transition-colors rounded-sm"><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">settings</span></button>
+</div>
+</div>
+</header>
+<div class="flex flex-1 overflow-hidden relative">
+<!-- SideNavBar -->
+<nav class="bg-surface-container-low border-r border-outline-variant shadow-none flex flex-col items-center py-base h-full w-20 shrink-0 z-10 hidden md:flex">
+<!-- Tabs -->
+<div class="flex-1 w-full flex flex-col gap-2 mt-4">
+<button class="w-full py-3 flex flex-col items-center gap-1 text-on-surface-variant hover:bg-surface-container transition-all duration-200">
+<span class="material-symbols-outlined">account_tree</span>
+<span class="font-label-caps text-label-caps uppercase">Nodes</span>
+</button>
+<button class="w-full py-3 flex flex-col items-center gap-1 text-on-surface-variant hover:bg-surface-container transition-all duration-200">
+<span class="material-symbols-outlined">folder_open</span>
+<span class="font-label-caps text-label-caps uppercase">Assets</span>
+</button>
+<button class="w-full py-3 flex flex-col items-center gap-1 text-on-surface-variant hover:bg-surface-container transition-all duration-200">
+<span class="material-symbols-outlined">precision_manufacturing</span>
+<span class="font-label-caps text-label-caps uppercase">Timeline</span>
+</button>
+<button class="w-full py-3 flex flex-col items-center gap-1 text-on-surface-variant hover:bg-surface-container transition-all duration-200">
+<span class="material-symbols-outlined">device_thermostat</span>
+<span class="font-label-caps text-label-caps uppercase">Thermal</span>
+</button>
+<button class="w-full py-3 flex flex-col items-center gap-1 text-on-surface-variant hover:bg-surface-container transition-all duration-200">
+<span class="material-symbols-outlined">settings_input_component</span>
+<span class="font-label-caps text-label-caps uppercase">System</span>
+</button>
+</div>
+<div class="w-full pt-4 border-t border-outline-variant">
+<button class="w-full py-3 flex flex-col items-center gap-1 text-on-surface-variant hover:bg-surface-container transition-all duration-200">
+<span class="material-symbols-outlined">help_outline</span>
+<span class="font-label-caps text-label-caps uppercase">Help</span>
+</button>
+</div>
+</nav>
+<!-- Main Canvas Area -->
+<main class="flex-1 relative overflow-hidden bg-[#121316] canvas-grid">
+<!-- SVG Layer for Connections -->
+<svg class="absolute inset-0 w-full h-full pointer-events-none z-0">
+<!-- Video Source to Upscale -->
+<path class="bezier-path-solid stroke-secondary-fixed-dim" d="M 220 200 C 280 200, 280 120, 340 120"></path>
+<!-- Video Source to Denoise -->
+<path class="bezier-path-solid stroke-molten-copper-bright" d="M 220 200 C 280 200, 280 320, 340 320"></path>
+<!-- Upscale to Object Removal -->
+<path class="bezier-path-solid stroke-port-image" d="M 520 120 C 580 120, 580 120, 640 120"></path>
+<!-- Denoise to Transcribe -->
+<path class="bezier-path-solid stroke-molten-copper-bright" d="M 520 320 C 580 320, 580 320, 640 320"></path>
+<!-- Object Removal to Output -->
+<path class="bezier-path-solid stroke-port-image" d="M 820 120 C 880 120, 880 200, 940 200"></path>
+<!-- Mid-gesture connection: Transcribe to Output (Audio) -->
+<!-- Origin at Transcribe Audio Out: (820, 320) -->
+<!-- Target at Output Audio In: (940, 240) -->
+<path class="bezier-path stroke-molten-copper-bright" d="M 820 320 C 880 320, 860 260, 915 245"></path>
+</svg>
+<!-- Nodes Container -->
+<div class="absolute inset-0 overflow-auto z-10">
+<!-- Node 1: Video Source -->
+<div class="absolute left-[40px] top-[160px] w-[180px] bg-[#1d1f23] rounded-lg border border-[#3f4045] plate-effect shadow-plate-shadow flex flex-col">
+<div class="px-3 py-2 border-b border-outline-variant flex justify-between items-center bg-surface-container-low rounded-t-lg">
+<span class="font-headline-sm text-headline-sm text-on-surface">Video Source</span>
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">movie</span>
+</div>
+<div class="p-3 flex flex-col gap-2">
+<div class="font-body-sm text-body-sm text-on-surface-variant">Camera_01_RAW.mp4</div>
+<div class="self-start font-telemetry-sm text-telemetry-sm px-1.5 py-0.5 bg-surface-container-highest border border-outline-variant text-on-surface-variant rounded-sm uppercase">NPU: 12ms</div>
+</div>
+<!-- Ports -->
+<div class="port port-out port-video" style="top: 50%;" title="Video Out"></div>
+</div>
+<!-- Node 2: Upscale -->
+<div class="absolute left-[340px] top-[80px] w-[180px] bg-[#1d1f23] rounded-lg border border-[#3f4045] plate-effect shadow-plate-shadow flex flex-col">
+<div class="px-3 py-2 border-b border-outline-variant flex justify-between items-center bg-surface-container-low rounded-t-lg">
+<span class="font-headline-sm text-headline-sm text-on-surface">Upscale</span>
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">aspect_ratio</span>
+</div>
+<div class="p-3 flex flex-col gap-2">
+<div class="font-body-sm text-body-sm text-on-surface-variant">ESRGAN_4x</div>
+<div class="self-start font-telemetry-sm text-telemetry-sm px-1.5 py-0.5 bg-surface-container-highest border border-outline-variant text-on-surface-variant rounded-sm uppercase">GPU: 45ms</div>
+</div>
+<!-- Ports -->
+<div class="port port-in port-video" style="top: 50%;"></div>
+<div class="port port-out port-image" style="top: 50%;"></div>
+</div>
+<!-- Node 3: Denoise -->
+<div class="absolute left-[340px] top-[280px] w-[180px] bg-[#1d1f23] rounded-lg border border-[#3f4045] plate-effect shadow-plate-shadow flex flex-col">
+<div class="px-3 py-2 border-b border-outline-variant flex justify-between items-center bg-surface-container-low rounded-t-lg">
+<span class="font-headline-sm text-headline-sm text-on-surface">Denoise</span>
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">noise_aware</span>
+</div>
+<div class="p-3 flex flex-col gap-2">
+<div class="font-body-sm text-body-sm text-on-surface-variant">CleanAudio_v2</div>
+<div class="self-start font-telemetry-sm text-telemetry-sm px-1.5 py-0.5 bg-surface-container-highest border border-outline-variant text-on-surface-variant rounded-sm uppercase">NPU: 8ms</div>
+</div>
+<!-- Ports -->
+<div class="port port-in port-audio" style="top: 50%;"></div>
+<div class="port port-out port-audio" style="top: 50%;"></div>
+</div>
+<!-- Node 4: Object Removal -->
+<div class="absolute left-[640px] top-[80px] w-[180px] bg-[#1d1f23] rounded-lg border border-[#3f4045] plate-effect shadow-plate-shadow flex flex-col">
+<div class="px-3 py-2 border-b border-outline-variant flex justify-between items-center bg-surface-container-low rounded-t-lg">
+<span class="font-headline-sm text-headline-sm text-on-surface">Object Removal</span>
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">ink_eraser</span>
+</div>
+<div class="p-3 flex flex-col gap-2">
+<div class="font-body-sm text-body-sm text-on-surface-variant">LaMa_Inpaint</div>
+<div class="self-start font-telemetry-sm text-telemetry-sm px-1.5 py-0.5 bg-surface-container-highest border border-outline-variant text-on-surface-variant rounded-sm uppercase">GPU: 120ms</div>
+</div>
+<!-- Ports -->
+<div class="port port-in port-image" style="top: 50%;"></div>
+<div class="port port-out port-image" style="top: 50%;"></div>
+</div>
+<!-- Node 5: Transcribe -->
+<div class="absolute left-[640px] top-[280px] w-[180px] bg-[#1d1f23] rounded-lg border border-[#3f4045] plate-effect shadow-plate-shadow flex flex-col ring-1 ring-primary">
+<div class="px-3 py-2 border-b border-outline-variant flex justify-between items-center bg-surface-container-highest rounded-t-lg">
+<span class="font-headline-sm text-headline-sm text-on-surface">Transcribe</span>
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">transcribe</span>
+</div>
+<div class="p-3 flex flex-col gap-2">
+<div class="font-body-sm text-body-sm text-on-surface-variant">Whisper_Tiny</div>
+<div class="self-start font-telemetry-sm text-telemetry-sm px-1.5 py-0.5 bg-surface-container-highest border border-outline-variant text-on-surface-variant rounded-sm uppercase">CPU: 85ms</div>
+</div>
+<!-- Ports -->
+<div class="port port-in port-audio" style="top: 50%;"></div>
+<!-- Active Port -->
+<div class="port port-out port-audio port-active-audio" style="top: 50%;"></div>
+</div>
+<!-- Node 6: Output -->
+<div class="absolute left-[940px] top-[180px] w-[180px] bg-[#1d1f23] rounded-lg border border-[#3f4045] plate-effect shadow-plate-shadow flex flex-col">
+<div class="px-3 py-2 border-b border-outline-variant flex justify-between items-center bg-surface-container-low rounded-t-lg">
+<span class="font-headline-sm text-headline-sm text-on-surface">Output</span>
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">save</span>
+</div>
+<div class="p-3 flex flex-col gap-2">
+<div class="font-body-sm text-body-sm text-on-surface-variant">MUX_Container</div>
+<div class="self-start font-telemetry-sm text-telemetry-sm px-1.5 py-0.5 bg-surface-container-highest border border-outline-variant text-on-surface-variant rounded-sm uppercase">SYS: 2ms</div>
+</div>
+<!-- Ports -->
+<div class="port port-in port-image" style="top: 25%;"></div>
+<!-- Target Port with Halo -->
+<div class="port port-in port-audio port-halo-audio" style="top: 75%;"></div>
+</div>
+</div>
+</main>
+<!-- Docked Inspector Panel -->
+<aside class="w-1/3 min-w-[320px] max-w-[400px] bg-[#1d1f23] border-l border-[#3f4045] flex flex-col shadow-[-8px_0_24px_rgba(8,9,10,0.55)] z-20">
+<!-- Header -->
+<div class="px-4 py-4 border-b border-outline-variant flex justify-between items-center shrink-0">
+<h2 class="font-headline-md text-headline-md text-on-surface">Transcribe</h2>
+<button class="text-on-surface-variant hover:text-on-surface"><span class="material-symbols-outlined">more_vert</span></button>
+</div>
+<!-- Scrollable Content -->
+<div class="flex-1 overflow-y-auto p-4 flex flex-col gap-6">
+<!-- Model Selection -->
+<div class="flex flex-col gap-2">
+<label class="font-label-caps text-label-caps text-on-surface-variant uppercase">Model Selection</label>
+<div class="relative">
+<select class="w-full bg-surface-graphite border border-outline-variant rounded-sm px-3 py-2 text-body-md text-on-surface appearance-none focus:outline-none focus:border-primary plate-effect">
+<option>Whisper_Tiny (Fast)</option>
+<option>Whisper_Base</option>
+<option>Whisper_Large (Accurate)</option>
+</select>
+<span class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none">arrow_drop_down</span>
+</div>
+</div>
+<!-- Backend Targeting -->
+<div class="flex flex-col gap-2">
+<label class="font-label-caps text-label-caps text-on-surface-variant uppercase">Compute Target</label>
+<div class="flex bg-surface-graphite p-1 rounded-sm border border-outline-variant plate-effect w-full">
+<button class="flex-1 text-on-surface-variant hover:text-on-surface py-1.5 font-telemetry text-telemetry uppercase transition-colors">NPU</button>
+<button class="flex-1 text-on-surface-variant hover:text-on-surface py-1.5 font-telemetry text-telemetry uppercase transition-colors">GPU</button>
+<button class="flex-1 bg-surface-container-highest border border-outline-variant text-on-surface font-telemetry text-telemetry py-1.5 rounded-sm uppercase">CPU</button>
+</div>
+</div>
+<!-- Parameters -->
+<div class="flex flex-col gap-4 pt-2 border-t border-outline-variant">
+<h3 class="font-label-caps text-label-caps text-on-surface-variant uppercase">Parameters</h3>
+<!-- Slider 1 -->
+<div class="flex flex-col gap-1">
+<div class="flex justify-between items-center">
+<span class="font-body-sm text-body-sm text-on-surface">Confidence Threshold</span>
+<span class="font-telemetry text-telemetry text-primary">0.85</span>
+</div>
+<input class="w-full h-1 bg-surface-container rounded-none appearance-none cursor-pointer accent-primary" max="100" min="0" type="range" value="85"/>
+</div>
+<!-- Slider 2 -->
+<div class="flex flex-col gap-1 mt-2">
+<div class="flex justify-between items-center">
+<span class="font-body-sm text-body-sm text-on-surface">Beam Size</span>
+<span class="font-telemetry text-telemetry text-primary">5</span>
+</div>
+<input class="w-full h-1 bg-surface-container rounded-none appearance-none cursor-pointer accent-primary" max="10" min="1" type="range" value="5"/>
+</div>
+<!-- Stepper -->
+<div class="flex flex-col gap-1 mt-2">
+<span class="font-body-sm text-body-sm text-on-surface">Max Tokens</span>
+<div class="flex items-center w-32 border border-outline-variant rounded-sm bg-surface-graphite plate-effect">
+<button class="w-8 h-8 flex items-center justify-center text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors border-r border-outline-variant"><span class="material-symbols-outlined text-[16px]">remove</span></button>
+<input class="flex-1 w-full bg-transparent border-none text-center font-telemetry text-telemetry text-on-surface p-0 focus:ring-0" type="text" value="256"/>
+<button class="w-8 h-8 flex items-center justify-center text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors border-l border-outline-variant"><span class="material-symbols-outlined text-[16px]">add</span></button>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Actions -->
+<div class="p-4 border-t border-outline-variant bg-surface-container-lowest flex gap-3 shrink-0">
+<button class="flex-1 bg-transparent border border-outline-variant text-on-surface font-body-sm font-semibold py-2 rounded-sm hover:bg-surface-container transition-colors">Reset</button>
+<button class="flex-1 bg-primary-container text-on-primary-container font-body-sm font-semibold py-2 rounded-sm hover:brightness-110 transition-all">Apply</button>
+</div>
+</aside>
+</div>
+<!-- BottomNavBar (Hidden on desktop, present for structural adherence if resizing) -->
+<nav class="bg-surface-container-highest border border-outline-variant shadow-lg rounded-xl mb-4 mx-auto w-fit fixed bottom-0 left-1/2 -translate-x-1/2 mb-6 flex gap-gutter px-6 py-3 z-50 md:hidden">
+<button class="flex flex-col items-center gap-1 text-primary scale-110 duration-200">
+<span class="material-symbols-outlined">zoom_in</span>
+<span class="font-telemetry-sm text-telemetry-sm">Zoom In</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">zoom_out</span>
+<span class="font-telemetry-sm text-telemetry-sm">Zoom Out</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">restart_alt</span>
+<span class="font-telemetry-sm text-telemetry-sm">Reset</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">fullscreen</span>
+<span class="font-telemetry-sm text-telemetry-sm">Fit</span>
+</button>
+</nav>
+</body></html>

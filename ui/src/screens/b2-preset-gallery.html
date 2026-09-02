@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Preset Gallery - MediaForge</title>
+<script src="/src/assets/tailwind.js"></script>
+<link rel="stylesheet" href="/src/assets/fonts.css"/>
+<link rel="stylesheet" href="/src/assets/fonts.css"/>
+<link rel="stylesheet" href="/src/assets/fonts.css"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-surface-variant": "#b3afa9",
+                        "heat-hot": "#ff5722",
+                        "on-tertiary-fixed-variant": "#004a78",
+                        "surface-container-low": "#181a1e",
+                        "on-secondary-fixed-variant": "#00504a",
+                        "surface-graphite": "#121316",
+                        "on-secondary-container": "#9cf4e8",
+                        "error": "#ffb4ab",
+                        "primary-fixed-dim": "#ffb077",
+                        "on-tertiary": "#003355",
+                        "surface-tint": "#ffb077",
+                        "secondary-container": "#00726a",
+                        "inverse-primary": "#9c4500",
+                        "heat-throttle": "#ffb300",
+                        "background": "#121316",
+                        "on-background": "#e8e6e3",
+                        "on-tertiary-container": "#002f4f",
+                        "surface-container": "#1d1f23",
+                        "port-mask": "#e88ac4",
+                        "on-secondary": "#003732",
+                        "surface": "#121316",
+                        "secondary-fixed": "#9bf2e7",
+                        "molten-copper-bright": "#ffb077",
+                        "port-image": "#9ad67f",
+                        "surface-variant": "#2c2e34",
+                        "surface-bright": "#44362f",
+                        "plate-shadow": "#08090a",
+                        "on-secondary-fixed": "#00201d",
+                        "on-primary": "#542200",
+                        "tertiary-fixed": "#cfe5ff",
+                        "heat-idle": "#5a5b60",
+                        "on-primary-container": "#4e1f00",
+                        "outline": "#8a857e",
+                        "inverse-surface": "#e8e6e3",
+                        "outline-variant": "#3f4045",
+                        "tertiary-fixed-dim": "#a8c7e8",
+                        "surface-container-high": "#24262b",
+                        "secondary-fixed-dim": "#7fd6cb",
+                        "plate-highlight": "#3f4045",
+                        "inverse-on-surface": "#3b2e27",
+                        "port-tensor": "#d4c77f",
+                        "tertiary-container": "#009af3",
+                        "surface-container-highest": "#2c2e34",
+                        "surface-container-lowest": "#08090a",
+                        "on-error": "#690005",
+                        "secondary": "#7fd6cb",
+                        "primary": "#ffb077",
+                        "on-tertiary-fixed": "#001d34",
+                        "on-primary-fixed-variant": "#773300",
+                        "primary-fixed": "#ffdbca",
+                        "on-error-container": "#ffdad6",
+                        "tertiary": "#a8c7e8",
+                        "on-surface": "#e8e6e3",
+                        "error-container": "#93000a",
+                        "surface-dim": "#121316",
+                        "primary-container": "#ed7014",
+                        "on-primary-fixed": "#331200",
+                        "port-text": "#a8c7e8"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "margin-mobile": "20px",
+                        "gutter": "16px",
+                        "touch-min": "44px",
+                        "node-row-height": "72px",
+                        "base": "8px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "headline-md": ["Chivo"],
+                        "headline-lg": ["Chivo"],
+                        "headline-sm": ["Chivo"],
+                        "body-lg": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "telemetry": ["JetBrains Mono"],
+                        "body-sm": ["Inter"],
+                        "telemetry-sm": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-md": ["22px", { "lineHeight": "28px", "fontWeight": "700" }],
+                        "headline-lg": ["30px", { "lineHeight": "38px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "label-caps": ["11px", { "lineHeight": "16px", "letterSpacing": "0.06em", "fontWeight": "700" }],
+                        "telemetry": ["13px", { "lineHeight": "20px", "fontWeight": "450" }],
+                        "body-sm": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+                        "telemetry-sm": ["11px", { "lineHeight": "16px", "fontWeight": "400" }]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .plate-effect {
+            background-color: #1d1f23;
+            border: 1px solid #3f4045;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 2px 4px rgba(8, 9, 10, 0.2);
+            border-radius: 8px;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface-graphite text-on-surface min-h-screen">
+<!-- Top Bar -->
+<header class="fixed top-0 left-0 w-full z-50 flex items-center justify-between px-margin-mobile h-node-row-height bg-surface-graphite border-b border-outline-variant">
+<div class="flex items-center gap-gutter">
+<button class="w-touch-min h-touch-min flex items-center justify-center text-on-surface-variant hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined text-[24px]">chevron_left</span>
+</button>
+<h1 class="font-headline-md text-[22px] text-[#e8e6e3] tracking-tight">Presets</h1>
+</div>
+<div class="flex items-center gap-2">
+<div class="flex items-center gap-1.5 border border-outline-variant rounded px-2 py-1">
+<span class="material-symbols-outlined text-[14px] text-heat-idle">device_thermostat</span>
+<span class="font-telemetry-sm text-[11px] text-heat-idle uppercase">IDLE</span>
+</div>
+<div class="flex items-center gap-1.5 border border-outline-variant rounded px-2 py-1">
+<span class="material-symbols-outlined text-[14px] text-[#b3afa9]">shield</span>
+<span class="font-body-sm text-[11px] text-[#b3afa9]">Media stays on device</span>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="pt-[92px] pb-[40px] px-margin-mobile max-w-3xl mx-auto flex flex-col gap-[12px]">
+<!-- Card 1 -->
+<button class="plate-effect p-[16px] flex flex-col items-start gap-2 text-left hover:bg-surface-container-high transition-colors w-full group">
+<h2 class="font-headline-sm text-[16px] text-on-surface group-hover:text-primary transition-colors">Podcast cleanup</h2>
+<p class="font-telemetry-sm text-[11px] text-[#b3afa9]">denoise → isolate → transcribe → chapters</p>
+</button>
+<!-- Card 2 -->
+<button class="plate-effect p-[16px] flex flex-col items-start gap-2 text-left hover:bg-surface-container-high transition-colors w-full group">
+<h2 class="font-headline-sm text-[16px] text-on-surface group-hover:text-primary transition-colors">Old footage revival</h2>
+<p class="font-telemetry-sm text-[11px] text-[#b3afa9]">upscale → denoise → deflicker → grade</p>
+</button>
+<!-- Card 3 -->
+<button class="plate-effect p-[16px] flex flex-col items-start gap-2 text-left hover:bg-surface-container-high transition-colors w-full group">
+<h2 class="font-headline-sm text-[16px] text-on-surface group-hover:text-primary transition-colors">Remove background</h2>
+<p class="font-telemetry-sm text-[11px] text-[#b3afa9]">matte → refine → composite</p>
+</button>
+<!-- Card 4 -->
+<button class="plate-effect p-[16px] flex flex-col items-start gap-2 text-left hover:bg-surface-container-high transition-colors w-full group">
+<h2 class="font-headline-sm text-[16px] text-on-surface group-hover:text-primary transition-colors">Shorts factory</h2>
+<p class="font-telemetry-sm text-[11px] text-[#b3afa9]">detect → crop → caption → export</p>
+</button>
+<!-- Card 5 -->
+<button class="plate-effect p-[16px] flex flex-col items-start gap-2 text-left hover:bg-surface-container-high transition-colors w-full group relative">
+<div class="flex justify-between items-start w-full">
+<h2 class="font-headline-sm text-[16px] text-on-surface group-hover:text-primary transition-colors">Studio stems</h2>
+<div class="flex items-center gap-1 border border-port-tensor rounded-[4px] px-2 py-0.5 bg-transparent">
+<span class="material-symbols-outlined text-[14px] text-port-tensor">generating_tokens</span>
+<span class="font-telemetry-sm text-[11px] text-port-tensor">2 credits</span>
+</div>
+</div>
+<p class="font-telemetry-sm text-[11px] text-[#b3afa9]">isolate → separate → master</p>
+</button>
+<!-- Card 6 -->
+<button class="plate-effect p-[16px] flex flex-col items-start gap-2 text-left hover:bg-surface-container-high transition-colors w-full group relative">
+<div class="flex justify-between items-start w-full">
+<h2 class="font-headline-sm text-[16px] text-on-surface group-hover:text-primary transition-colors">Generative retouch</h2>
+<div class="flex items-center gap-1 border border-molten-copper-bright rounded-[4px] px-2 py-0.5 bg-transparent">
+<span class="material-symbols-outlined text-[14px] text-molten-copper-bright">lock</span>
+<span class="font-body-sm text-[11px] font-bold text-molten-copper-bright uppercase tracking-wider">PRO</span>
+</div>
+</div>
+<p class="font-telemetry-sm text-[11px] text-[#b3afa9]">mask → fill → blend</p>
+</button>
+<!-- Card 7 -->
+<div class="plate-effect p-[16px] flex flex-col items-start gap-2 text-left w-full opacity-55 relative">
+<div class="flex justify-between items-start w-full">
+<h2 class="font-headline-sm text-[16px] text-on-surface">Film grain restore</h2>
+<div class="flex items-center gap-1 border border-[#6a6a6d] rounded-[4px] px-2 py-0.5 bg-transparent">
+<span class="font-body-sm text-[11px] text-[#6a6a6d]">Needs 8 Gen 3</span>
+</div>
+</div>
+<p class="font-telemetry-sm text-[11px] text-[#b3afa9]">denoise → regrain → grade</p>
+</div>
+<!-- Card 8 -->
+<div class="plate-effect p-[16px] flex flex-col items-start gap-2 text-left w-full opacity-55 relative">
+<div class="flex justify-between items-start w-full">
+<h2 class="font-headline-sm text-[16px] text-on-surface">Depth relight</h2>
+<div class="flex items-center gap-1 border border-[#6a6a6d] rounded-[4px] px-2 py-0.5 bg-transparent">
+<span class="font-body-sm text-[11px] text-[#6a6a6d]">Needs 8 Gen 3</span>
+</div>
+</div>
+<p class="font-telemetry-sm text-[11px] text-[#b3afa9]">depth → relight → composite</p>
+</div>
+</main>
+</body></html>

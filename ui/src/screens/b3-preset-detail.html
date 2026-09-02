@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MediaForge - Podcast Cleanup</title>
+<script src="/src/assets/tailwind.js"></script>
+<link rel="stylesheet" href="/src/assets/fonts.css"/>
+<link rel="stylesheet" href="/src/assets/fonts.css"/>
+<link rel="stylesheet" href="/src/assets/fonts.css"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "surface-container": "#1d1f23",
+                        "on-secondary": "#003732",
+                        "surface-graphite": "#121316",
+                        "on-tertiary-fixed-variant": "#004a78",
+                        "surface": "#121316",
+                        "primary-fixed": "#ffdbca",
+                        "surface-container-lowest": "#08090a",
+                        "on-secondary-container": "#9cf4e8",
+                        "surface-container-low": "#181a1e",
+                        "port-tensor": "#d4c77f",
+                        "primary-fixed-dim": "#ffb077",
+                        "heat-hot": "#ff5722",
+                        "primary-container": "#ed7014",
+                        "plate-highlight": "#3f4045",
+                        "error": "#ffb4ab",
+                        "inverse-on-surface": "#3b2e27",
+                        "surface-container-highest": "#2c2e34",
+                        "secondary": "#7fd6cb",
+                        "on-tertiary-container": "#002f4f",
+                        "outline-variant": "#3f4045",
+                        "heat-throttle": "#ffb300",
+                        "on-tertiary-fixed": "#001d34",
+                        "on-background": "#e8e6e3",
+                        "tertiary-fixed-dim": "#a8c7e8",
+                        "outline": "#8a857e",
+                        "molten-copper-bright": "#ffb077",
+                        "surface-variant": "#2c2e34",
+                        "tertiary-fixed": "#cfe5ff",
+                        "plate-shadow": "#08090a",
+                        "on-surface": "#e8e6e3",
+                        "surface-dim": "#121316",
+                        "secondary-fixed": "#9bf2e7",
+                        "heat-idle": "#5a5b60",
+                        "inverse-primary": "#9c4500",
+                        "surface-tint": "#ffb077",
+                        "on-error-container": "#ffdad6",
+                        "on-primary-fixed-variant": "#773300",
+                        "port-text": "#a8c7e8",
+                        "tertiary": "#a8c7e8",
+                        "surface-bright": "#44362f",
+                        "tertiary-container": "#009af3",
+                        "secondary-fixed-dim": "#7fd6cb",
+                        "on-primary-container": "#4e1f00",
+                        "background": "#121316",
+                        "on-surface-variant": "#b3afa9",
+                        "on-secondary-fixed-variant": "#00504a",
+                        "on-error": "#690005",
+                        "on-tertiary": "#003355",
+                        "on-primary": "#542200",
+                        "secondary-container": "#00726a",
+                        "surface-container-high": "#24262b",
+                        "on-primary-fixed": "#331200",
+                        "error-container": "#93000a",
+                        "on-secondary-fixed": "#00201d",
+                        "port-mask": "#e88ac4",
+                        "primary": "#ffb077",
+                        "port-image": "#9ad67f",
+                        "inverse-surface": "#e8e6e3",
+                        // Specific custom colors requested
+                        "bg-graphite": "#121316",
+                        "node-surface": "#1d1f23",
+                        "summary-surface": "#24262b",
+                        "text-light": "#e8e6e3",
+                        "text-muted": "#b3afa9",
+                        "copper-solid": "#ed7014",
+                        "copper-text": "#4a1f00",
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem",
+                        "sm": "0.125rem"
+                    },
+                    spacing: {
+                        "margin-mobile": "20px",
+                        "base": "8px",
+                        "touch-min": "44px",
+                        "gutter": "16px",
+                        "node-row-height": "72px"
+                    },
+                    fontFamily: {
+                        "headline-sm": ["Chivo", "sans-serif"],
+                        "headline-lg": ["Chivo", "sans-serif"],
+                        "telemetry-sm": ["JetBrains Mono", "monospace"],
+                        "telemetry": ["JetBrains Mono", "monospace"],
+                        "label-caps": ["Inter", "sans-serif"],
+                        "headline-md": ["Chivo", "sans-serif"],
+                        "body-lg": ["Inter", "sans-serif"],
+                        "body-sm": ["Inter", "sans-serif"],
+                        "body-md": ["Inter", "sans-serif"]
+                    },
+                    fontSize: {
+                        "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+                        "headline-lg": ["30px", { "lineHeight": "38px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "telemetry-sm": ["11px", { "lineHeight": "16px", "fontWeight": "400" }],
+                        "telemetry": ["13px", { "lineHeight": "20px", "fontWeight": "450" }],
+                        "label-caps": ["11px", { "lineHeight": "16px", "letterSpacing": "0.06em", "fontWeight": "700" }],
+                        "headline-md": ["22px", { "lineHeight": "28px", "fontWeight": "700" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "body-sm": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .plate-effect {
+            box-shadow: inset 0 1px 0 0 theme('colors.plate-highlight');
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-bg-graphite text-text-light font-body-sm min-h-screen flex flex-col antialiased">
+<!-- TopAppBar -->
+<header class="flex justify-between items-center w-full px-margin-mobile h-node-row-height bg-bg-graphite shrink-0">
+<div class="flex items-center gap-4">
+<button aria-label="Go back" class="w-touch-min h-touch-min flex items-center justify-start text-text-light hover:bg-surface-variant transition-colors rounded-sm">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">arrow_back_ios_new</span>
+</button>
+<h1 class="text-headline-md font-headline-md text-text-light">Podcast cleanup</h1>
+</div>
+<div class="flex flex-col items-end gap-1">
+<div class="flex items-center gap-1 border border-outline-variant px-2 py-0.5 rounded-sm">
+<span class="material-symbols-outlined text-[14px] text-heat-idle" style="font-variation-settings: 'FILL' 0;">thermostat</span>
+<span class="text-telemetry-sm font-telemetry-sm text-heat-idle uppercase">IDLE</span>
+</div>
+<div class="flex items-center gap-1 border border-outline-variant px-2 py-0.5 rounded-sm">
+<span class="material-symbols-outlined text-[14px] text-text-muted" style="font-variation-settings: 'FILL' 0;">shield</span>
+<span class="text-body-sm font-body-sm text-text-muted">Media stays on device</span>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-grow px-margin-mobile pb-24 overflow-y-auto">
+<!-- Node Chain -->
+<div class="relative py-6 flex flex-col gap-4 pl-4">
+<!-- Connecting Line -->
+<div class="absolute left-6 top-10 bottom-10 w-px bg-secondary opacity-50 z-0"></div>
+<!-- Node 1: Denoise -->
+<div class="relative z-10 flex gap-4">
+<div class="mt-4 flex flex-col items-center">
+<div class="w-2 h-2 rounded-full bg-secondary"></div>
+<span class="material-symbols-outlined text-secondary text-[16px] mt-1 -ml-px rotate-90" style="font-variation-settings: 'FILL' 1;">arrow_drop_down</span>
+</div>
+<div class="flex-grow bg-node-surface border border-plate-highlight rounded-xl plate-effect p-gutter shadow-[0_2px_4px_theme('colors.plate-shadow')]">
+<div class="flex justify-between items-start mb-2">
+<div>
+<h2 class="text-headline-sm font-headline-sm text-text-light">Denoise</h2>
+<p class="text-body-sm font-body-sm text-text-muted mt-0.5">GTCRN</p>
+</div>
+</div>
+<div class="flex items-center gap-3 mt-4">
+<span class="border border-plate-highlight px-2 py-0.5 rounded-sm text-telemetry-sm font-telemetry-sm uppercase text-text-muted">GPU</span>
+<span class="text-telemetry font-telemetry text-text-light">0:38</span>
+</div>
+</div>
+</div>
+<!-- Node 2: Isolate voice -->
+<div class="relative z-10 flex gap-4">
+<div class="mt-4 flex flex-col items-center">
+<div class="w-2 h-2 rounded-full bg-secondary"></div>
+<span class="material-symbols-outlined text-secondary text-[16px] mt-1 -ml-px rotate-90" style="font-variation-settings: 'FILL' 1;">arrow_drop_down</span>
+</div>
+<div class="flex-grow bg-node-surface border border-plate-highlight rounded-xl plate-effect p-gutter shadow-[0_2px_4px_theme('colors.plate-shadow')]">
+<div class="flex justify-between items-start mb-2">
+<div>
+<h2 class="text-headline-sm font-headline-sm text-text-light">Isolate voice</h2>
+<p class="text-body-sm font-body-sm text-text-muted mt-0.5">UVR</p>
+</div>
+</div>
+<div class="flex items-center gap-3 mt-4">
+<span class="border border-plate-highlight px-2 py-0.5 rounded-sm text-telemetry-sm font-telemetry-sm uppercase text-text-muted">GPU</span>
+<span class="text-telemetry font-telemetry text-text-light">1:24</span>
+</div>
+</div>
+</div>
+<!-- Node 3: Transcribe -->
+<div class="relative z-10 flex gap-4">
+<div class="mt-4 flex flex-col items-center">
+<div class="w-2 h-2 rounded-full bg-secondary"></div>
+<span class="material-symbols-outlined text-secondary text-[16px] mt-1 -ml-px rotate-90" style="font-variation-settings: 'FILL' 1;">arrow_drop_down</span>
+</div>
+<div class="flex-grow bg-node-surface border border-plate-highlight rounded-xl plate-effect p-gutter shadow-[0_2px_4px_theme('colors.plate-shadow')]">
+<div class="flex justify-between items-start mb-2">
+<div>
+<h2 class="text-headline-sm font-headline-sm text-text-light">Transcribe</h2>
+<p class="text-body-sm font-body-sm text-text-muted mt-0.5">Whisper small</p>
+</div>
+</div>
+<div class="flex items-center gap-3 mt-4">
+<span class="border border-plate-highlight px-2 py-0.5 rounded-sm text-telemetry-sm font-telemetry-sm uppercase text-text-muted">CPU</span>
+<span class="text-telemetry font-telemetry text-text-light">2:02</span>
+</div>
+</div>
+</div>
+<!-- Node 4: Chapters -->
+<div class="relative z-10 flex gap-4">
+<div class="mt-4 flex flex-col items-center">
+<div class="w-2 h-2 rounded-full bg-secondary"></div>
+</div>
+<div class="flex-grow bg-node-surface border border-plate-highlight rounded-xl plate-effect p-gutter shadow-[0_2px_4px_theme('colors.plate-shadow')]">
+<div class="flex justify-between items-start mb-2">
+<div>
+<h2 class="text-headline-sm font-headline-sm text-text-light">Chapters</h2>
+<p class="text-body-sm font-body-sm text-text-muted mt-0.5">Local LLM</p>
+</div>
+</div>
+<div class="flex items-center gap-3 mt-4">
+<span class="border border-plate-highlight px-2 py-0.5 rounded-sm text-telemetry-sm font-telemetry-sm uppercase text-text-muted">CPU</span>
+<span class="text-telemetry font-telemetry text-text-light">0:16</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Summary Plate -->
+<div class="mt-6 bg-summary-surface border border-plate-highlight rounded-xl plate-effect p-gutter shadow-[0_4px_8px_theme('colors.plate-shadow')]">
+<p class="text-telemetry font-telemetry text-text-light leading-relaxed">Estimated 4 min 20 s for a 30 minute recording on this device</p>
+<div class="flex items-center gap-2 mt-3">
+<span class="material-symbols-outlined text-secondary text-[16px]" style="font-variation-settings: 'FILL' 1;">shield</span>
+<p class="text-body-sm font-body-sm text-text-muted">Runs entirely offline. Nothing is uploaded.</p>
+</div>
+</div>
+</main>
+<!-- Bottom Action Bar -->
+<div class="fixed bottom-0 left-0 w-full bg-bg-graphite/95 border-t border-outline-variant p-4 z-50">
+<button class="w-full h-12 bg-copper-solid text-copper-text text-headline-sm font-headline-sm rounded flex items-center justify-center hover:brightness-110 transition-all active:scale-[0.98]">
+            Run
+        </button>
+</div>
+</body></html>

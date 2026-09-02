@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Run Preflight - MediaForge</title>
+<link rel="stylesheet" href="/src/assets/fonts.css"/>
+<link rel="stylesheet" href="/src/assets/fonts.css"/>
+<link rel="stylesheet" href="/src/assets/fonts.css"/>
+<script src="/src/assets/tailwind.js"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "molten-copper-bright": "#ffb077",
+                        "on-error": "#690005",
+                        "on-primary-fixed": "#331200",
+                        "surface-graphite": "#121316",
+                        "on-secondary-fixed-variant": "#00504a",
+                        "heat-hot": "#ff5722",
+                        "heat-idle": "#5a5b60",
+                        "surface-bright": "#44362f",
+                        "tertiary-container": "#009af3",
+                        "surface-container-low": "#181a1e",
+                        "error-container": "#93000a",
+                        "surface-container-high": "#24262b",
+                        "surface-container-highest": "#2c2e34",
+                        "secondary": "#7fd6cb",
+                        "primary-container": "#ed7014",
+                        "plate-highlight": "#3f4045",
+                        "surface-container": "#1d1f23",
+                        "primary-fixed-dim": "#ffb077",
+                        "on-error-container": "#ffdad6",
+                        "inverse-primary": "#9c4500",
+                        "port-text": "#a8c7e8",
+                        "primary": "#ffb077",
+                        "on-secondary-fixed": "#00201d",
+                        "on-primary-container": "#4e1f00",
+                        "surface": "#121316",
+                        "secondary-fixed": "#9bf2e7",
+                        "on-tertiary-fixed-variant": "#004a78",
+                        "on-secondary": "#003732",
+                        "on-tertiary-container": "#002f4f",
+                        "tertiary": "#a8c7e8",
+                        "on-primary-fixed-variant": "#773300",
+                        "inverse-surface": "#e8e6e3",
+                        "tertiary-fixed-dim": "#a8c7e8",
+                        "port-tensor": "#d4c77f",
+                        "port-image": "#9ad67f",
+                        "on-background": "#e8e6e3",
+                        "outline-variant": "#3f4045",
+                        "background": "#121316",
+                        "heat-throttle": "#ffb300",
+                        "plate-shadow": "#08090a",
+                        "surface-variant": "#2c2e34",
+                        "on-surface": "#e8e6e3",
+                        "on-surface-variant": "#b3afa9",
+                        "surface-container-lowest": "#08090a",
+                        "secondary-container": "#00726a",
+                        "secondary-fixed-dim": "#7fd6cb",
+                        "port-mask": "#e88ac4",
+                        "on-tertiary": "#003355",
+                        "error": "#ffb4ab",
+                        "surface-dim": "#121316",
+                        "on-primary": "#542200",
+                        "primary-fixed": "#ffdbca",
+                        "outline": "#8a857e",
+                        "tertiary-fixed": "#cfe5ff",
+                        "inverse-on-surface": "#3b2e27",
+                        "surface-tint": "#ffb077",
+                        "on-secondary-container": "#9cf4e8",
+                        "on-tertiary-fixed": "#001d34"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    spacing: {
+                        "margin-mobile": "20px",
+                        "node-row-height": "72px",
+                        "base": "8px",
+                        "gutter": "16px",
+                        "touch-min": "44px"
+                    },
+                    fontFamily: {
+                        "telemetry-sm": ["JetBrains Mono"],
+                        "body-md": ["Inter"],
+                        "telemetry": ["JetBrains Mono"],
+                        "body-lg": ["Inter"],
+                        "headline-lg": ["Chivo"],
+                        "body-sm": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "headline-sm": ["Chivo"],
+                        "headline-md": ["Chivo"]
+                    },
+                    fontSize: {
+                        "telemetry-sm": ["11px", { lineHeight: "16px", fontWeight: "400" }],
+                        "body-md": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+                        "telemetry": ["13px", { lineHeight: "20px", fontWeight: "450" }],
+                        "body-lg": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+                        "headline-lg": ["30px", { lineHeight: "38px", letterSpacing: "-0.01em", fontWeight: "700" }],
+                        "body-sm": ["13px", { lineHeight: "18px", fontWeight: "400" }],
+                        "label-caps": ["11px", { lineHeight: "16px", letterSpacing: "0.06em", fontWeight: "700" }],
+                        "headline-sm": ["18px", { lineHeight: "24px", fontWeight: "600" }],
+                        "headline-md": ["22px", { lineHeight: "28px", fontWeight: "700" }]
+                    }
+                }
+            }
+        };
+    </script>
+<style>
+        .machined-plate {
+            background-color: theme('colors.surface-container');
+            border: 1px solid theme('colors.outline-variant');
+            border-top: 1px solid theme('colors.plate-highlight');
+            box-shadow: 0 4px 6px -1px theme('colors.plate-shadow'), 0 2px 4px -1px theme('colors.plate-shadow');
+            border-radius: theme('borderRadius.xl');
+        }
+        .film-sprocket {
+            background-image: 
+                radial-gradient(circle at 10px 50%, transparent 6px, theme('colors.surface-graphite') 6.5px),
+                radial-gradient(circle at calc(100% - 10px) 50%, transparent 6px, theme('colors.surface-graphite') 6.5px);
+            background-size: 100% 24px;
+            background-repeat: repeat-y;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface-graphite text-on-surface font-body-md antialiased pb-24">
+<!-- Top Bar -->
+<header class="flex justify-between items-center w-full px-margin-mobile h-node-row-height bg-surface-graphite border-b border-outline-variant sticky top-0 z-10">
+<div class="flex items-center gap-gutter">
+<button class="w-[44px] h-[44px] flex items-center justify-center text-on-surface-variant hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<h1 class="font-headline-md text-headline-md text-on-surface">Start job</h1>
+</div>
+<div class="flex items-center gap-base">
+<div class="flex items-center gap-1 bg-surface-container-highest rounded-full px-3 py-1 border border-outline-variant">
+<span class="material-symbols-outlined text-[14px] text-heat-idle">thermostat</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant uppercase">IDLE</span>
+</div>
+<div class="bg-surface-container-highest rounded-full px-3 py-1 border border-outline-variant">
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant uppercase">ON-DEVICE</span>
+</div>
+</div>
+</header>
+<main class="px-margin-mobile py-gutter flex flex-col gap-gutter max-w-2xl mx-auto">
+<!-- Job Header -->
+<section class="machined-plate p-4 flex gap-gutter items-center">
+<div class="w-24 h-16 bg-surface-graphite border border-outline-variant rounded flex items-center justify-center film-sprocket relative overflow-hidden">
+<span class="material-symbols-outlined text-outline-variant">movie</span>
+</div>
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Old footage revival</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Source clip · 6 min</p>
+</div>
+</section>
+<!-- Estimate Section -->
+<section>
+<h3 class="font-label-caps text-label-caps text-on-surface-variant mb-base">ESTIMATE</h3>
+<div class="machined-plate">
+<div class="flex justify-between items-center p-4 border-b border-outline-variant">
+<span class="font-body-md text-body-md text-on-surface">Estimated time on this device</span>
+<span class="font-telemetry text-telemetry text-on-surface">11 min</span>
+</div>
+<div class="flex justify-between items-center p-4 border-b border-outline-variant">
+<span class="font-body-md text-body-md text-on-surface">Segments</span>
+<span class="font-telemetry text-telemetry text-on-surface">148</span>
+</div>
+<div class="flex justify-between items-center p-4 border-b border-outline-variant">
+<span class="font-body-md text-body-md text-on-surface">Output resolution</span>
+<span class="font-telemetry text-telemetry text-on-surface">1920x1080</span>
+</div>
+<div class="flex justify-between items-center p-4">
+<span class="font-body-md text-body-md text-on-surface">Approx. written to disk</span>
+<span class="font-telemetry text-telemetry text-on-surface">340 MB</span>
+</div>
+</div>
+</section>
+<!-- Thermal Advisory -->
+<section class="bg-[#3a2818] border-l-4 border-heat-throttle p-4 flex gap-3 rounded-r-[4px]">
+<span class="material-symbols-outlined text-heat-throttle mt-0.5" style="font-variation-settings: 'FILL' 1;">device_thermostat</span>
+<p class="font-body-sm text-body-sm text-on-surface">This job runs longer than 10 minutes. Your phone will get warm and may slow itself down to stay safe.</p>
+</section>
+<!-- Settings Row -->
+<section class="machined-plate p-4 flex justify-between items-center">
+<div>
+<p class="font-body-md text-body-md text-on-surface font-medium">Only run while charging</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Recommended for jobs over 10 minutes</p>
+</div>
+<!-- Machined Toggle (ON) -->
+<button class="w-12 h-6 bg-primary-container rounded-full relative border border-outline-variant focus:outline-none focus:ring-2 focus:ring-primary-container focus:ring-offset-2 focus:ring-offset-surface-graphite">
+<div class="absolute right-1 top-1 w-4 h-4 bg-surface-graphite rounded-full shadow-sm"></div>
+</button>
+</section>
+<!-- Cost Row -->
+<section class="flex justify-between items-center px-2">
+<p class="font-body-sm text-body-sm text-on-surface-variant">Uses <span class="font-telemetry text-telemetry text-on-surface">2</span> credits</p>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-port-tensor" style="font-variation-settings: 'FILL' 1;">monetization_on</span>
+<span class="font-telemetry text-telemetry text-port-tensor">balance 24</span>
+</div>
+</section>
+</main>
+<!-- Bottom Action Bar -->
+<footer class="fixed bottom-0 left-0 w-full bg-surface-graphite border-t border-outline-variant p-margin-mobile flex gap-4">
+<button class="flex-1 h-[44px] bg-transparent border border-outline text-molten-copper-bright font-headline-sm text-headline-sm rounded flex items-center justify-center hover:bg-surface-variant transition-colors">
+            Back
+        </button>
+<button class="flex-1 h-[44px] bg-primary-container text-[#2e1200] font-headline-sm text-headline-sm rounded flex items-center justify-center hover:opacity-90 transition-opacity">
+            Start job
+        </button>
+</footer>
+</body></html>

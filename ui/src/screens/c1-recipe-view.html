@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Podcast cleanup - OnDroid MediaForge</title>
+<script src="/src/assets/tailwind.js"></script>
+<link rel="stylesheet" href="/src/assets/fonts.css"/>
+<link rel="stylesheet" href="/src/assets/fonts.css"/>
+<link rel="stylesheet" href="/src/assets/fonts.css"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+                "tertiary-fixed-dim": "#a8c7e8",
+                "surface-dim": "#121316",
+                "tertiary": "#a8c7e8",
+                "on-secondary": "#003732",
+                "surface-container-highest": "#2c2e34",
+                "port-image": "#9ad67f",
+                "on-tertiary-fixed": "#001d34",
+                "on-error": "#690005",
+                "outline-variant": "#3f4045",
+                "port-tensor": "#d4c77f",
+                "on-tertiary-container": "#002f4f",
+                "inverse-primary": "#9c4500",
+                "on-surface-variant": "#b3afa9",
+                "surface-container-lowest": "#08090a",
+                "surface-tint": "#ffb077",
+                "surface-container-high": "#24262b",
+                "surface-container": "#1d1f23",
+                "secondary-container": "#00726a",
+                "background": "#121316",
+                "on-secondary-fixed": "#00201d",
+                "primary-container": "#ed7014",
+                "primary": "#ffb077",
+                "error-container": "#93000a",
+                "inverse-surface": "#e8e6e3",
+                "on-primary-fixed-variant": "#773300",
+                "surface-bright": "#44362f",
+                "tertiary-fixed": "#cfe5ff",
+                "molten-copper-bright": "#ffb077",
+                "heat-idle": "#5a5b60",
+                "outline": "#8a857e",
+                "heat-throttle": "#ffb300",
+                "secondary": "#7fd6cb",
+                "on-secondary-fixed-variant": "#00504a",
+                "plate-highlight": "#3f4045",
+                "surface-variant": "#2c2e34",
+                "surface-graphite": "#121316",
+                "secondary-fixed-dim": "#7fd6cb",
+                "surface": "#121316",
+                "heat-hot": "#ff5722",
+                "on-primary-container": "#4e1f00",
+                "on-error-container": "#ffdad6",
+                "port-mask": "#e88ac4",
+                "primary-fixed-dim": "#ffb077",
+                "on-tertiary": "#003355",
+                "on-background": "#e8e6e3",
+                "on-primary-fixed": "#331200",
+                "port-text": "#a8c7e8",
+                "on-primary": "#542200",
+                "on-tertiary-fixed-variant": "#004a78",
+                "plate-shadow": "#08090a",
+                "on-surface": "#e8e6e3",
+                "surface-container-low": "#181a1e",
+                "primary-fixed": "#ffdbca",
+                "tertiary-container": "#009af3",
+                "on-secondary-container": "#9cf4e8",
+                "inverse-on-surface": "#3b2e27",
+                "secondary-fixed": "#9bf2e7",
+                "error": "#ffb4ab"
+        },
+        "borderRadius": {
+                "DEFAULT": "0.125rem",
+                "lg": "0.25rem",
+                "xl": "0.5rem",
+                "full": "0.75rem"
+        },
+        "spacing": {
+                "base": "8px",
+                "touch-min": "44px",
+                "margin-mobile": "20px",
+                "gutter": "16px",
+                "node-row-height": "72px"
+        },
+        "fontFamily": {
+                "label-caps": [
+                        "Inter"
+                ],
+                "telemetry": [
+                        "JetBrains Mono"
+                ],
+                "telemetry-sm": [
+                        "JetBrains Mono"
+                ],
+                "headline-sm": [
+                        "Chivo"
+                ],
+                "headline-md": [
+                        "Chivo"
+                ],
+                "body-lg": [
+                        "Inter"
+                ],
+                "body-sm": [
+                        "Inter"
+                ],
+                "headline-lg": [
+                        "Chivo"
+                ],
+                "body-md": [
+                        "Inter"
+                ]
+        },
+        "fontSize": {
+                "label-caps": [
+                        "11px",
+                        {
+                                "lineHeight": "16px",
+                                "letterSpacing": "0.06em",
+                                "fontWeight": "700"
+                        }
+                ],
+                "telemetry": [
+                        "13px",
+                        {
+                                "lineHeight": "20px",
+                                "fontWeight": "450"
+                        }
+                ],
+                "telemetry-sm": [
+                        "11px",
+                        {
+                                "lineHeight": "16px",
+                                "fontWeight": "400"
+                        }
+                ],
+                "headline-sm": [
+                        "18px",
+                        {
+                                "lineHeight": "24px",
+                                "fontWeight": "600"
+                        }
+                ],
+                "headline-md": [
+                        "22px",
+                        {
+                                "lineHeight": "28px",
+                                "fontWeight": "700"
+                        }
+                ],
+                "body-lg": [
+                        "16px",
+                        {
+                                "lineHeight": "24px",
+                                "fontWeight": "400"
+                        }
+                ],
+                "body-sm": [
+                        "13px",
+                        {
+                                "lineHeight": "18px",
+                                "fontWeight": "400"
+                        }
+                ],
+                "headline-lg": [
+                        "30px",
+                        {
+                                "lineHeight": "38px",
+                                "letterSpacing": "-0.01em",
+                                "fontWeight": "700"
+                        }
+                ],
+                "body-md": [
+                        "14px",
+                        {
+                                "lineHeight": "20px",
+                                "fontWeight": "400"
+                        }
+                ]
+        }
+},
+    },
+  }
+</script>
+<style>
+    body {
+        background-color: #121316; /* surface-graphite equivalent for this specific prompt */
+        color: #e8e6e3;
+    }
+    
+    .machined-plate {
+        background-color: #1d1f23;
+        border-top: 1px solid theme('colors.plate-highlight');
+        border-right: 1px solid theme('colors.plate-highlight');
+        border-bottom: 1px solid theme('colors.plate-shadow');
+        border-left: 1px solid theme('colors.plate-highlight');
+        box-shadow: 0 4px 6px -1px rgba(8,9,10,0.55);
+    }
+
+    .node-card {
+        border-radius: 8px;
+    }
+
+    .connector-line {
+        width: 2px;
+        height: 32px;
+        margin: 0 auto;
+    }
+
+    .add-node-btn {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #1d1f23;
+        border: 1px solid theme('colors.outline-variant');
+        color: theme('colors.primary');
+        margin: -16px auto;
+        position: relative;
+        z-index: 10;
+        cursor: pointer;
+    }
+
+    .port-audio { background-color: theme('colors.molten-copper-bright'); border-radius: 50%; width: 16px; height: 16px; display: inline-block; }
+    .port-video { background-color: theme('colors.secondary'); width: 16px; height: 16px; display: inline-block; }
+    .port-text { background-color: theme('colors.port-text'); clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%); width: 18px; height: 16px; display: inline-block; }
+
+    .port-audio-line { background-color: theme('colors.molten-copper-bright'); }
+    .port-video-line { background-color: theme('colors.secondary'); }
+    .port-text-line { background-color: theme('colors.port-text'); }
+</style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-body-md antialiased pb-24">
+<!-- TopAppBar -->
+<header class="flex justify-between items-center px-margin-mobile h-node-row-height w-full bg-surface dark:bg-surface border-b border-outline-variant bg-surface-container sticky top-0 z-50">
+<div class="flex items-center gap-4">
+<button class="w-touch-min h-touch-min flex items-center justify-center text-primary dark:text-primary hover:bg-surface-bright transition-colors active:scale-95 duration-100 rounded-full">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">arrow_back</span>
+</button>
+<h1 class="font-headline-sm text-headline-sm-mobile md:text-headline-sm text-primary dark:text-primary">Podcast cleanup</h1>
+</div>
+<div class="flex items-center gap-3">
+<!-- Thermal & Privacy Chips -->
+<div class="flex items-center gap-1 bg-[#1d1f23] border border-outline-variant rounded px-2 py-1">
+<span class="material-symbols-outlined text-[14px] text-heat-idle" style="font-variation-settings: 'FILL' 1;">device_thermostat</span>
+<span class="font-telemetry-sm text-telemetry-sm text-heat-idle uppercase">IDLE</span>
+</div>
+<div class="hidden md:flex items-center gap-1 bg-[#1d1f23] border border-outline-variant rounded px-2 py-1">
+<span class="material-symbols-outlined text-[14px] text-surface-tint" style="font-variation-settings: 'FILL' 1;">shield_lock</span>
+<span class="font-telemetry-sm text-telemetry-sm text-surface-tint uppercase">MEDIA STAYS ON DEVICE</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-telemetry-sm text-telemetry-sm text-primary">[STABLE] 38°C</span>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="max-w-2xl mx-auto px-gutter mt-6">
+<!-- Segmented Toggle -->
+<div class="flex w-full bg-[#1d1f23] border border-outline-variant rounded-lg p-1 mb-8">
+<button class="flex-1 py-2 font-headline-sm text-[14px] rounded-md bg-primary-container text-on-primary-container text-center transition-colors">Recipe</button>
+<button class="flex-1 py-2 font-headline-sm text-[14px] rounded-md text-primary border border-transparent hover:border-outline-variant text-center transition-colors">Canvas</button>
+</div>
+<!-- Recipe List -->
+<div class="flex flex-col relative pb-8">
+<!-- Node 1: Source video -->
+<div class="machined-plate node-card p-4 relative">
+<div class="flex justify-between items-start mb-2">
+<h2 class="font-headline-sm text-headline-sm">Source video</h2>
+<div class="flex items-center gap-1">
+<div class="w-2 h-2 rounded-full bg-green-500"></div>
+<span class="font-label-caps text-label-caps text-green-500">READY</span>
+</div>
+</div>
+<div class="flex items-center justify-between mt-4">
+<div class="font-telemetry text-telemetry text-on-surface-variant">camera_roll/ep_014.mp4</div>
+<div class="flex items-center gap-2">
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant">OUT</span>
+<div class="port-video"></div>
+</div>
+</div>
+</div>
+<div class="connector-line port-video-line"></div>
+<div class="add-node-btn"><span class="material-symbols-outlined text-[18px]">add</span></div>
+<div class="connector-line port-video-line"></div>
+<!-- Node 2: Split audio -->
+<div class="machined-plate node-card p-4 relative mt-4">
+<div class="flex justify-between items-start mb-2">
+<h2 class="font-headline-sm text-headline-sm">Split audio</h2>
+<div class="flex items-center gap-1">
+<div class="w-2 h-2 rounded-full bg-green-500"></div>
+<span class="font-label-caps text-label-caps text-green-500">READY</span>
+</div>
+</div>
+<div class="flex flex-wrap items-center gap-3 mb-4">
+<span class="font-telemetry-sm text-telemetry-sm bg-surface-container-high px-2 py-0.5 rounded border border-outline-variant">ffmpeg demux</span>
+<span class="font-telemetry-sm text-telemetry-sm bg-surface-container-high px-2 py-0.5 rounded border border-outline-variant">CPU</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant">0m 04s</span>
+</div>
+<div class="flex justify-between items-center bg-[#181a1e] p-2 rounded border border-outline-variant">
+<div class="flex items-center gap-2">
+<div class="port-video"></div>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant">IN</span>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2">
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant">OUT</span>
+<div class="port-video"></div>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant">OUT</span>
+<div class="port-audio"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Pinned Bottom Bar as requested in prompt, ignoring nav logic for this specific recipe view) -->
+<div class="fixed bottom-0 w-full z-50 machined-plate bg-[#181a1e] flex justify-between items-center px-gutter py-4 md:py-6 shadow-[0_-8px_24px_rgba(8,9,10,0.55)]">
+<div class="font-telemetry text-telemetry font-bold text-on-surface">TOTAL 4m 34s</div>
+<button class="bg-primary-container text-on-primary-container font-headline-sm text-[16px] px-8 py-2 rounded-md hover:bg-molten-copper-bright transition-colors active:scale-95 touch-min flex items-center justify-center">
+            Run
+        </button>
+</div>
+</body></html>

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>d2-paywall-device-aware</title>
+<script src="/src/assets/tailwind.js"></script>
+<link rel="stylesheet" href="/src/assets/fonts.css"/>
+<link rel="stylesheet" href="/src/assets/fonts.css"/>
+<link rel="stylesheet" href="/src/assets/fonts.css"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-surface": "#e8e6e3",
+                        "heat-idle": "#5a5b60",
+                        "surface-tint": "#ffb077",
+                        "outline-variant": "#3f4045",
+                        "on-primary-container": "#4e1f00",
+                        "on-tertiary-fixed": "#001d34",
+                        "port-tensor": "#d4c77f",
+                        "surface-bright": "#44362f",
+                        "on-tertiary": "#003355",
+                        "on-secondary": "#003732",
+                        "tertiary-fixed": "#cfe5ff",
+                        "plate-shadow": "#08090a",
+                        "error-container": "#93000a",
+                        "surface-container": "#1d1f23",
+                        "surface-container-lowest": "#08090a",
+                        "surface": "#121316",
+                        "primary-fixed": "#ffdbca",
+                        "on-tertiary-container": "#002f4f",
+                        "heat-hot": "#ff5722",
+                        "on-secondary-container": "#9cf4e8",
+                        "molten-copper-bright": "#ffb077",
+                        "secondary-fixed": "#9bf2e7",
+                        "surface-variant": "#2c2e34",
+                        "inverse-primary": "#9c4500",
+                        "surface-container-low": "#181a1e",
+                        "background": "#121316",
+                        "secondary-fixed-dim": "#7fd6cb",
+                        "on-tertiary-fixed-variant": "#004a78",
+                        "on-primary-fixed-variant": "#773300",
+                        "inverse-surface": "#e8e6e3",
+                        "secondary-container": "#00726a",
+                        "heat-throttle": "#ffb300",
+                        "on-primary-fixed": "#331200",
+                        "surface-container-highest": "#2c2e34",
+                        "on-error-container": "#ffdad6",
+                        "on-error": "#690005",
+                        "tertiary-fixed-dim": "#a8c7e8",
+                        "port-mask": "#e88ac4",
+                        "port-text": "#a8c7e8",
+                        "outline": "#8a857e",
+                        "error": "#ffb4ab",
+                        "primary-container": "#ed7014",
+                        "surface-dim": "#121316",
+                        "port-image": "#9ad67f",
+                        "on-surface-variant": "#b3afa9",
+                        "primary": "#ffb077",
+                        "on-background": "#e8e6e3",
+                        "secondary": "#7fd6cb",
+                        "plate-highlight": "#3f4045",
+                        "on-secondary-fixed": "#00201d",
+                        "primary-fixed-dim": "#ffb077",
+                        "surface-graphite": "#121316",
+                        "inverse-on-surface": "#3b2e27",
+                        "surface-container-high": "#24262b",
+                        "on-secondary-fixed-variant": "#00504a",
+                        "on-primary": "#542200",
+                        "tertiary-container": "#009af3",
+                        "tertiary": "#a8c7e8",
+                        
+                        "custom-surface": "#1d1f23",
+                        "custom-surface-low": "#181a1e",
+                        "custom-grey": "#b3afa9",
+                        "custom-grey-muted": "#6a6a6d"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "node-row-height": "72px",
+                        "base": "8px",
+                        "touch-min": "44px",
+                        "gutter": "16px",
+                        "margin-mobile": "20px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Chivo", "sans-serif"],
+                        "body-sm": ["Inter", "sans-serif"],
+                        "headline-sm": ["Chivo", "sans-serif"],
+                        "body-lg": ["Inter", "sans-serif"],
+                        "telemetry": ["JetBrains Mono", "monospace"],
+                        "label-caps": ["Inter", "sans-serif"],
+                        "headline-lg": ["Chivo", "sans-serif"],
+                        "body-md": ["Inter", "sans-serif"],
+                        "telemetry-sm": ["JetBrains Mono", "monospace"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["22px", {"lineHeight": "28px", "fontWeight": "700"}],
+                        "body-sm": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+                        "headline-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "telemetry": ["13px", {"lineHeight": "20px", "fontWeight": "450"}],
+                        "label-caps": ["11px", {"lineHeight": "16px", "letterSpacing": "0.06em", "fontWeight": "700"}],
+                        "headline-lg": ["30px", {"lineHeight": "38px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "telemetry-sm": ["11px", {"lineHeight": "16px", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .plate-effect {
+            box-shadow: inset 0 1px 0 0 rgba(63,64,69,1), 0 2px 4px 0 rgba(8,9,10,0.55);
+        }
+        .plate-effect-subtle {
+            box-shadow: inset 0 1px 0 0 rgba(63,64,69,1);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface-graphite text-on-surface font-body-md min-h-screen flex flex-col items-center">
+<div class="w-full max-w-[480px] bg-surface-graphite min-h-screen flex flex-col relative px-margin-mobile pb-8">
+<!-- Top Bar -->
+<div class="flex justify-between items-center py-4 w-full sticky top-0 bg-surface-graphite z-50">
+<button class="h-touch-min w-touch-min flex items-center justify-start text-on-surface">
+<span class="material-symbols-outlined text-2xl">close</span>
+</button>
+<div class="font-telemetry-sm text-telemetry-sm text-on-surface-variant border border-outline-variant px-2 py-1 rounded bg-surface-container-low uppercase tracking-wider">
+                MEDIA STAYS ON DEVICE
+            </div>
+</div>
+<!-- Header -->
+<div class="mt-4 mb-8">
+<h1 class="font-headline-lg text-headline-lg text-on-surface mb-2">Unlock everything your phone can do</h1>
+<p class="font-body-md text-[14px] text-custom-grey">Priced for what this device can actually run.</p>
+</div>
+<!-- HERO CARD -->
+<div class="w-full border-2 border-primary-container bg-custom-surface rounded-lg p-6 plate-effect mb-6 relative">
+<div class="font-label-caps text-label-caps text-primary-container mb-4">BEST VALUE</div>
+<h2 class="font-headline-md text-headline-md text-on-surface mb-2">Pay once</h2>
+<div class="font-telemetry text-telemetry text-4xl text-on-surface mb-2">£59.99</div>
+<p class="font-body-md text-custom-grey mb-8">Keep this version forever</p>
+<button class="w-full bg-primary-container text-on-primary-container h-12 rounded-[4px] font-headline-sm text-[16px] font-bold flex items-center justify-center tracking-wide hover:bg-molten-copper-bright transition-colors">
+                Buy lifetime
+            </button>
+</div>
+<!-- SECONDARY OPTIONS -->
+<div class="flex space-x-4 mb-4">
+<div class="flex-1 border border-[#3f4045] bg-custom-surface rounded-lg p-4 plate-effect-subtle flex flex-col justify-center cursor-pointer hover:bg-surface-variant transition-colors">
+<div class="font-body-md text-on-surface mb-1">Monthly</div>
+<div class="font-telemetry text-telemetry text-on-surface text-lg">£4.99</div>
+</div>
+<div class="flex-1 border border-[#3f4045] bg-custom-surface rounded-lg p-4 plate-effect-subtle flex flex-col justify-center cursor-pointer hover:bg-surface-variant transition-colors">
+<div class="font-body-md text-on-surface mb-1">Annual</div>
+<div class="font-telemetry text-telemetry text-on-surface text-lg">£39.99</div>
+</div>
+</div>
+<!-- TERTIARY OPTION -->
+<div class="w-full py-4 mb-8 border-b border-[#3f4045] cursor-pointer group flex flex-col justify-center">
+<div class="font-body-md text-on-surface group-hover:text-primary-fixed transition-colors">Or buy credits and pay per generation</div>
+<div class="font-telemetry text-telemetry text-custom-grey mt-1">from £2.99</div>
+</div>
+<!-- FEATURE SECTION -->
+<div class="mb-8">
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-4">What Pro unlocks on your <span class="font-telemetry tracking-tight">Snapdragon 888</span></h3>
+<ul class="space-y-4">
+<li class="flex items-start">
+<span class="material-symbols-outlined text-port-image mr-3 text-xl" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-body-md text-[14px] text-on-surface">Node canvas and branching pipelines</span>
+</li>
+<li class="flex items-start">
+<span class="material-symbols-outlined text-port-image mr-3 text-xl" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-body-md text-[14px] text-on-surface">Unlimited saved pipelines</span>
+</li>
+<li class="flex items-start">
+<span class="material-symbols-outlined text-port-image mr-3 text-xl" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-body-md text-[14px] text-on-surface">4-stem studio separation</span>
+</li>
+<li class="flex items-start">
+<span class="material-symbols-outlined text-port-image mr-3 text-xl" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-body-md text-[14px] text-on-surface">Slow-motion interpolation</span>
+</li>
+<li class="flex items-start">
+<span class="material-symbols-outlined text-port-image mr-3 text-xl" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-body-md text-[14px] text-on-surface">On-device titles and chapters</span>
+</li>
+<li class="flex items-start">
+<span class="material-symbols-outlined text-port-image mr-3 text-xl" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-body-md text-[14px] text-on-surface">Job queue and overnight mode</span>
+</li>
+</ul>
+</div>
+<!-- FOOTNOTE PANEL -->
+<div class="w-full bg-custom-surface-low border border-[#3f4045] rounded-lg p-4 plate-effect-subtle mt-auto">
+<p class="font-body-sm text-[13px] text-custom-grey-muted leading-relaxed">
+<span class="font-telemetry">SDXL</span> and <span class="font-telemetry">FLUX</span> generative fill need an <span class="font-telemetry">8 Gen 3</span> or newer chip. Pro won't add them to this device.
+            </p>
+</div>
+</div>
+</body></html>
