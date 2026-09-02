@@ -51,25 +51,28 @@ impl NodePricing {
 /// The model a node loads, when it loads one at all.
 ///
 /// This is the single place the download size, licence identifier and nominal
-/// per-unit estimate for a node's default model live. The figures are carried
-/// here so `NeedsModel` and `Experimental` report a real number instead of a
-/// placeholder; they must be reconciled against the published artefacts before
-/// a release ships.
+/// per-unit estimate for a node's default model live. The figures are normative,
+/// taken from `DOCS/ARCHITECTURE.md` §4a, whose values are sourced from the
+/// verified research report. `review_required` flags entries whose licence
+/// terms are unresolved and must be surfaced in the model manager rather than
+/// presented as settled.
 struct ModelReq {
     bytes: u64,
     license: &'static str,
     estimate_ms: u64,
+    review_required: bool,
 }
 
 const MB: u64 = 1024 * 1024;
 
 fn model_requirement(kind: NodeKind) -> Option<ModelReq> {
     use NodeKind::*;
-    let req = |bytes, license, estimate_ms| {
+    let req = |bytes, license, estimate_ms, review_required| {
         Some(ModelReq {
             bytes,
             license,
             estimate_ms,
+            review_required,
         })
     };
     match kind {
@@ -78,24 +81,24 @@ fn model_requirement(kind: NodeKind) -> Option<ModelReq> {
         // Track demux is a container operation, not inference.
         AudioSplit => None,
 
-        AudioDenoise => req(2 * MB, "Apache-2.0", 40),
-        AudioIsolateVoice => req(24 * MB, "MIT", 120),
-        AudioStems => req(80 * MB, "MIT", 400),
-        Transcribe => req(488 * MB, "MIT", 900),
-        Diarize => req(28 * MB, "MIT", 300),
+        AudioDenoise => req(1 * MB, "MIT", 40, false),
+        AudioIsolateVoice => req(40 * MB, "Apache-2.0", 120, false),
+        AudioStems => req(120 * MB, "MIT", 400, false),
+        Transcribe => req(488 * MB, "MIT", 900, false),
+        Diarize => req(50 * MB, "Apache-2.0", 300, false),
 
-        ImageUpscale => req(6 * MB, "Apache-2.0", 60),
-        ImageObjectRemove => req(200 * MB, "Apache-2.0", 700),
-        GenerativeFill => req(6656 * MB, "FLUX-1-dev-non-commercial", 9000),
-        ImageCutout => req(176 * MB, "MIT", 250),
-        MaskHelper => req(38 * MB, "Apache-2.0", 90),
+        ImageUpscale => req(40 * MB, "BSD-3", 60, false),
+        ImageObjectRemove => req(200 * MB, "Qualcomm AI Hub per-model", 700, true),
+        GenerativeFill => req(4 * 1024 * MB, "Apache-2.0", 9000, false),
+        ImageCutout => req(170 * MB, "MIT", 250, false),
+        MaskHelper => req(40 * MB, "Apache-2.0", 90, false),
 
-        VideoUpscale => req(6 * MB, "Apache-2.0", 3),
-        VideoRemoveBg => req(176 * MB, "MIT", 30),
-        VideoInterpolate => req(64 * MB, "MIT", 25),
+        VideoUpscale => req(1 * MB, "BSD-3", 3, false),
+        VideoRemoveBg => req(25 * MB, "Apache-2.0", 30, true),
+        VideoInterpolate => req(40 * MB, "MIT", 25, false),
 
-        MetadataGen => req(1024 * MB, "Gemma-Terms-of-Use", 1800),
-        CaptionFrames => req(1024 * MB, "Gemma-Terms-of-Use", 1200),
+        MetadataGen => req(2 * 1024 * MB, "Apache-2.0", 1800, false),
+        CaptionFrames => req(512 * MB, "apple-amlr", 1200, true),
     }
 }
 
@@ -405,5 +408,41 @@ mod tests {
             true,
         );
         assert_eq!(got, NodeAvailability::Ready(Backend::Cpu));
+    }
+
+    /// No licence string in the catalogue may contain the NC substring — a
+    /// restricted-licence model on a paid product's feature is a shipping
+    /// blocker, and the test is the mechanical enforcement, not a review
+    /// comment.
+    #[test]
+    fn no_licence_contains_non_commercial() {
+        let needle = "non-commercial";
+        for kind in NodeKind::ALL {
+            if let Some(req) = model_requirement(kind) {
+                assert!(
+                    !req.license.contains(needle),
+                    "{kind:?} licence \"{}\" contains {needle}",
+                    req.license,
+                );
+            }
+        }
+    }
+
+    /// The four entries the architecture flags must carry `review_required: true`
+    /// so the licence sheet surfaces them as unresolved.
+    #[test]
+    fn flagged_models_carry_review_required() {
+        let flagged = [
+            NodeKind::ImageObjectRemove,
+            NodeKind::VideoRemoveBg,
+            NodeKind::CaptionFrames,
+        ];
+        for kind in &flagged {
+            let req = model_requirement(*kind).expect("flagged kind has a model");
+            assert!(
+                req.review_required,
+                "{kind:?} should carry review_required: true",
+            );
+        }
     }
 }
