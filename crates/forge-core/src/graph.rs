@@ -282,3 +282,256 @@ pub fn ports_for(kind: NodeKind) -> (Vec<Port>, Vec<Port>) {
         SinkFiles => (any_port("in"), vec![]),
     }
 }
+
+#[cfg(test)]
+mod port_table_tests {
+    use super::*;
+
+    // -- Source nodes: no inputs, typed outputs --
+
+    #[test]
+    fn port_table_source_video() {
+        let (i, o) = ports_for(NodeKind::SourceVideo);
+        assert!(i.is_empty(), "SourceVideo has no inputs");
+        assert_eq!(o.len(), 2);
+        assert_eq!(o[0], p("video", PortType::Video));
+        assert_eq!(o[1], p("audio", PortType::Audio));
+    }
+
+    #[test]
+    fn port_table_source_image() {
+        let (i, o) = ports_for(NodeKind::SourceImage);
+        assert!(i.is_empty());
+        assert_eq!(o, vec![p("image", PortType::Image)]);
+    }
+
+    #[test]
+    fn port_table_source_audio() {
+        let (i, o) = ports_for(NodeKind::SourceAudio);
+        assert!(i.is_empty());
+        assert_eq!(o, vec![p("audio", PortType::Audio)]);
+    }
+
+    // -- Audio processing nodes --
+
+    #[test]
+    fn port_table_audio_split() {
+        let (i, o) = ports_for(NodeKind::AudioSplit);
+        assert_eq!(i, vec![p("in", PortType::Audio)]);
+        assert_eq!(o.len(), 2);
+        assert_eq!(o[0], p("voice", PortType::Audio));
+        assert_eq!(o[1], p("music", PortType::Audio));
+    }
+
+    #[test]
+    fn port_table_audio_denoise() {
+        let (i, o) = ports_for(NodeKind::AudioDenoise);
+        assert_eq!(i, vec![p("in", PortType::Audio)]);
+        assert_eq!(o, vec![p("out", PortType::Audio)]);
+    }
+
+    #[test]
+    fn port_table_audio_isolate_voice() {
+        let (i, o) = ports_for(NodeKind::AudioIsolateVoice);
+        assert_eq!(i, vec![p("in", PortType::Audio)]);
+        assert_eq!(o, vec![p("out", PortType::Audio)]);
+    }
+
+    #[test]
+    fn port_table_audio_stems() {
+        let (i, o) = ports_for(NodeKind::AudioStems);
+        assert_eq!(i, vec![p("in", PortType::Audio)]);
+        assert_eq!(o.len(), 4);
+        assert_eq!(o[0], p("vocals", PortType::Audio));
+        assert_eq!(o[1], p("drums", PortType::Audio));
+        assert_eq!(o[2], p("bass", PortType::Audio));
+        assert_eq!(o[3], p("other", PortType::Audio));
+    }
+
+    // -- Language nodes: audio in, text out --
+
+    #[test]
+    fn port_table_transcribe() {
+        let (i, o) = ports_for(NodeKind::Transcribe);
+        assert_eq!(i, vec![p("in", PortType::Audio)]);
+        assert_eq!(o, vec![p("out", PortType::Text)]);
+    }
+
+    #[test]
+    fn port_table_diarize() {
+        let (i, o) = ports_for(NodeKind::Diarize);
+        assert_eq!(i, vec![p("in", PortType::Audio)]);
+        assert_eq!(o, vec![p("out", PortType::Text)]);
+    }
+
+    // -- Image processing nodes --
+
+    #[test]
+    fn port_table_image_upscale() {
+        let (i, o) = ports_for(NodeKind::ImageUpscale);
+        assert_eq!(i, vec![p("in", PortType::Image)]);
+        assert_eq!(o, vec![p("out", PortType::Image)]);
+    }
+
+    #[test]
+    fn port_table_image_object_remove() {
+        let (i, o) = ports_for(NodeKind::ImageObjectRemove);
+        assert_eq!(i, vec![p("in", PortType::Image), p("mask", PortType::Mask)]);
+        assert_eq!(o, vec![p("out", PortType::Image)]);
+    }
+
+    #[test]
+    fn port_table_generative_fill() {
+        let (i, o) = ports_for(NodeKind::GenerativeFill);
+        assert_eq!(
+            i,
+            vec![
+                p("in", PortType::Image),
+                p("mask", PortType::Mask),
+                p("prompt", PortType::Text),
+            ]
+        );
+        assert_eq!(o, vec![p("out", PortType::Image)]);
+    }
+
+    #[test]
+    fn port_table_image_cutout() {
+        let (i, o) = ports_for(NodeKind::ImageCutout);
+        assert_eq!(i, vec![p("in", PortType::Image)]);
+        assert_eq!(o.len(), 2);
+        assert_eq!(o[0], p("out", PortType::Image));
+        assert_eq!(o[1], p("mask", PortType::Mask));
+    }
+
+    // -- Video processing nodes --
+
+    #[test]
+    fn port_table_video_upscale() {
+        let (i, o) = ports_for(NodeKind::VideoUpscale);
+        assert_eq!(i, vec![p("in", PortType::Video)]);
+        assert_eq!(o, vec![p("out", PortType::Video)]);
+    }
+
+    #[test]
+    fn port_table_video_remove_bg() {
+        let (i, o) = ports_for(NodeKind::VideoRemoveBg);
+        assert_eq!(i, vec![p("in", PortType::Video)]);
+        assert_eq!(o.len(), 2);
+        assert_eq!(o[0], p("out", PortType::Video));
+        assert_eq!(o[1], p("mask", PortType::Mask));
+    }
+
+    #[test]
+    fn port_table_video_interpolate() {
+        let (i, o) = ports_for(NodeKind::VideoInterpolate);
+        assert_eq!(i, vec![p("in", PortType::Video)]);
+        assert_eq!(o, vec![p("out", PortType::Video)]);
+    }
+
+    // -- Language nodes: text/video in, text out --
+
+    #[test]
+    fn port_table_metadata_gen() {
+        let (i, o) = ports_for(NodeKind::MetadataGen);
+        assert_eq!(i, vec![p("in", PortType::Text)]);
+        assert_eq!(o, vec![p("out", PortType::Text)]);
+    }
+
+    #[test]
+    fn port_table_caption_frames() {
+        let (i, o) = ports_for(NodeKind::CaptionFrames);
+        assert_eq!(i, vec![p("in", PortType::Video)]);
+        assert_eq!(o, vec![p("out", PortType::Text)]);
+    }
+
+    // -- Utility nodes --
+
+    #[test]
+    fn port_table_mask_helper() {
+        let (i, o) = ports_for(NodeKind::MaskHelper);
+        assert_eq!(i, vec![p("in", PortType::Image)]);
+        assert_eq!(o, vec![p("mask", PortType::Mask)]);
+    }
+
+    #[test]
+    fn port_table_av_mux() {
+        let (i, o) = ports_for(NodeKind::AvMux);
+        assert_eq!(
+            i,
+            vec![p("video", PortType::Video), p("audio", PortType::Audio)]
+        );
+        assert_eq!(o, vec![p("out", PortType::Video)]);
+    }
+
+    // -- Sinks: polymorphic input, no outputs --
+
+    #[test]
+    fn port_table_sink_gallery() {
+        let (i, o) = ports_for(NodeKind::SinkGallery);
+        assert!(o.is_empty());
+        assert_eq!(i.len(), 6, "sink accepts all six port types");
+        let types: Vec<_> = i.iter().map(|p| p.ty).collect();
+        assert!(types.contains(&PortType::Audio));
+        assert!(types.contains(&PortType::Video));
+        assert!(types.contains(&PortType::Image));
+        assert!(types.contains(&PortType::Mask));
+        assert!(types.contains(&PortType::Text));
+        assert!(types.contains(&PortType::Tensor));
+        assert!(i.iter().all(|p| p.name == "in"));
+    }
+
+    #[test]
+    fn port_table_sink_files() {
+        let (i, o) = ports_for(NodeKind::SinkFiles);
+        assert!(o.is_empty());
+        assert_eq!(i.len(), 6, "sink accepts all six port types");
+        let types: Vec<_> = i.iter().map(|p| p.ty).collect();
+        assert!(types.contains(&PortType::Audio));
+        assert!(types.contains(&PortType::Video));
+        assert!(types.contains(&PortType::Image));
+        assert!(types.contains(&PortType::Mask));
+        assert!(types.contains(&PortType::Text));
+        assert!(types.contains(&PortType::Tensor));
+        assert!(i.iter().all(|p| p.name == "in"));
+    }
+
+    // -- Exhaustiveness: every variant in NodeKind::ALL is covered --
+
+    #[test]
+    fn port_table_covers_all_22_variants() {
+        for kind in NodeKind::ALL {
+            let (_i, _o) = ports_for(kind);
+        }
+    }
+
+    /// No two input ports on the same node share a name, and no two output
+    /// ports on the same node share a name — except sinks, whose polymorphic
+    /// `in` port is declared once per accepted type under a single name. The
+    /// validator relies on this to resolve edge endpoints.
+    #[test]
+    fn port_table_no_duplicate_port_names() {
+        for kind in NodeKind::ALL {
+            let (inputs, outputs) = ports_for(kind);
+            let out_names: Vec<&str> = outputs.iter().map(|p| p.name.as_str()).collect();
+            let out_set: HashSet<&str> = out_names.iter().copied().collect();
+            assert_eq!(
+                out_names.len(),
+                out_set.len(),
+                "{kind:?} has duplicate output port names: {out_names:?}"
+            );
+
+            // Sinks use any_port("in") — 6 declarations under the same name,
+            // one per port type. That is the only allowed duplication.
+            let is_sink = matches!(kind, NodeKind::SinkGallery | NodeKind::SinkFiles);
+            if !is_sink {
+                let in_names: Vec<&str> = inputs.iter().map(|p| p.name.as_str()).collect();
+                let in_set: HashSet<&str> = in_names.iter().copied().collect();
+                assert_eq!(
+                    in_names.len(),
+                    in_set.len(),
+                    "{kind:?} has duplicate input port names: {in_names:?}"
+                );
+            }
+        }
+    }
+}
